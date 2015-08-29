@@ -38,19 +38,20 @@ Usage:
 
 ## Initial dialogue
 echo "
-Starting ak_ubuntu_installer.sh
+***** Starting ak_ubuntu_installer.sh *****
 
 You can cancel during this initial dialogue with <ctrl-C>
-"
-sleep 1
-echo "Enter your email address (to configure task spooler):
+
+Enter your email address (to configure task spooler):
 "
 read email
-echo "Enter your computers hostname if it has one.
+echo "
+Enter your computers hostname if it has one.
 Example: enggen.bio.nau.edu
 Just hit enter if you don't have one.
 "
 read host
+echo ""
 
 ## Install Google Chrome
 ## Test for install
@@ -83,10 +84,24 @@ wait
 ## Add additional ppas
 echo "Adding extra ppas.
 "
+mlicount=`ls /etc/apt/sources.list.d/indicator-multiload-stable-daily* | wc -l`
+if [[ $mlicount == 0 ]]; then
 apt-add-repository -y ppa:indicator-multiload/stable-daily
+fi
+ottocount=`ls /etc/apt/sources.list.d/otto-kesselgulasch-gimp* | wc -l`
+if [[ $ottocount == 0 ]]; then
 add-apt-repository -y ppa:otto-kesselgulasch/gimp
+fi
+rppacount=`cat /etc/apt/sources.list | grep "cran.rstudio.com" | wc -l`
+if [[ $rppacount == 0 ]]; then
+/bin/su -c "echo 'deb http://cran.rstudio.com/bin/linux/ubuntu trusty/' >> /etc/apt/sources.list"
+apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+fi
 add-apt-repository "deb http://archive.canonical.com/ precise partner"
+yppacount=`ls /etc/apt/sources.list.d/webupd8team-y-ppa-manager* | wc -l`
+if [[ $yppacount == 0 ]]; then
 add-apt-repository -y ppa:webupd8team/y-ppa-manager
+fi
 apt-get -y update
 cat /etc/apt/sources.list > /etc/apt/sources.list.backup
 uniq /etc/apt/sources.list.backup > /etc/apt/sources.list
@@ -122,7 +137,7 @@ wait
 ## Install programs from Ubuntu repositories
 echo "Installing programs from repositories.
 "
-apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-bioc-biocinstaller samtools mafft fastx-toolkit bedtools bowtie2 tophat bwa cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev
+apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-bioc-biocinstaller samtools mafft fastx-toolkit bedtools bowtie2 tophat bwa cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla
 wait
 
 echo "Cleaning up ubuntu packages.
@@ -160,7 +175,7 @@ source /etc/environment
 
 ## Install vsearch
 	vsearchtest=`command -v vsearch 2>/dev/null | wc -l`
-	if [[ $vsearchtest == 0]]; then
+	if [[ $vsearchtest == 0 ]]; then
 echo "Installing vsearch.
 "
 cd $homedir/vsearch/src
@@ -175,7 +190,7 @@ echo "Vsearch already installed.  Skipping.
 
 ## Install bamtools
 	bamtoolstest=`command -v vsearch 2>/dev/null | wc -l`
-	if [[ $bamtoolstest == 0]]; then
+	if [[ $bamtoolstest == 0 ]]; then
 echo "Installing Bamtools.
 "
 cd $homedir/bamtools/
@@ -195,7 +210,7 @@ echo "Bamtools already installed.  Skipping.
 
 ## Install HMMER
 	hmmertest=`command -v hmmsearch 2>/dev/null | wc -l`
-	if [[ $hmmertest == 0]]; then
+	if [[ $hmmertest == 0 ]]; then
 echo "Installing HMMer
 "
 tar -xzvf $scriptdir/hmmer-3.1b2-linux-intel-x86_64.tar.gz -C /bin/
@@ -211,7 +226,7 @@ echo "HMMer already installed.  Skipping.
 
 ## Install ITSx
 	itsxtest=`command -v ITSx 2>/dev/null | wc -l`
-	if [[ $itsxtest == 0]]; then
+	if [[ $itsxtest == 0 ]]; then
 echo "Installing ITSx.
 "
 tar -xzvf $scriptdir/ITSx_1.0.11.tar.gz -C /bin/ 2>/dev/null
@@ -231,7 +246,7 @@ echo "ITSx already installed.  Skipping.
 
 ## Install smalt
 	smalttest=`command -v smalt 2>/dev/null | wc -l`
-	if [[ $smalttest == 0]]; then
+	if [[ $smalttest == 0 ]]; then
 echo "Installing Smalt.
 "
 tar -xzvf $scriptdir/smalt.tar.gz -C /bin/
@@ -248,7 +263,7 @@ echo "Smalt already installed.  Skipping.
 
 ## Install ea-utils
 	eautilstest=`command -v fastq-mcf 2>/dev/null | wc -l`
-	if [[ $eautilstest == 0]]; then
+	if [[ $eautilstest == 0 ]]; then
 echo "Installing ea-utils.
 "
 tar -xzvf $scriptdir/ea-utils.1.1.2-806.tar.gz -C /bin/
@@ -262,7 +277,7 @@ echo "ea-utils already installed.  Skipping.
 
 ## Install task spooler
 	tstest=`command -v ts 2>/dev/null | wc -l`
-	if [[ $tstest == 0]]; then
+	if [[ $tstest == 0 ]]; then
 echo "Installing Task spooler.
 "
 tar -xzvf $scriptdir/ts-0.7.4.tar.gz -C /bin/
@@ -296,67 +311,114 @@ echo "Task spooler already installed.  Skipping.
 	fi
 
 ## Upgrading pip
-echo "Upgrading pip version."
-pip install pip --upgrade pip
+pipver=`python -c "import pip; print pip.__version__" 2>/dev/null`
+if [[ $pipver != 7.1.2 ]]; then
+echo "Installing pip v7.1.2."
+pip install pip==7.1.2
 wait
+else
+echo "Pip already correct version (7.1.2).
+"
+fi
 
 ## Install numpy
-echo "Installing Numpy.
+numpyver=`python -c "import numpy; print numpy.version.version" 2>/dev/null`
+if [[ $numpyver != 1.9.1 ]]; then
+echo "Installing Numpy v1.9.1.
 "
 pip install numpy==1.9.1
 wait
+else
+echo "Numpy already correct version (1.9.1).
+"
+fi
 
 ## Install scipy
-echo "Installing Scipy.
+scipyver=`python -c "import scipy; print scipy.version.version" 2>/dev/null`
+if [[ $scipyver != 0.15.1 ]]; then
+echo "Installing Scipy v0.15.1.
 "
 pip install scipy==0.15.1
 wait
+else
+echo "Scipy already correct version (0.15.1).
+"
+fi
 
 ## Install matplotlib
-echo "Installing Matplotlib.
+mplver=`python -c "import matplotlib; print matplotlib.__version__" 2>/dev/null`
+if [[ $mplver != 1.3.1 ]]; then
+echo "Installing Matplotlib v1.3.1.
 "
 pip install matplotlib==1.3.1
 wait
+else
+echo "Matplotlib already correct version (1.3.1).
+"
+fi
 
 ## Install Cython
-echo "Installing Cython.
+cythonver=`python -c "import cython; print cython.__version__" 2>/dev/null`
+if [[ $cythonver != 0.23.1 ]]; then
+echo "Installing Cython v0.23.1.
 "
-pip install Cython
+pip install Cython==0.23.1
+else
+echo "Cython already correct version (0.23.1).
+"
+fi
 
 ## Install h5py
-echo "Installing h5py.
+h5pyver=`python -c "import h5py; print h5py.__version__" 2>/dev/null`
+if [[ $h5pyver != 2.4.0 ]]; then
+echo "Installing h5py v2.4.0.
 "
 pip install h5py==2.4.0
 wait
+else
+echo "h5py already correct version (2.4.0).
+"
+fi
 
 ## Install QIIME base
-echo "Installing QIIME.
+qiimever=`python -c "import qiime; print qiime.__version__" 2>/dev/null`
+if [[ $qiimever != 1.9.1 ]]; then
+echo "Installing QIIME base v1.9.1.
 "
 pip install qiime==1.9.1
 wait
+else
+echo "QIIME already correct version (1.9.1).
+"
+fi
 
 ## Install primer prospector and correct the analyze primers library
+	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
+	if [[ $pptest == 0 ]]; then
+echo "Installing Primer Prospector.
+"
 tar -xzvf $scriptdir/pprospector-1.0.1.tar.gz -C /bin/
 cd /bin/pprospector-1.0.1/
 python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/
 sed -i "s/\"$/:TARGET/" /etc/environment
 sed -i "s|TARGET$|/bin/pprospector-1.0.1/bin\"|" /etc/environment
 source /etc/environment
-cp akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/
+cp $homedir/akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/
+else
+echo "Primer prospector already installed.  Skipping.
+"
+	fi
 
 ## Run QIIME deploy
-/bin/su -c "echo 'deb http://cran.rstudio.com/bin/linux/ubuntu trusty/' >> /etc/apt/sources.list"
-apt-get -y update
-$scriptdir/r_updates.r
+
+Rscript $scriptdir/r_updates.r
 wait
 if [[ ! -d $homedir/qiime-deploy ]]; then
-rm -r $homedir/qiime-deploy
+git clone https://github.com/qiime/qiime-deploy.git
 fi
 if [[ ! -d $homedir/qiime-deploy-conf ]]; then
-rm -r qiime-deploy-conf
-fi
-git clone https://github.com/qiime/qiime-deploy.git
 git clone git://github.com/qiime/qiime-deploy-conf.git
+fi
 wait
 cd qiime-deploy/
 python qiime-deploy.py $homedir/qiime_software/ -f $homedir/qiime-deploy-conf/qiime-1.9.1/qiime.conf --force-remove-failed-dirs
