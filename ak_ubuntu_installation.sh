@@ -349,11 +349,18 @@ cp akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerpro
 apt-get -y update
 $scriptdir/r_updates.r
 wait
+if [[ ! -d $homedir/qiime-deploy ]]; then
+rm -r $homedir/qiime-deploy
+fi
+if [[ ! -d $homedir/qiime-deploy-conf ]]; then
+rm -r qiime-deploy-conf
+fi
 git clone https://github.com/qiime/qiime-deploy.git
 git clone git://github.com/qiime/qiime-deploy-conf.git
 wait
 cd qiime-deploy/
 python qiime-deploy.py $homedir/qiime_software/ -f $homedir/qiime-deploy-conf/qiime-1.9.1/qiime.conf --force-remove-failed-dirs
+wait
 source $homedir/.bashrc
 print_qiime_config.py -tf
 
