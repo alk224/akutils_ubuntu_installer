@@ -50,6 +50,7 @@ hdf5-tools (more hdf5 utilities)
 task spooler (command queueing)
 subversion (versioning software)
 cmake (compiler)
+filezilla (ftp client)
 
 *** R software ***
 r-base (R itself)
