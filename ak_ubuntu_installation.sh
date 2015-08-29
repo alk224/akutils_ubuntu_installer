@@ -4,40 +4,53 @@
 ## Author: Andrew Krohn
 ## Date: 2015-08-29
 ## License: MIT
+## Version: 0.0.1
 set -e
 homedir=`pwd`
 scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 
 ## Check whether user supplied install argument.  Otherwise display help.
-	if [[ "$1" != "install" ]] || [[ "$1" != "list" ]]; then
+	if [[ "$1" != "install" ]] && [[ "$1" != "list" ]]; then
 echo "
-ak_ubuntu_installation script (v0.0.1), 2015-08-29.
-Script to facilitate installation of my favorite
-useful bioinformatics packages on a bare Ubuntu
+ak_ubuntu_installation script (v0.0.1), 2015-08-29.  Script to facilitate
+installation of my favorite useful bioinformatics packages on a bare Ubuntu
 14.04 LTS install.  Tested on no other distros.
 
-To run this script which will install a variety of
-software, and assuming that you cloned this repo
-to your home directory, issue the following command:
+The script will initially ask for brief input.  If you make a mistake,
+hit <ctrl-C> and start over.
 
-sudo ./ak_ubuntu_installer/ak_ubuntu_installation.sh
+There are a few items in the middle of the install that also require user
+input.  The installation should resume once input is provided.
 
-The script will initially ask for brief input.  If
-you make a mistake, hit <ctrl-C> and start over.
-
-There are a few items in the middle of the install
-that also require user input.  The installation
-should resume once input is provided.
-
-For a list of software this script installs, execute:
-./ak_ubuntu_installer/ak_ubuntu_installation.sh list
+Usage:
+   ./ak_ubuntu_installer/ak_ubuntu_installation.sh (this help screen)
+   ./ak_ubuntu_installer/ak_ubuntu_installation.sh list (list of software)
+   sudo ./ak_ubuntu_installer/ak_ubuntu_installation.sh install (installation)
 "
+	exit 0
 	fi
 
 ## Check whether user supplied list argument.
-	if [[ "$1" != "list" ]]; then
+	if [[ "$1" == "list" ]]; then
 	less $scriptdir/software_list
+	exit 0
 	fi
+
+## Initial dialogue
+echo "
+Starting ak_ubuntu_installer.sh
+
+You can cancel during this initial dialogue with <ctrl-C>
+"
+sleep 1
+echo "Enter your email address (to configure task spooler):
+"
+read email
+echo "Enter your computers hostname if it has one.
+Example: enggen.bio.nau.edu
+Just hit enter if you don't have one.
+"
+read host
 
 ## Install Google Chrome
 ## Test for install
@@ -74,10 +87,10 @@ apt-add-repository -y ppa:indicator-multiload/stable-daily
 add-apt-repository -y ppa:otto-kesselgulasch/gimp
 add-apt-repository "deb http://archive.canonical.com/ precise partner"
 add-apt-repository -y ppa:webupd8team/y-ppa-manager
-apt-get update
+apt-get -y update
 cat /etc/apt/sources.list > /etc/apt/sources.list.backup
 uniq /etc/apt/sources.list.backup > /etc/apt/sources.list
-apt-get update
+apt-get -y update
 wait
 
 ## Download special programs
@@ -109,7 +122,7 @@ wait
 ## Install programs from Ubuntu repositories
 echo "Installing programs from repositories.
 "
-apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-bioc-biocinstaller samtools mafft fastx-toolkit bedtools bowtie2 tophat bwa cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake
+apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-bioc-biocinstaller samtools mafft fastx-toolkit bedtools bowtie2 tophat bwa cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev
 wait
 
 echo "Cleaning up ubuntu packages.
@@ -122,7 +135,7 @@ wait
 
 ## Remove precise repository
 add-apt-repository -r "deb http://archive.canonical.com/ precise partner"
-apt-get update
+apt-get -y update
 
 ## Clone github repositories
 echo "Cloning github repositories.
@@ -170,6 +183,7 @@ mkdir build
 cd build
 cmake ..
 make
+wait
 cd $homedir
 sed -i "s/\"$/:TARGET/" /etc/environment
 sed -i "s|TARGET$|$homedir/bamtools/bin\"|" /etc/environment
@@ -188,6 +202,7 @@ tar -xzvf $scriptdir/hmmer-3.1b2-linux-intel-x86_64.tar.gz -C /bin/
 cd /bin/hmmer-3.1b2-linux-intel-x86_64/
 ./configure
 make
+wait
 cd $homedir
 	else
 echo "HMMer already installed.  Skipping.
@@ -239,6 +254,7 @@ echo "Installing ea-utils.
 tar -xzvf $scriptdir/ea-utils.1.1.2-806.tar.gz -C /bin/
 cd /bin/ea-utils.1.1.2-806/
 make install
+wait
 	else
 echo "ea-utils already installed.  Skipping.
 "
@@ -255,6 +271,25 @@ make
 make install
 wait
 cd $homedir
+		emailtest=`grep "TS_MAILTO" /etc/environment | wc -l`
+		if [[ $emailtest == 1 ]]; then
+		sed -i '/TS_MAILTO/d' /etc/environment
+		fi
+		lighttest=`grep "tslight" $homedir/.bashrc | wc -l`
+		if [[ $lighttest == 1 ]]; then
+		sed -i '/tslight/d' $homedir/.bashrc
+		fi
+		heavytest=`grep "tsheavy" $homedir/.bashrc | wc -l`
+		if [[ $heavytest == 1 ]]; then
+		sed -i '/tsheavy/d' $homedir/.bashrc
+		fi
+
+/bin/su -c "echo 'TS_MAILTO="$email"' >> /etc/environment"
+/bin/su -c "echo 'tsheavy -S 1' >> /etc/environment"
+/bin/su -c "echo 'tslight -S 3' >> /etc/environment"
+/bin/su -c "echo '$host' > /etc/hostname"
+/bin/su -c "echo 'alias tsheavy="TS_SOCKET=/tmp/socket.ts.heavy ts"' >> $homedir/.bashrc"
+/bin/su -c "echo 'alias tslight="TS_SOCKET=/tmp/socket.ts.light ts"' >> $homedir/.bashrc"
 	else
 echo "Task spooler already installed.  Skipping.
 "
@@ -294,7 +329,7 @@ echo "Installing h5py.
 pip install h5py==2.4.0
 wait
 
-## Install QIIME
+## Install QIIME base
 echo "Installing QIIME.
 "
 pip install qiime==1.9.1
@@ -308,6 +343,19 @@ sed -i "s/\"$/:TARGET/" /etc/environment
 sed -i "s|TARGET$|/bin/pprospector-1.0.1/bin\"|" /etc/environment
 source /etc/environment
 cp akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/
+
+## Run QIIME deploy
+/bin/su -c "echo 'deb http://cran.rstudio.com/bin/linux/ubuntu trusty/' >> /etc/apt/sources.list"
+apt-get -y update
+$scriptdir/r_updates.r
+wait
+git clone https://github.com/qiime/qiime-deploy.git
+git clone git://github.com/qiime/qiime-deploy-conf.git
+wait
+cd qiime-deploy/
+python qiime-deploy.py $homedir/qiime_software/ -f $homedir/qiime-deploy-conf/qiime-1.9.1/qiime.conf --force-remove-failed-dirs
+source $homedir/.bashrc
+print_qiime_config.py -tf
 
 ## Report on installations
 echo "
