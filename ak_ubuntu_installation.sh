@@ -1,9 +1,43 @@
 #!/usr/bin/env bash
-set -e
-
 ## Script to install my favorite programs in Ubuntu
 ## Should be run from home directory
+## Author: Andrew Krohn
+## Date: 2015-08-29
+## License: MIT
+set -e
+homedir=`pwd`
+scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 
+## Check whether user supplied install argument.  Otherwise display help.
+	if [[ "$1" != "install" ]] || [[ "$1" != "list" ]]; then
+echo "
+ak_ubuntu_installation script (v0.0.1), 2015-08-29.
+Script to facilitate installation of my favorite
+useful bioinformatics packages on a bare Ubuntu
+14.04 LTS install.  Tested on no other distros.
+
+To run this script which will install a variety of
+software, and assuming that you cloned this repo
+to your home directory, issue the following command:
+
+sudo ./ak_ubuntu_installer/ak_ubuntu_installation.sh
+
+The script will initially ask for brief input.  If
+you make a mistake, hit <ctrl-C> and start over.
+
+There are a few items in the middle of the install
+that also require user input.  The installation
+should resume once input is provided.
+
+For a list of software this script installs, execute:
+./ak_ubuntu_installer/ak_ubuntu_installation.sh list
+"
+	fi
+
+## Check whether user supplied list argument.
+	if [[ "$1" != "list" ]]; then
+	less $scriptdir/software_list
+	fi
 
 ## Install Google Chrome
 ## Test for install
@@ -17,14 +51,14 @@ echo "Installing dependencies for Google Chrome install.
 wait
 echo "Downloading Google Chrome.
 "
-	if [[ -f ~/Downloads/google-chrome*.deb ]]; then
-	rm ~/Downloads/google-chrome*.deb
+	if [[ -f $homedir/Downloads/google-chrome*.deb ]]; then
+	rm $homedir/Downloads/google-chrome*.deb
 	fi
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P ~/Downloads/
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P $homedir/Downloads/
 wait
 echo "Installing Google Chrome.
 "
-	dpkg -i ~/Downloads/google-chrome*.deb
+	dpkg -i $homedir/Downloads/google-chrome*.deb
 wait
 
 else
@@ -47,35 +81,35 @@ apt-get update
 wait
 
 ## Download special programs
-echo "Downloading special programs.
-"
-
-	ITSxcount=`ls ~/Downloads/ITSx_*.gz | wc -l`
-	if [[ $ITSxcount == 0 ]]; then
-	wget http://microbiology.se/sw/ITSx_1.0.11.tar.gz -P ~/Downloads/
-	fi
-
-	smaltcount=`ls ~/Downloads/smalt*.gz | wc -l`
-	if [[ $smaltcount == 0 ]]; then
-	wget http://sourceforge.net/projects/smalt/files/latest/download -P ~/Downloads/
-	mv ~/Downloads/download ~/Downloads/smalt.tar.gz
-	fi
-
-	hmmcount=`ls ~/Downloads/hmmer-3.1b2*.gz | wc -l`
-	if [[ $hmmcount == 0 ]]; then
-	wget http://selab.janelia.org/software/hmmer3/3.1b2/hmmer-3.1b2-linux-intel-x86_64.tar.gz -P ~/Downloads/
-	fi
-
-	tscount=`ls ~/Downloads/ts-0.7.4*.gz | wc -l`
-	if [[ $tscount == 0 ]]; then
-	wget http://vicerveza.homeunix.net/~viric/soft/ts/ts-0.7.4.tar.gz -P ~/Downloads/
-	fi
-wait
+#echo "Downloading special programs.
+#"
+#
+#	ITSxcount=`ls $homedir/Downloads/ITSx_*.gz | wc -l`
+#	if [[ $ITSxcount == 0 ]]; then
+#	wget http://microbiology.se/sw/ITSx_1.0.11.tar.gz -P $homedir/Downloads/
+#	fi
+#
+#	smaltcount=`ls $homedir/Downloads/smalt*.gz | wc -l`
+#	if [[ $smaltcount == 0 ]]; then
+#	wget http://sourceforge.net/projects/smalt/files/latest/download -P $homedir/Downloads/
+#	mv $homedir/Downloads/download $homedir/Downloads/smalt.tar.gz
+#	fi
+#
+#	hmmcount=`ls $homedir/Downloads/hmmer-3.1b2*.gz | wc -l`
+#	if [[ $hmmcount == 0 ]]; then
+#	wget http://selab.janelia.org/software/hmmer3/3.1b2/hmmer-3.1b2-linux-intel-x86_64.tar.gz -P $homedir/Downloads/
+#	fi
+#
+#	tscount=`ls $homedir/Downloads/ts-0.7.4*.gz | wc -l`
+#	if [[ $tscount == 0 ]]; then
+#	wget http://vicerveza.homeunix.net/~viric/soft/ts/ts-0.7.4.tar.gz -P $homedir/Downloads/
+#	fi
+#wait
 
 ## Install programs from Ubuntu repositories
 echo "Installing programs from repositories.
 "
-apt-get -y install fail2ban veusz samtools r-base r-base-core r-base-dev r-bioc-biocinstaller openssh-server build-essential python-dev python-pip mafft fastx-toolkit bowtie2 tophat abyss arb bedtools bwa cufflinks picard-tools seaview treeview treeviewx staden-io-lib-utils ugene ugene-data velvet gpart gparted htop gimp gimp-data gimp-plugin-registry gimp-data-extras indicator-multiload synaptic zip unzip clementine acroread git y-ppa-manager gimp-help-en ttf-mscorefonts-installer libfreetype6-dev hdf5-tools ghc gcc g++ fastqc h5utils
+apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-bioc-biocinstaller samtools mafft fastx-toolkit bedtools bowtie2 tophat bwa cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake
 wait
 
 echo "Cleaning up ubuntu packages.
@@ -93,30 +127,160 @@ apt-get update
 ## Clone github repositories
 echo "Cloning github repositories.
 "
-homedir=`pwd`
 if [[ ! -d $homedir/akutils ]]; then
 git clone https://github.com/alk224/akutils.git
 fi
-
 if [[ ! -d $homedir/vsearch ]]; then
 git clone https://github.com/torognes/vsearch.git
 fi
+if [[ ! -d $homedir/bamtools ]]; then
+git clone git://github.com/pezmaster31/bamtools.git
+fi
 wait
+
+## Add akutils to path
+echo "Adding akutils repository to path (/etc/environment).
+"
+sed -i "s/\"$/:TARGET/" /etc/environment
+sed -i "s|TARGET$|$homedir/akutils\"|" /etc/environment
+source /etc/environment
+
+## Install vsearch
+	vsearchtest=`command -v vsearch 2>/dev/null | wc -l`
+	if [[ $vsearchtest == 0]]; then
+echo "Installing vsearch.
+"
+cd $homedir/vsearch/src
+make -f Makefile
+wait
+cd $homedir
+cp $homedir/vsearch/src/vsearch /bin/
+	else
+echo "Vsearch already installed.  Skipping.
+"
+	fi
+
+## Install bamtools
+	bamtoolstest=`command -v vsearch 2>/dev/null | wc -l`
+	if [[ $bamtoolstest == 0]]; then
+echo "Installing Bamtools.
+"
+cd $homedir/bamtools/
+mkdir build
+cd build
+cmake ..
+make
+cd $homedir
+sed -i "s/\"$/:TARGET/" /etc/environment
+sed -i "s|TARGET$|$homedir/bamtools/bin\"|" /etc/environment
+source /etc/environment
+	else
+echo "Bamtools already installed.  Skipping.
+"
+	fi
+
+## Install HMMER
+	hmmertest=`command -v hmmsearch 2>/dev/null | wc -l`
+	if [[ $hmmertest == 0]]; then
+echo "Installing HMMer
+"
+tar -xzvf $scriptdir/hmmer-3.1b2-linux-intel-x86_64.tar.gz -C /bin/
+cd /bin/hmmer-3.1b2-linux-intel-x86_64/
+./configure
+make
+cd $homedir
+	else
+echo "HMMer already installed.  Skipping.
+"
+	fi
+
+## Install ITSx
+	itsxtest=`command -v ITSx 2>/dev/null | wc -l`
+	if [[ $itsxtest == 0]]; then
+echo "Installing ITSx.
+"
+tar -xzvf $scriptdir/ITSx_1.0.11.tar.gz -C /bin/ 2>/dev/null
+sed -i "s/\"$/:TARGET/" /etc/environment
+sed -i "s|TARGET$|/bin/ITSx_1.0.11\"|" /etc/environment
+source /etc/environment
+	# Fresh hmmpress of ITSx hmm files
+	for hmm in `ls /bin/ITSx_1.0.11/ITSx_db/HMMs/*.hmm`; do
+		hmmpress -f $hmm
+	done
+wait
+cd $homedir
+	else
+echo "ITSx already installed.  Skipping.
+"
+	fi
+
+## Install smalt
+	smalttest=`command -v smalt 2>/dev/null | wc -l`
+	if [[ $smalttest == 0]]; then
+echo "Installing Smalt.
+"
+tar -xzvf $scriptdir/smalt.tar.gz -C /bin/
+smaltdir=`ls /bin/ | grep "smalt"`
+cd /bin/$smaltdir/
+./configure
+make install
+wait
+cd $homedir
+	else
+echo "Smalt already installed.  Skipping.
+"
+	fi
+
+## Install ea-utils
+	eautilstest=`command -v fastq-mcf 2>/dev/null | wc -l`
+	if [[ $eautilstest == 0]]; then
+echo "Installing ea-utils.
+"
+tar -xzvf $scriptdir/ea-utils.1.1.2-806.tar.gz -C /bin/
+cd /bin/ea-utils.1.1.2-806/
+make install
+	else
+echo "ea-utils already installed.  Skipping.
+"
+	fi
+
+## Install task spooler
+	tstest=`command -v ts 2>/dev/null | wc -l`
+	if [[ $tstest == 0]]; then
+echo "Installing Task spooler.
+"
+tar -xzvf $scriptdir/ts-0.7.4.tar.gz -C /bin/
+cd /bin/ts-0.7.4/
+make
+make install
+wait
+cd $homedir
+	else
+echo "Task spooler already installed.  Skipping.
+"
+	fi
 
 ## Upgrading pip
 echo "Upgrading pip version."
 pip install pip --upgrade pip
+wait
 
 ## Install numpy
 echo "Installing Numpy.
 "
-pip install numpy --upgrade
+pip install numpy==1.9.1
 wait
 
 ## Install scipy
 echo "Installing Scipy.
 "
-pip install scipy --upgrade
+pip install scipy==0.15.1
+wait
+
+## Install matplotlib
+echo "Installing Matplotlib.
+"
+pip install matplotlib==1.3.1
 wait
 
 ## Install Cython
@@ -127,29 +291,41 @@ pip install Cython
 ## Install h5py
 echo "Installing h5py.
 "
-pip install h5py
+pip install h5py==2.4.0
+wait
 
 ## Install QIIME
 echo "Installing QIIME.
 "
-pip install qiime
+pip install qiime==1.9.1
 wait
 
+## Install primer prospector and correct the analyze primers library
+tar -xzvf $scriptdir/pprospector-1.0.1.tar.gz -C /bin/
+cd /bin/pprospector-1.0.1/
+python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/
+sed -i "s/\"$/:TARGET/" /etc/environment
+sed -i "s|TARGET$|/bin/pprospector-1.0.1/bin\"|" /etc/environment
+source /etc/environment
+cp akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/
+
+## Report on installations
 echo "
 Installations complete (hopefully).
 
-Need to add the following directory to your PATH variable:
-$homedir/akutils
+Open the dash (super key) and search for \"System Load Monitor.\"
+Start that program and you will see a small load icon appear in the
+upper left screen on the status bar.  Right click and choose
+\"Preferences.\"  Select all of the Monitored Resources options
+and choose your favorite color scheme (I like Traditional).  I also
+like to expand the monitor width to 150 pixels, but this will depend
+on your available monitor space.
 
-Need to go to the following directory and follow README instructions for installation:
-$homedir/vsearch
+Check your QIIME installation with print_qiime_config.py
+If there are any issues, resolve them via the QIIME forum.  You
+should have all the tools you need to fix any problems that arise.
 
-Need to download and compile ea-utils.
-
-Need to compile ITSx, smalt, hmmer, and task-spooler.
-All are already downloaded to $homedir/Downloads/ directory
-
-Probably should reboot computer first.
+Then reboot your system.
 "
 
 exit 0
