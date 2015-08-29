@@ -1,0 +1,85 @@
+Software list for ak_ubuntu_installation.sh
+
+In most cases, software will not be reinstalled
+if already present.
+
+Please cite any software packges that you use in your work and do so properly.
+
+*** Featured software ***
+QIIME (process metagenetic data)
+HMMer (sequence search software)
+ITSx (use HMMer to identify valid ITS domains)
+vsearch (fully functional drop-in replacement for usearch)
+ea-utils (fastq manipulation)
+PrimerProspector (design primers)
+
+*** Internet ***
+Google Chrome (browser)
+fail2ban (locks out ip addresses when incorrect password repeatedly supplied)
+openssh-server (allows remote access)
+
+*** Graphics ***
+Gimp (fully featured image editor)
+Veusz (generate publication-quality graphs and plots)
+
+*** Audio ***
+Clemetine (listen to mp3 while you work)
+
+*** System and file handling ***
+build-essential (dependencies for compiling most software)
+python-dev (python environment)
+python-pip (pip installer)
+perl (perl interpreter)
+zip (compression)
+unzip (compression)
+synaptic (graphical package manager)
+y-ppa-manager (graphical ppa manager)
+git (versioning software)
+gparted (graphical disk partition manager)
+gpart (disk partition utilities)
+indicator-multiload (status bar system load indicator)
+libfreetype6-dev (font engine)
+ttf-mscorefonts-installer (Microsoft core fonts)
+ghc (compiler -- installs only if update is needed)
+gcc (compiler -- installs only if update is needed)
+g++ (compiler -- installs only if update is needed)
+htop (advanced ascii system monitor for terminal)
+acroread (Adobe Reader, from the Precise repository)
+h5utils (hdf5 utilities)
+hdf5-tools (more hdf5 utilities)
+task spooler (command queueing)
+subversion (versioning software)
+cmake (compiler)
+
+*** R software ***
+r-base (R itself)
+r-base-core (more R essentials)
+r-base-dev (more R essentials)
+r-bioc-biocinstaller (useful for adding R libraries)
+
+*** Sequencing data ***
+smalt (alignment software)
+samtools (processing HT sequencing data)
+mafft (alignment software)
+fastx-toolkit (manipulate fastq and fasta files)
+bedtools (HT sequence data file manipulation)
+bowtie2 (alignment software)
+tophat (RNAseq aligner)
+bwa (alignment software)
+cufflinks (RNAseq tools)
+picard-tools (HT sequence data file manipulation)
+abyss (de novo assembler)
+arb (software environment for sequence data)
+fastqc (get metrics on raw fastq files)
+velvet (alignment software)
+ugene (graphical sequence analysis software)
+seaview (graphical sequence analysis software)
+treeview (view and manipulate phylogenetic trees)
+
+*** Github repositories ***
+akutils (facilitate processing miseq data through qiime)
+vsearch (open source replacement for usearch)
+bamtools (sequence data manipulation)
+
+
+
