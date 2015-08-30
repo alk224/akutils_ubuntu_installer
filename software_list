@@ -90,4 +90,5 @@ treeview (view and manipulate phylogenetic trees)
 akutils (facilitate processing miseq data through qiime)
 vsearch (open source replacement for usearch)
 bamtools (sequence data manipulation)
+QIIME_test_data_16S (small data set to test workflows and installation)
 

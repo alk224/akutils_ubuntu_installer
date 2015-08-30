@@ -43,7 +43,7 @@ source('http://bioconductor.org/biocLite.R')
 biocLite()
 
 #if (is.element('DESeq2', installed.packages()[,1]) == FALSE) { 
-biocLite('DESeq2') }
+biocLite('DESeq2') 
 
 if (is.element('metagenomeSeq', installed.packages()[,1]) == FALSE) { 
 biocLite('metagenomeSeq') } 

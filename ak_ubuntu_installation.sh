@@ -6,11 +6,11 @@
 ## License: MIT
 ## Version: 0.0.1
 set -e
-homedir=`pwd`
+homedir=`echo $HOME`
 scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 
 ## Check whether user supplied install argument.  Otherwise display help.
-	if [[ "$1" != "install" ]] && [[ "$1" != "list" ]]; then
+	if [[ "$1" != "install" ]] && [[ "$1" != "list" ]] && [[ "$1" != "test" ]]; then
 echo "
 ak_ubuntu_installation script (v0.0.1), 2015-08-29.  Script to facilitate
 installation of my favorite useful bioinformatics packages on a bare Ubuntu
@@ -23,9 +23,10 @@ There are a few items in the middle of the install that also require user
 input.  The installation should resume once input is provided.
 
 Usage:
-   ./ak_ubuntu_installer/ak_ubuntu_installation.sh (this help screen)
-   ./ak_ubuntu_installer/ak_ubuntu_installation.sh list (list of software)
-   sudo ./ak_ubuntu_installer/ak_ubuntu_installation.sh install (installation)
+   bash ak_ubuntu_installer/ak_ubuntu_installation.sh (this help screen)
+   bash ak_ubuntu_installer/ak_ubuntu_installation.sh list (list of software)
+   bash ak_ubuntu_installer/ak_ubuntu_installation.sh test (test of installed software)
+   sudo bash ak_ubuntu_installer/ak_ubuntu_installation.sh install (installation)
 "
 	exit 0
 	fi
@@ -33,6 +34,12 @@ Usage:
 ## Check whether user supplied list argument.
 	if [[ "$1" == "list" ]]; then
 	less $scriptdir/software_list
+	exit 0
+	fi
+
+## Check whether user supplied test argument.
+	if [[ "$1" == "test" ]]; then
+	bash $scriptdir/ak_ubuntu_QIIME_test.sh
 	exit 0
 	fi
 
@@ -90,21 +97,21 @@ wait
 ## Add additional ppas
 echo "Adding extra ppas.
 "
-mlicount=`ls /etc/apt/sources.list.d/indicator-multiload-stable-daily* | wc -l`
+mlicount=`ls /etc/apt/sources.list.d/indicator-multiload-stable-daily*  2>/dev/null | wc -l`
 if [[ $mlicount == 0 ]]; then
 apt-add-repository -y ppa:indicator-multiload/stable-daily
 fi
-ottocount=`ls /etc/apt/sources.list.d/otto-kesselgulasch-gimp* | wc -l`
+ottocount=`ls /etc/apt/sources.list.d/otto-kesselgulasch-gimp*  2>/dev/null | wc -l`
 if [[ $ottocount == 0 ]]; then
 add-apt-repository -y ppa:otto-kesselgulasch/gimp
 fi
-rppacount=`cat /etc/apt/sources.list | grep "cran.rstudio.com" | wc -l`
+rppacount=`cat /etc/apt/sources.list | grep "cran.rstudio.com"  2>/dev/null | wc -l`
 if [[ $rppacount == 0 ]]; then
 /bin/su -c "echo 'deb http://cran.rstudio.com/bin/linux/ubuntu trusty/' >> /etc/apt/sources.list"
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 fi
 add-apt-repository "deb http://archive.canonical.com/ precise partner"
-yppacount=`ls /etc/apt/sources.list.d/webupd8team-y-ppa-manager* | wc -l`
+yppacount=`ls /etc/apt/sources.list.d/webupd8team-y-ppa-manager*  2>/dev/null | wc -l`
 if [[ $yppacount == 0 ]]; then
 add-apt-repository -y ppa:webupd8team/y-ppa-manager
 fi
@@ -118,23 +125,23 @@ wait
 #echo "Downloading special programs.
 #"
 #
-#	ITSxcount=`ls $homedir/Downloads/ITSx_*.gz | wc -l`
+#	ITSxcount=`ls $homedir/Downloads/ITSx_*.gz  2>/dev/null | wc -l`
 #	if [[ $ITSxcount == 0 ]]; then
 #	wget http://microbiology.se/sw/ITSx_1.0.11.tar.gz -P $homedir/Downloads/
 #	fi
 #
-#	smaltcount=`ls $homedir/Downloads/smalt*.gz | wc -l`
+#	smaltcount=`ls $homedir/Downloads/smalt*.gz  2>/dev/null | wc -l`
 #	if [[ $smaltcount == 0 ]]; then
 #	wget http://sourceforge.net/projects/smalt/files/latest/download -P $homedir/Downloads/
 #	mv $homedir/Downloads/download $homedir/Downloads/smalt.tar.gz
 #	fi
 #
-#	hmmcount=`ls $homedir/Downloads/hmmer-3.1b2*.gz | wc -l`
+#	hmmcount=`ls $homedir/Downloads/hmmer-3.1b2*.gz  2>/dev/null | wc -l`
 #	if [[ $hmmcount == 0 ]]; then
 #	wget http://selab.janelia.org/software/hmmer3/3.1b2/hmmer-3.1b2-linux-intel-x86_64.tar.gz -P $homedir/Downloads/
 #	fi
 #
-#	tscount=`ls $homedir/Downloads/ts-0.7.4*.gz | wc -l`
+#	tscount=`ls $homedir/Downloads/ts-0.7.4*.gz  2>/dev/null | wc -l`
 #	if [[ $tscount == 0 ]]; then
 #	wget http://vicerveza.homeunix.net/~viric/soft/ts/ts-0.7.4.tar.gz -P $homedir/Downloads/
 #	fi
@@ -143,7 +150,7 @@ wait
 ## Install programs from Ubuntu repositories
 echo "Installing programs from repositories.
 "
-apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-bioc-biocinstaller r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat bwa cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev
+apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-bioc-biocinstaller r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat bwa cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk
 wait
 
 echo "Cleaning up ubuntu packages.
@@ -171,6 +178,9 @@ if [[ ! -d $homedir/bamtools ]]; then
 git clone git://github.com/pezmaster31/bamtools.git
 fi
 wait
+if [[ ! -d $homedir/QIIME_test_data_16S ]]; then
+git clone https://github.com/alk224/QIIME_test_data_16S.git
+fi
 
 ## Add akutils to path
 echo "Adding akutils repository to path (/etc/environment).
@@ -290,31 +300,34 @@ tar -xzvf $scriptdir/ts-0.7.4.tar.gz -C /bin/
 cd /bin/ts-0.7.4/
 make
 make install
-wait
 cd $homedir
-		emailtest=`grep "TS_MAILTO" /etc/environment | wc -l`
-		if [[ $emailtest == 1 ]]; then
-		sed -i '/TS_MAILTO/d' /etc/environment
-		fi
-		lighttest=`grep "tslight" $homedir/.bashrc | wc -l`
-		if [[ $lighttest == 1 ]]; then
-		sed -i '/tslight/d' $homedir/.bashrc
-		fi
-		heavytest=`grep "tsheavy" $homedir/.bashrc | wc -l`
-		if [[ $heavytest == 1 ]]; then
-		sed -i '/tsheavy/d' $homedir/.bashrc
-		fi
-
-/bin/su -c "echo 'TS_MAILTO="$email"' >> /etc/environment"
-/bin/su -c "echo 'tsheavy -S 1' >> /etc/environment"
-/bin/su -c "echo 'tslight -S 3' >> /etc/environment"
-/bin/su -c "echo '$host' > /etc/hostname"
-/bin/su -c "echo 'alias tsheavy="TS_SOCKET=/tmp/socket.ts.heavy ts"' >> $homedir/.bashrc"
-/bin/su -c "echo 'alias tslight="TS_SOCKET=/tmp/socket.ts.light ts"' >> $homedir/.bashrc"
+wait
 	else
 echo "Task spooler already installed.  Skipping.
 "
 	fi
+
+## Configure task spooler
+		emailtest=`grep "TS_MAILTO" /etc/environment  2>/dev/null | wc -l`
+		if [[ $emailtest == 1 ]]; then
+		sed -i '/TS_MAILTO/d' /etc/environment
+		/bin/su -c "echo 'TS_MAILTO="$email"' >> /etc/environment"
+		/bin/su -c "echo '$host' > /etc/hostname"
+		fi
+		lighttest=`grep "tslight" $homedir/.bashrc  2>/dev/null | wc -l`
+		if [[ $lighttest == 1 ]]; then
+		sed -i '/tslight/d' $homedir/.bashrc
+		/bin/su -c "echo 'alias tslight="TS_SOCKET=/tmp/socket.ts.light ts"' >> $homedir/.bashrc"
+		/bin/su -c "echo 'tslight -S 3' >> /etc/environment"
+		fi
+		heavytest=`grep "tsheavy" $homedir/.bashrc  2>/dev/null | wc -l`
+		if [[ $heavytest == 1 ]]; then
+		sed -i '/tsheavy/d' $homedir/.bashrc
+		/bin/su -c "echo 'alias tsheavy="TS_SOCKET=/tmp/socket.ts.heavy ts"' >> $homedir/.bashrc"
+		/bin/su -c "echo 'tsheavy -S 1' >> /etc/environment"
+		fi
+source ~/.bashrc
+source /etc/environment
 
 ## Upgrading pip
 pipver=`python -c "import pip; print pip.__version__" 2>/dev/null`
@@ -394,7 +407,7 @@ echo "Installing QIIME base v1.9.1.
 pip install qiime==1.9.1
 wait
 else
-echo "QIIME already correct version (1.9.1).
+echo "QIIME base install already correct version (1.9.1).
 "
 fi
 
