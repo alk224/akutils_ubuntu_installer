@@ -57,6 +57,15 @@ r-base (R itself)
 r-base-core (more R essentials)
 r-base-dev (more R essentials)
 r-bioc-biocinstaller (useful for adding R libraries)
+ape
+vegan
+biom
+randomForest
+RColorBrewer
+optparse
+DESeq2
+metagenomeSeq
+...and many more
 
 *** Sequencing data ***
 smalt (alignment software)
