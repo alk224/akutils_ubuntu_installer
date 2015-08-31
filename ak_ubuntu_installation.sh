@@ -74,7 +74,7 @@ echo ""
 ## Install if test failed
 echo "Installing dependencies for Google Chrome install.
 "
-	apt-get install libxss1 libappindicator1 libindicator7
+	apt-get -y install libxss1 libappindicator1 libindicator7
 wait
 echo "Downloading Google Chrome.
 "
@@ -150,6 +150,7 @@ wait
 ## Install programs from Ubuntu repositories
 echo "Installing programs from repositories.
 "
+export DEBIAN_FRONTEND=noninteractive
 apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk
 wait
 
