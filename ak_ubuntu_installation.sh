@@ -6,7 +6,8 @@
 ## License: MIT
 ## Version: 0.0.1
 #set -e
-homedir=`echo $HOME`
+userid=`echo $USER`
+homedir=(/home/$userid/)
 scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 
 ## Check whether user supplied install argument.  Otherwise display help.
@@ -173,17 +174,17 @@ apt-get -y update
 echo "Cloning github repositories.
 "
 if [[ ! -d $homedir/akutils ]]; then
-git clone https://github.com/alk224/akutils.git 2>/dev/null
+sudo -u $userid git clone https://github.com/alk224/akutils.git 2>/dev/null
 fi
 if [[ ! -d $homedir/vsearch ]]; then
-git clone https://github.com/torognes/vsearch.git 2>/dev/null
+sudo -u $userid git clone https://github.com/torognes/vsearch.git 2>/dev/null
 fi
 if [[ ! -d $homedir/bamtools ]]; then
-git clone git://github.com/pezmaster31/bamtools.git 2>/dev/null
+sudo -u $userid git clone git://github.com/pezmaster31/bamtools.git 2>/dev/null
 fi
 wait
 if [[ ! -d $homedir/QIIME_test_data_16S ]]; then
-git clone https://github.com/alk224/QIIME_test_data_16S.git 2>/dev/null
+sudo -u $userid git clone https://github.com/alk224/QIIME_test_data_16S.git 2>/dev/null
 fi
 
 ## Add akutils to path
