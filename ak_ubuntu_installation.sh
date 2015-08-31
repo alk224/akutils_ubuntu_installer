@@ -6,7 +6,7 @@
 ## License: MIT
 ## Version: 0.0.1
 #set -e
-userid=`echo $USER`
+userid=`echo $SUDO_USER`
 homedir=(/home/$userid/)
 scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 
@@ -177,21 +177,21 @@ apt-get -y update
 echo "Cloning github repositories.
 "
 if [[ ! -d $homedir/akutils ]]; then
-git clone https://github.com/alk224/akutils.git #2>/dev/null
-chown -R $userid:$userid $homedir/akutils
+sudo -u $userid git clone https://github.com/alk224/akutils.git #2>/dev/null
+#chown -R $userid:$userid $homedir/akutils
 fi
 if [[ ! -d $homedir/vsearch ]]; then
-git clone https://github.com/torognes/vsearch.git #2>/dev/null
-chown -R $userid:$userid $homedir/vsearch
+sudo -u $userid git clone https://github.com/torognes/vsearch.git #2>/dev/null
+#chown -R $userid:$userid $homedir/vsearch
 fi
 if [[ ! -d $homedir/bamtools ]]; then
-git clone git://github.com/pezmaster31/bamtools.git #2>/dev/null
-chown -R $userid:$userid $homedir/bamtools
+sudo -u $userid git clone git://github.com/pezmaster31/bamtools.git #2>/dev/null
+#chown -R $userid:$userid $homedir/bamtools
 fi
 wait
 if [[ ! -d $homedir/QIIME_test_data_16S ]]; then
-git clone https://github.com/alk224/QIIME_test_data_16S.git #2>/dev/null
-chown -R $userid:$userid $homedir/QIIME_test_data_16S
+sudo -u $userid git clone https://github.com/alk224/QIIME_test_data_16S.git #2>/dev/null
+#chown -R $userid:$userid $homedir/QIIME_test_data_16S
 fi
 
 ## Add akutils to path
