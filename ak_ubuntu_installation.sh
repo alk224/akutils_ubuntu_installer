@@ -150,7 +150,7 @@ wait
 ## Install programs from Ubuntu repositories
 echo "Installing programs from repositories.
 "
-apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-bioc-biocinstaller r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat bwa cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk
+apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk
 wait
 
 echo "Cleaning up ubuntu packages.
@@ -183,10 +183,13 @@ git clone https://github.com/alk224/QIIME_test_data_16S.git
 fi
 
 ## Add akutils to path
+akutilstest=`grep "$homedir/akutils" /etc/environment 2>/dev/null | wc -l`
+	if [[ $akutilstest == 0 ]]; then
 echo "Adding akutils repository to path (/etc/environment).
 "
 sed -i "s/\"$/:TARGET/" /etc/environment
 sed -i "s|TARGET$|$homedir/akutils\"|" /etc/environment
+	fi
 source /etc/environment
 
 ## Install vsearch
@@ -205,7 +208,7 @@ echo "Vsearch already installed.  Skipping.
 	fi
 
 ## Install bamtools
-	bamtoolstest=`command -v vsearch 2>/dev/null | wc -l`
+	bamtoolstest=`command -v bamtools 2>/dev/null | wc -l`
 	if [[ $bamtoolstest == 0 ]]; then
 echo "Installing Bamtools.
 "
@@ -399,6 +402,10 @@ echo "h5py already correct version (2.4.0).
 "
 fi
 
+## Update R packages
+sudo Rscript $scriptdir/r_updates.r
+wait
+
 ## Install QIIME base
 qiimever=`python -c "import qiime; print qiime.__version__" 2>/dev/null`
 if [[ $qiimever != 1.9.1 ]]; then
@@ -412,25 +419,23 @@ echo "QIIME base install already correct version (1.9.1).
 fi
 
 ## Install primer prospector and correct the analyze primers library
-	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
-	if [[ $pptest == 0 ]]; then
-echo "Installing Primer Prospector.
-"
-tar -xzvf $scriptdir/pprospector-1.0.1.tar.gz -C /bin/
-cd /bin/pprospector-1.0.1/
-python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/
-sed -i "s/\"$/:TARGET/" /etc/environment
-sed -i "s|TARGET$|/bin/pprospector-1.0.1/bin\"|" /etc/environment
-source /etc/environment
-cp $homedir/akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/
-else
-echo "Primer prospector already installed.  Skipping.
-"
-	fi
+#	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
+#	if [[ $pptest == 0 ]]; then
+#echo "Installing Primer Prospector.
+#"
+#tar -xzvf $scriptdir/pprospector-1.0.1.tar.gz -C /bin/
+#cd /bin/pprospector-1.0.1/
+#python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/
+#sed -i "s/\"$/:TARGET/" /etc/environment
+#sed -i "s|TARGET$|/bin/pprospector-1.0.1/bin\"|" /etc/environment
+#source /etc/environment
+#cp $homedir/akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/
+#else
+#echo "Primer prospector already installed.  Skipping.
+#"
+#	fi
 
 ## Run QIIME deploy
-Rscript $scriptdir/r_updates.r
-wait
 if [[ ! -d $homedir/qiime-deploy ]]; then
 git clone https://github.com/qiime/qiime-deploy.git
 fi
@@ -439,9 +444,15 @@ git clone git://github.com/qiime/qiime-deploy-conf.git
 fi
 wait
 cd qiime-deploy/
-python qiime-deploy.py $homedir/qiime_software/ -f $homedir/qiime-deploy-conf/qiime-1.9.1/qiime.conf --force-remove-failed-dirs
+python qiime-deploy.py $homedir/qiime_1.9.1/ -f $scriptdir/qiime.1.9.1.custom.conf --force-remove-failed-dirs
 wait
+
+## Fix broken analyze_primers.py
+cp $homedir/akutils/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py
+
+## Source files and test qiime install
 source $homedir/.bashrc
+source $homedir/qiime_1.9.1/activate.sh
 print_qiime_config.py -tf
 
 ## Report on installations

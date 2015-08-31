@@ -33,17 +33,14 @@ install.packages('randomForest') }
 if (is.element('vegan', installed.packages()[,1]) == FALSE) { 
 install.packages('vegan') }
 
-##list.of.packages <- c('ape', 'biom', 'optparse', 'RColorBrewer', 'randomForest', 'vegan')
-##new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"Package"])]
-##if(length(new.packages)) install.packages(new.packages)
-
-
 ## BiocLite installs
 source('http://bioconductor.org/biocLite.R')
-biocLite()
 
-#if (is.element('DESeq2', installed.packages()[,1]) == FALSE) { 
-biocLite('DESeq2') 
+biocLite()
+biocLite('BiocUpgrade')
+
+if (is.element('DESeq2', installed.packages()[,1]) == FALSE) { 
+biocLite('DESeq2') }
 
 if (is.element('metagenomeSeq', installed.packages()[,1]) == FALSE) { 
 biocLite('metagenomeSeq') } 
