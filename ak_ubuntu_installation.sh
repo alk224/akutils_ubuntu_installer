@@ -405,7 +405,7 @@ echo "h5py already correct version (2.4.0).
 fi
 
 ## Update R packages
-sudo Rscript $scriptdir/r_updates.r
+Rscript $scriptdir/r_updates.r
 wait
 
 ## Install QIIME base
