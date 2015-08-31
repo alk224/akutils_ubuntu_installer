@@ -27,4 +27,5 @@ sudo bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh install
 ***** OTHER FUNCTIONS *****
 bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh (print help screen)
 bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh list (list of software to be installed)
+bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh test (test of installed software via QIIME)
 
