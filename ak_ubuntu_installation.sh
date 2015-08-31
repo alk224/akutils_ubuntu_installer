@@ -149,12 +149,15 @@ wait
 #wait
 
 ## Install programs from Ubuntu repositories
-echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-
 echo "Installing programs from repositories.
 "
 export DEBIAN_FRONTEND=noninteractive
-apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ttf-mscorefonts-installer ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk --quiet
+apt-get -y install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted indicator-multiload libfreetype6-dev ghc gcc g++ htop acroread h5utils hdf5-tools r-base r-base-core r-base-dev r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk --quiet
+wait
+
+## Install microsoft core fonts
+echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
+apt-get -y install ttf-mscorefonts-installer
 wait
 
 echo "Cleaning up ubuntu packages.
@@ -174,17 +177,21 @@ apt-get -y update
 echo "Cloning github repositories.
 "
 if [[ ! -d $homedir/akutils ]]; then
-sudo -u $userid git clone https://github.com/alk224/akutils.git 2>/dev/null
+git clone https://github.com/alk224/akutils.git #2>/dev/null
+chown -R $userid:$userid $homedir/akutils
 fi
 if [[ ! -d $homedir/vsearch ]]; then
-sudo -u $userid git clone https://github.com/torognes/vsearch.git 2>/dev/null
+git clone https://github.com/torognes/vsearch.git #2>/dev/null
+chown -R $userid:$userid $homedir/vsearch
 fi
 if [[ ! -d $homedir/bamtools ]]; then
-sudo -u $userid git clone git://github.com/pezmaster31/bamtools.git 2>/dev/null
+git clone git://github.com/pezmaster31/bamtools.git #2>/dev/null
+chown -R $userid:$userid $homedir/bamtools
 fi
 wait
 if [[ ! -d $homedir/QIIME_test_data_16S ]]; then
-sudo -u $userid git clone https://github.com/alk224/QIIME_test_data_16S.git 2>/dev/null
+git clone https://github.com/alk224/QIIME_test_data_16S.git #2>/dev/null
+chown -R $userid:$userid $homedir/QIIME_test_data_16S
 fi
 
 ## Add akutils to path
