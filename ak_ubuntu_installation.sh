@@ -474,6 +474,9 @@ print_qiime_config.py -tf
 echo "
 Installations complete (hopefully).
 
+A single failure for the QIIME tests is normal since you need to provide
+your own binary for usearch (see details on qiime website).
+
 Open the dash (super key) and search for \"System Load Monitor.\"
 Start that program and you will see a small load icon appear in the
 upper left screen on the status bar.  Right click and choose
