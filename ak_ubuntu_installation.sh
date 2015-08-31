@@ -254,6 +254,9 @@ tar -xzvf $scriptdir/ITSx_1.0.11.tar.gz -C /bin/ 2>/dev/null
 sed -i "s/\"$/:TARGET/" /etc/environment
 sed -i "s|TARGET$|/bin/ITSx_1.0.11\"|" /etc/environment
 source /etc/environment
+	if [[ -f /bin/ITSx_1.0.11/ITSx_db/HMMs/N.hmm ]]; then
+	rm /bin/ITSx_1.0.11/ITSx_db/HMMs/N.hmm
+	fi
 	# Fresh hmmpress of ITSx hmm files
 	for hmm in `ls /bin/ITSx_1.0.11/ITSx_db/HMMs/*.hmm`; do
 		hmmpress -f $hmm
