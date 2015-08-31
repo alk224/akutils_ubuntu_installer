@@ -21,8 +21,10 @@ Issue the following commands:
 
 cd
 sudo apt-get install git
-https://github.com/alk224/akutils_ubuntu_installer.gitsudo ./ak_ubuntu_installer/ak_ubuntu_installation.sh install
+git clone https://github.com/alk224/akutils_ubuntu_installer.git
+sudo bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh install
+
 ***** OTHER FUNCTIONS *****
-./ak_ubuntu_installer/ak_ubuntu_installation.sh (print help screen)
-./ak_ubuntu_installer/ak_ubuntu_installation.sh list (list of software to be installed)
+bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh (print help screen)
+bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh list (list of software to be installed)
 
