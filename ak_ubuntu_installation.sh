@@ -173,17 +173,17 @@ apt-get -y update
 echo "Cloning github repositories.
 "
 if [[ ! -d $homedir/akutils ]]; then
-git clone https://github.com/alk224/akutils.git
+git clone https://github.com/alk224/akutils.git 2>/dev/null
 fi
 if [[ ! -d $homedir/vsearch ]]; then
-git clone https://github.com/torognes/vsearch.git
+git clone https://github.com/torognes/vsearch.git 2>/dev/null
 fi
 if [[ ! -d $homedir/bamtools ]]; then
-git clone git://github.com/pezmaster31/bamtools.git
+git clone git://github.com/pezmaster31/bamtools.git 2>/dev/null
 fi
 wait
 if [[ ! -d $homedir/QIIME_test_data_16S ]]; then
-git clone https://github.com/alk224/QIIME_test_data_16S.git
+git clone https://github.com/alk224/QIIME_test_data_16S.git 2>/dev/null
 fi
 
 ## Add akutils to path
