@@ -5,7 +5,7 @@
 ## Date: 2015-08-29
 ## License: MIT
 ## Version: 0.0.1
-set -e
+#set -e
 homedir=`echo $HOME`
 scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 
