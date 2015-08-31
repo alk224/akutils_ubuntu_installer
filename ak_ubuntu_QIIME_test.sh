@@ -8,6 +8,8 @@ scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 ## Echo test start
 echo "
 Beginning tests of QIIME installation.
+All tests take ~20 minutes on a system
+with 24 cores.
 "
 
 ## Check for test data
@@ -352,7 +354,8 @@ echo "$runtime
 ## Test of otu_picking_workflow.sh command
 	res1=$(date +%s.%N)
 	echo "Test of otu_picking_workflow.sh command.
-This test takes a while.  Please be patient.
+This test takes a while.  Please be patient
+(~13 minutes needed on a system with 24 cores).
 	"
 	echo "
 ***** Test of otu_picking_workflow.sh command.
@@ -464,7 +467,8 @@ echo "$runtime
 ## Test of cdiv_graphs_and_stats_workflow.sh command
 	res1=$(date +%s.%N)
 	echo "Test of cdiv_graphs_and_stats_workflow.sh command.
-This test takes a while.  Please be patient.
+This test takes a while.  Please be patient
+(~7 minutes needed on a system with 24 cores).
 	"
 	echo "
 ***** Test of cdiv_graphs_and_stats_workflow.sh command.
