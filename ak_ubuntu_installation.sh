@@ -342,7 +342,6 @@ echo "Task spooler already installed.  Skipping.
 
 		lighttest=`grep "tslight" $homedir/.bashrc  2>/dev/null | wc -l`
 		if [[ $lighttest -ge 1 ]]; then
-		echo "Configuring light queue for Task spooler."
 		sed -i '/tslight/d' $homedir/.bashrc 2>/dev/null
 		sed -i '/tslight/d' /etc/environment 2>/dev/null
 		fi
@@ -351,7 +350,6 @@ echo "Task spooler already installed.  Skipping.
 
 		heavytest=`grep "tsheavy" $homedir/.bashrc  2>/dev/null | wc -l`
 		if [[ $heavytest -ge 1 ]]; then
-		echo "Configuring heavy queue for Task spooler."
 		sed -i '/tsheavy/d' $homedir/.bashrc 2>/dev/null
 		sed -i '/tsheavy/d' /etc/environment 2>/dev/null
 		fi
