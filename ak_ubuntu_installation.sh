@@ -162,13 +162,13 @@ wait
 cd ~/Downloads/
 wget -c http://ardownload.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
 export DEBIAN_FRONTEND=noninteractive
-sudo dpkg -i AdbeRdr9.5.5-1_i386linux_enu.deb
+sudo dpkg -i AdbeRdr9.5.5-1_i386linux_enu.deb 2>/dev/null
 wait
 cd
 
 ## Install Microsoft core fonts
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-apt-get -yfm install ttf-mscorefonts-installer
+apt-get -yfm install ttf-mscorefonts-installer 2>/dev/null
 wait
 
 echo "Cleaning up ubuntu packages.
