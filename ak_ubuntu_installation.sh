@@ -155,8 +155,8 @@ apt-get -yfm install htop indicator-multiload
 wait
 apt-get -yfm install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted libfreetype6-dev ghc gcc g++ h5utils hdf5-tools r-base r-base-core r-base-dev r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk sendmail --quiet --force-yes
 wait
-apt-get -yfm install libgtk2.0-0:i386 libnss3-1d:i386 libnspr4-0d:i386 lib32nss-mdns libxml2:i386 libxslt1.1:i386 libstdc++6:i386
-wait
+#apt-get -yfm install libgtk2.0-0:i386 libnss3-1d:i386 libnspr4-0d:i386 lib32nss-mdns libxml2:i386 libxslt1.1:i386 libstdc++6:i386
+#wait
 
 ## Install Adobe reader 9
 cd ~/Downloads/
