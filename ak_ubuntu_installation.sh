@@ -333,19 +333,19 @@ echo "Task spooler already installed.  Skipping.
 
 ## Configure task spooler
 		emailtest=`grep "TS_MAILTO" /etc/environment  2>/dev/null | wc -l`
-		if [[ $emailtest == 1 ]]; then
+		if [[ $emailtest == 0 ]]; then
 		sed -i '/TS_MAILTO/d' /etc/environment
 		/bin/su -c "echo 'TS_MAILTO="$email"' >> /etc/environment"
 		/bin/su -c "echo '$host' > /etc/hostname"
 		fi
 		lighttest=`grep "tslight" $homedir/.bashrc  2>/dev/null | wc -l`
-		if [[ $lighttest == 1 ]]; then
+		if [[ $lighttest == 0 ]]; then
 		sed -i '/tslight/d' $homedir/.bashrc
 		/bin/su -c "echo 'alias tslight="TS_SOCKET=/tmp/socket.ts.light ts"' >> $homedir/.bashrc"
 		/bin/su -c "echo 'tslight -S 3' >> /etc/environment"
 		fi
 		heavytest=`grep "tsheavy" $homedir/.bashrc  2>/dev/null | wc -l`
-		if [[ $heavytest == 1 ]]; then
+		if [[ $heavytest == 0 ]]; then
 		sed -i '/tsheavy/d' $homedir/.bashrc
 		/bin/su -c "echo 'alias tsheavy="TS_SOCKET=/tmp/socket.ts.heavy ts"' >> $homedir/.bashrc"
 		/bin/su -c "echo 'tsheavy -S 1' >> /etc/environment"
