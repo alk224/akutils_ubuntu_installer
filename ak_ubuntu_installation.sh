@@ -333,25 +333,28 @@ echo "Task spooler already installed.  Skipping.
 
 ## Configure task spooler
 		emailtest=`grep "TS_MAILTO" /etc/environment  2>/dev/null | wc -l`
-		if [[ $emailtest == 0 ]]; then
-		sed -i '/TS_MAILTO/d' /etc/environment
+		if [[ $emailtest -ge 1 ]]; then
+		sed -i '/TS_MAILTO/d' /etc/environment 2>/dev/null
+		fi
 		/bin/su -c "echo 'TS_MAILTO="$email"' >> /etc/environment"
 		/bin/su -c "echo '$host' > /etc/hostname"
-		fi
+
 		lighttest=`grep "tslight" $homedir/.bashrc  2>/dev/null | wc -l`
-		if [[ $lighttest == 0 ]]; then
-		sed -i '/tslight/d' $homedir/.bashrc
+		if [[ $lighttest -ge 1 ]]; then
+		sed -i '/tslight/d' $homedir/.bashrc 2>/dev/null
+		fi
 		echo 'alias tslight="TS_SOCKET=/tmp/socket.ts.light ts"' >> $homedir/.bashrc
 		/bin/su -c "echo 'tslight -S 3' >> /etc/environment"
-		fi
+
 		heavytest=`grep "tsheavy" $homedir/.bashrc  2>/dev/null | wc -l`
-		if [[ $heavytest == 0 ]]; then
-		sed -i '/tsheavy/d' $homedir/.bashrc
+		if [[ $heavytest -ge 1 ]]; then
+		sed -i '/tsheavy/d' $homedir/.bashrc 2>/dev/null
+		fi
 		echo 'alias tsheavy="TS_SOCKET=/tmp/socket.ts.heavy ts"' >> $homedir/.bashrc
 		/bin/su -c "echo 'tsheavy -S 1' >> /etc/environment"
-		fi
-source ~/.bashrc
+
 source /etc/environment
+source $homedir/.bashrc
 
 ## Upgrading pip
 pipver=`python -c "import pip; print pip.__version__" 2>/dev/null`
@@ -472,8 +475,8 @@ wait
 cp $homedir/akutils/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py
 
 ## Source files and test qiime install
-source $homedir/.bashrc
 source $homedir/qiime_1.9.1/activate.sh
+source $homedir/.bashrc
 print_qiime_config.py -tf
 
 ## Report on installations
