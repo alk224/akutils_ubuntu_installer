@@ -111,10 +111,6 @@ if [[ $rppacount == 0 ]]; then
 /bin/su -c "echo 'deb http://cran.rstudio.com/bin/linux/ubuntu trusty/' >> /etc/apt/sources.list"
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 fi
-precisecount=`grep "precise partner" /etc/apt/sources.list | wc -l`
-if [[ $precisecount == 0 ]]; then
-add-apt-repository "deb http://archive.canonical.com/ precise partner"
-fi
 yppacount=`ls /etc/apt/sources.list.d/webupd8team-y-ppa-manager*  2>/dev/null | wc -l`
 if [[ $yppacount == 0 ]]; then
 add-apt-repository -y ppa:webupd8team/y-ppa-manager
@@ -157,16 +153,22 @@ echo "Installing programs from repositories.
 export DEBIAN_FRONTEND=noninteractive
 apt-get -yfm install htop indicator-multiload
 wait
-apt-get -yfm install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted libfreetype6-dev ghc gcc g++ h5utils hdf5-tools r-base r-base-core r-base-dev r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk --quiet --force-yes
+apt-get -yfm install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted libfreetype6-dev ghc gcc g++ h5utils hdf5-tools r-base r-base-core r-base-dev r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk sendmail --quiet --force-yes
 wait
 apt-get -yfm install libgtk2.0-0:i386 libnss3-1d:i386 libnspr4-0d:i386 lib32nss-mdns libxml2:i386 libxslt1.1:i386 libstdc++6:i386
 wait
-apt-get -yfm install acroread --quiet --force-yes
-wait
 
-## Install microsoft core fonts
+## Install Adobe reader 9
+cd ~/Downloads/
+wget -c http://ardownload.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9.5.5-1_i386linux_enu.deb
+export DEBIAN_FRONTEND=noninteractive
+export DEBIAN_FRONTEND=noninteractive
+wait
+cd
+
+## Install Microsoft core fonts
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
-apt-get -y install ttf-mscorefonts-installer
+apt-get -yfm install ttf-mscorefonts-installer
 wait
 
 echo "Cleaning up ubuntu packages.
@@ -176,14 +178,6 @@ sudo apt-get -y autoremove
 sudo apt-get -y autoclean
 sudo apt-get -y clean
 wait
-
-
-## Remove precise repository
-precisecount=`grep "precise partner" /etc/apt/sources.list | wc -l`
-if [[ $precisecount -ge 1 ]]; then
-add-apt-repository -r "deb http://archive.canonical.com/ precise partner"
-fi
-apt-get -y update
 
 ## Clone github repositories
 echo "Cloning github repositories.
