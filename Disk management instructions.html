@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<head>
+<meta charset="UTF-8">
+<title>Disk management instructions</title>
+<div class="main-wrapper clearfix">
+<div id="page">
+<div class="detail-page cblayout">
+<div class="content-area single-content-area">
+<div id="content" class="content content-single">
+<div class="single-content">
+<article id="Disk management" class="disk management raid raid1 raid5 hdd sdd disks gparted mdadm">
+<div class="post-box">
+<header>
+<hr>
+<div class="post-title clearfix">
+<time datetime="2015-09-02" title="September 2, 2015">
+<span class="post-date">2</span>
+<span class="post-month uppercase">September</span>
+<span class="post-year uppercase">2015</span>
+</time>
+<div class="title-wrap">
+<h2 class="title single-title title20">
+Disk management for your Ubuntu-based production system </h2>
+<span class="post-author">Written by Andrew Krohn</span>
+</div>
+<div class="post-avtar">
+</div>
+</div>
+<body>
+<hr>
+<p>   Disk management is an annoying reality that must not be ignored on your bioinformatic production system. Disks can and do fail, and you must know what to do in most situations. As with most computer problems, if you aren't certain, do some searching first for someone who had the same problem as you and has already solved your problem. This guide will help you with some basic maintenance tasks regarding your system disk and internal Linux software RAID.</p>
+<p>   Essential software to know:</p>
+<ul><li><a href="https://apps.ubuntu.com/cat/applications/gnome-disk-utility/">disks</a> (bring up from dash, general info about disks)</li>
+<li><a href="http://gparted.org/">gparted</a> (start from terminal with <strong>sudo gparted</strong>, very powerful and therefore dangerous, yet essential)</li>
+<li><a href="http://linux.die.net/man/8/mdadm">mdadm</a> (use from command line, usually with sudo for managing multidisk software RAID arrays)</li></ul>
+<hr>
+<h2 class="heading1">Disks </h2>
+<p>   Bring up the disks utility via the Unity dash (hit "super" key which is the Windows key on a normal keyboard or the fan key on an Apple keyboard), and type disks. This is the stock disk utility that comes with Ubuntu and performs basic functions, but it doesn't produce GPT partition tables (MBR only), and can't create a partition larger than 2TB. But it gives you a nice graphical output displaying the status of each of your drives. Of particular interest here is the "Assessment" shown just below the serial number when you select a drive from the left-hand pane. If your disk is OK, then worry not. If your disk has bad sectors, you might want to make sure you have at least one spare drive on hand because this one could fail at any time.  If your disk has just a few bad sectors, it may have quite a bit of life left, but if it has many bad sectors (>1000), you should preemptively replace it before it fails at a more crucial moment.</p>
+<hr>
+<h2 class="heading1">gparted </h2>
+<p>   This is a graphical front end for the command line program "parted." You will ask it to do sometimes terrible things to your drives (erase, format, repartition), so it must be run as superuser. Open a terminal with <strong>ctrl-alt-t</strong> and then type:</p>
+<pre>
+sudo gparted
+</pre>
+<p>   There will be much scrolling of unimportant nonsense in the terminal (ignore it) and the gparted window will open. There is a drop-down menu in the top right of the screen from which you can select each of your individual drives (will be named sda, sdb etc), as well as any assembled RAID disks (named md0, md1 etc). If you have a new disk that needs to be formated, particularly if it is large, you should need to partition the drive first. From the "Device" menu, select "Create partition table," and choose the GPT option. This will allow the disk to be recognized by the system, but it is still not useable. Next you need to format your partition. Since this is a modern Linux system, you should choose ext4 file system.</p>
+<p>   Gparted also offers a "Data rescue" option from the "Device" menu. It is very slow, but may in fact recover your data if something horrible should happen. I hope you never have to try, but you can search the web for other people's success stories to help you feel better while you wait to find out if it works.</p>
+<hr>
+<h2 class="heading1">mdadm </h2>
+<p>   You will be tempted sometimes to try to find a graphical front end for RAID management. The best I have found is <a href="http://www.webmin.com/">webmin</a>, but I always come back to mdadm because everything I have tried still does things that leave me dissatisfied. mdadm is daunting, but simple, and works very well to manage your Linux software RAID devices. First, here is a link I have found very helpful in working with mdadm, though I'm sure there are many others. Please note that fdisk will try to use MBR partitioning and therefore won't handle your >2TB disks as you might prefer, so make sure to use gparted instead for the fdisk steps.</p>
+<p><a href="http://xmodulo.com/create-software-raid1-array-mdadm-linux.html">How to create a software RAID-1 array with mdadm on Linux</a></p>
+<p>   If you have spare disks (NAS or server quality, equivalent size) and SATA ports and you want to create a new software RAID, follow a few simple steps. First, partition your each of your drives with GPT structure but do not format. Then make note (easy from gparted) of which devices are your formated partitions. This will be something like sdb and sdc.  Assuming that is correct (change as appropriate for your system), issue the following command to create a RAID1 with these two disks:</p>
+<pre>
+sudo mdadm -Cv /dev/md0 -l1 -n2 /dev/sdb /dev/sdc
+</pre>
+<p>   You will be prompted to respond to the question "Continue creating array?" Answer "y" to proceed. This will initiate initial syncing of the RAID devices, even if there is no data to sync. The larger the disks used, and the size of the entire array, the longer this will take.  You can check progress of the "resync" process by issuing:</p>
+<pre>
+cat /proc/mdstat
+</pre>
+<p>   In fact, this is a good use of the <strong>watch</strong> command. This will keep refreshing the output from the above command every 2 seconds, effectively turning your terminal window into a progress bar:</p>
+<pre>
+watch cat /proc/mdstat
+</pre>
+<p>   Of particular interest here is the speed which is listed at the end of the last line. Depending on your system configuration you may benefit from increasing the system speed limits. You can check the existing limits with:</p>
+<pre>
+cat /proc/sys/dev/raid/speed_limit_min
+cat /proc/sys/dev/raid/speed_limit_max
+</pre>
+<p>   I like to increase the default values (1000 and 200000, respectively) to 20000 and 1000000.  You will need to use sudo and nano to change the values in these files:</p>
+<pre>
+sudo nano /proc/sys/dev/raid/speed_limit_min
+sudo nano /proc/sys/dev/raid/speed_limit_max
+</pre>
+<p>   Even if your RAID is actively resyncing, a speed increase may immediately be noticable, so keep an eye on the terminal watching <strong>/proc/mdstat</strong>. Once the resync is done, you can finally format and mount your array. Again, use gparted since even if you used 2TB or smaller disks, your assembled RAID is likely to be much larger. Create a GPT partition table in gparted, close gparted, and then format the disk thusly (assuming your RAID device is called "md0"):</p>
+<pre>
+sudo mkfs.ext4 /dev/md0
+</pre>
+<p>   Finally, you can mount your RAID so that it can be used. First, you need to make a place to mount it from. I like this in my home directory. If I have a single RAID1 device, I might want to call it "RAID1." Start by making a directory:</p>
+<pre>
+cd
+mkdir RAID1
+</pre>
+<p>Next, you need to mount your drive into the system so that it can be addressed. For this, use the <strong>mount</strong> command, and substitute your username for <strong>$userid</strong>:</p>
+<pre>
+sudo mount /dev/md0 /home/<strong>$userid</strong>/RAID1
+sudo mount
+</pre>
+<p>   This gets your disk going for now, but after a reboot it won't be there and you'll have to mount it manually every time. That's annoying, but you can add the mount to your <strong>fstab</strong> file and it will automount for you instead. For this, use nano:</p>
+<pre>
+sudo nano /etc/fstab
+</pre>
+<p>   Go to the bottom of the file and add the following lines, again substituting your <strong>$userid</strong>:</p>
+<pre>
+## Automount RAID1 array (md0)
+/dev/md0 /home/<strong>$userid</strong>/RAID1 ext4 defaults 0 2
+</pre>
+<p>   Test that your mounting worked OK:</p>
+<pre>
+sudo umount /home/<strong>$userid</strong>/RAID1
+sudo service mdadm restart
+sudo mount -a
+</pre>
+<p>   Your RAID device should have remounted and be available for use.</p>
+<hr>
+<h2 class="heading1">Monitoring and drive failures </h2>
+<p>   First, you should know about the following command, so issue it:</p>
+<pre>
+sudo mdadm -D /dev/md0
+</pre>
+<p>   You can see there are very important details about the health of your drive contained in this output. If you suspect there is a problem, you could check this output to see if your array is degraded due to a faulty drive. But maybe it would be even better if your computer emailed you when bad things happen? You can tell your computer where to email you by editing the <strong>/etc/mdadm/mdadm.conf</strong> file and changing the destination of <strong>MAILADDR</strong> from root (default) to your email address:</p>
+<pre>
+sudo nano /etc/mdadm/mdadm.conf
+</pre>
+<p>   Set the following line:</p>
+<pre>
+MAILADDR abc123@nau.edu
+</pre>
+<p>   Now test that everything is functioning by simulating a drive failure.  Don't worry, everything will be fine, and now you will know that things are working properly. Open a second terminal and run <strong>sudo mdadm -D /dev/md0</strong> in it between each command below (from a separate terminal):
+<p>Unmount the array</p>
+<pre>
+sudo umount /dev/md0
+</pre>
+<p>Mark sdb1 as faulty</p>
+<pre>
+sudo mdadm /dev/md0 --fail /dev/sdb
+</pre>
+<p>Remove sdb1 from the array</p>
+<pre>
+sudo mdadm --remove /dev/md0 /dev/sdb
+</pre>
+<p>   Normally you would now need to stop the array and then shutdown your system, physically swap the bad drive out for a new one, reboot, and add in the new drive. Here are the commands for that, but don't issue them now and we'll pretend this was done.
+<pre>
+sudo mdadm --stop /dev/md0
+sudo shutdown -h now
+sudo mdadm /dev/md0 --add /dev/sdb
+sudo mdadm --assemble /dev/md0 /dev/sdb /dev/sdc
+</pre>
+<p>   Instead just issue the add and assemble commands:</p>
+<pre>
+sudo mdadm /dev/md0 --add /dev/sdb
+</pre>
+<p>   You can now see from the output of <strong>sudo mdadm -D /dev/md0</strong> that your array is recovering. You can also see this from the <strong>disks</strong> program. You can mount and use your array even as it rebuilds, but this will also delay the rebuild by slowing the speed. Better to wait it out before doing anything since you built a RAID for redundancy.
+</p>
+<p>   Finally, check your email.  If your email is properly configured on your computer, you should have received a note about a degraded array event.  If not, you may need to configure sendmail (<strong>sudo sendmailconfig</strong>), or you may have other problems beyond the scope of this document. I hope this helps you to manage your RAID device with some confidence.
+</p>
+<br>
+<hr>
+</body>
+</html>
