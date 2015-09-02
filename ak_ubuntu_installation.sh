@@ -199,6 +199,22 @@ if [[ ! -d $homedir/QIIME_test_data_16S ]]; then
 sudo -u $userid git clone https://github.com/alk224/QIIME_test_data_16S.git #2>/dev/null
 #chown -R $userid:$userid $homedir/QIIME_test_data_16S
 fi
+wait
+if [[ ! -d $homedir/QIIME_databases ]]; then
+sudo -u $userid git clone https://github.com/alk224/QIIME_databases.git #2>/dev/null
+#chown -R $userid:$userid $homedir/QIIME_test_data_16S
+fi
+if [[ ! -d $homedir/QIIME_databases/gg_otus-13_8-release ]]; then
+cd $homedir/QIIME_databases
+tar -xzvf gg_otus-13_8-release.tar.gz
+cd $homedir
+fi
+if [[ ! -d $homedir/QIIME_databases ]]; then
+cd $homedir/QIIME_databases
+tar -xzvf UNITE_2015-03-02.tar.gz
+cd $homedir
+fi
+wait
 
 ## Source environment file
 source $homedir/.bashrc 2>/dev/null
