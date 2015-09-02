@@ -200,6 +200,9 @@ sudo -u $userid git clone https://github.com/alk224/QIIME_test_data_16S.git #2>/
 #chown -R $userid:$userid $homedir/QIIME_test_data_16S
 fi
 
+## Source environment file
+source /etc/environment
+
 ## Add akutils to path
 akutilstest=`grep "$homedir/akutils" /etc/environment 2>/dev/null | wc -l`
 	if [[ $akutilstest == 0 ]]; then
@@ -338,6 +341,7 @@ echo "Task spooler already installed.  Skipping.
 
 		lighttest=`grep "tslight" $homedir/.bashrc  2>/dev/null | wc -l`
 		if [[ $lighttest -ge 1 ]]; then
+		echo "Configuring light queue for Task spooler."
 		sed -i '/tslight/d' $homedir/.bashrc 2>/dev/null
 		sed -i '/tslight/d' /etc/environment 2>/dev/null
 		fi
@@ -346,6 +350,7 @@ echo "Task spooler already installed.  Skipping.
 
 		heavytest=`grep "tsheavy" $homedir/.bashrc  2>/dev/null | wc -l`
 		if [[ $heavytest -ge 1 ]]; then
+		echo "Configuring heavy queue for Task spooler."
 		sed -i '/tsheavy/d' $homedir/.bashrc 2>/dev/null
 		sed -i '/tsheavy/d' /etc/environment 2>/dev/null
 		fi
