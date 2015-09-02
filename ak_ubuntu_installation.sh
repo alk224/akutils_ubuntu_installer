@@ -208,7 +208,6 @@ echo "Adding akutils repository to path (/etc/environment).
 sed -i "s/\"$/:TARGET/" /etc/environment
 sed -i "s|TARGET$|$homedir/akutils\"|" /etc/environment
 	fi
-source /etc/environment
 
 ## Install vsearch
 	vsearchtest=`command -v vsearch 2>/dev/null | wc -l`
@@ -239,7 +238,6 @@ wait
 cd $homedir
 sed -i "s/\"$/:TARGET/" /etc/environment
 sed -i "s|TARGET$|$homedir/bamtools/bin\"|" /etc/environment
-source /etc/environment
 	else
 echo "Bamtools already installed.  Skipping.
 "
@@ -269,7 +267,6 @@ echo "Installing ITSx.
 tar -xzvf $scriptdir/ITSx_1.0.11.tar.gz -C /bin/ 2>/dev/null
 sed -i "s/\"$/:TARGET/" /etc/environment
 sed -i "s|TARGET$|/bin/ITSx_1.0.11\"|" /etc/environment
-source /etc/environment
 	if [[ -f /bin/ITSx_1.0.11/ITSx_db/HMMs/N.hmm ]]; then
 	rm /bin/ITSx_1.0.11/ITSx_db/HMMs/N.hmm
 	fi
