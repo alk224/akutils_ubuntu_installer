@@ -13,7 +13,8 @@ you wish to set up a VM in some other environment.
 
 Probably best for a fresh install.  If you have some other verison
 of python or other dependencies already in place, this might not
-work very well.
+work very well, or it could work fine and wreck something else
+dear to you instead.
 
 ***** INSTALLATION INSTRUCTIONS *****
 
