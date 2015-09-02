@@ -355,8 +355,8 @@ echo "Task spooler already installed.  Skipping.
 		echo 'alias tsheavy="TS_SOCKET=/tmp/socket.ts.heavy ts"' >> $homedir/.bashrc
 		/bin/su -c "echo 'tsheavy -S 1' >> /etc/environment"
 source $homedir/.bashrc
+sleep 1
 source /etc/environment
-source $homedir/.bashrc
 
 ## Upgrading pip
 pipver=`python -c "import pip; print pip.__version__" 2>/dev/null`
