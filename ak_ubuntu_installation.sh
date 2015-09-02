@@ -201,7 +201,8 @@ sudo -u $userid git clone https://github.com/alk224/QIIME_test_data_16S.git #2>/
 fi
 
 ## Source environment file
-source /etc/environment
+source $homedir/.bashrc 2>/dev/null
+source /etc/environment 2>/dev/null
 
 ## Add akutils to path
 akutilstest=`grep "$homedir/akutils" /etc/environment 2>/dev/null | wc -l`
@@ -356,9 +357,9 @@ echo "Task spooler already installed.  Skipping.
 		fi
 		echo 'alias tsheavy="TS_SOCKET=/tmp/socket.ts.heavy ts"' >> $homedir/.bashrc
 		/bin/su -c "echo 'tsheavy -S 1' >> /etc/environment"
-source $homedir/.bashrc
+source $homedir/.bashrc 2>/dev/null
 sleep 1
-source /etc/environment
+source /etc/environment 2>/dev/null
 
 ## Upgrading pip
 pipver=`python -c "import pip; print pip.__version__" 2>/dev/null`
