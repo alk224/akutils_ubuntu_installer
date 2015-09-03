@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-US" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#">
+<head>
+<meta charset="UTF-8">
+<title>Using the task spooler queue</title>
+<div class="main-wrapper clearfix">
+<div id="page">
+<div class="detail-page cblayout">
+<div class="content-area single-content-area">
+<div id="content" class="content content-single">
+<div class="single-content">
+<article id="Task spooler" class="task spooler resource queue">
+<div class="post-box">
+<header>
+<hr>
+<div class="post-title clearfix">
+<time datetime="2015-09-02" title="September 2, 2015">
+<span class="post-date">2</span>
+<span class="post-month uppercase">September</span>
+<span class="post-year uppercase">2015</span>
+</time>
+<div class="title-wrap">
+<h2 class="title single-title title20">
+Using the task spooler queue </h2>
+<span class="post-author">Written by Andrew Krohn</span>
+</div>
+<div class="post-avtar">
+</div>
+</div>
+<body>
+<hr>
+<p>   <a href="http://vicerveza.homeunix.net/~viric/soft/ts/">Task spooler</a> is a command queue that allows you to line jobs up on your computer. This is useful if you are running multiple jobs that are very resource-intensive because you can control how many resources are being consumed at a time.</p>
+<p>   Essential commands to know:</p>
+<ul><li>ts (main queue)</li>
+<li>ts -c (print std_out from currently running job on ts queue)</li>
+<li>ts -L xxx (name a job, where xxx is the name with no spaces)</li>
+<li>ts -m (email results of job upon completion)</li>
+<li>ts -C (clear the list of completed jobs in ts queue)</li>
+<li>ts -K (kill the ts queue)</li>
+<li>ts -S # (change the number of jobs allowed to run in the ts queue, where # is an integer)</li>
+</ul>
+<p>   That may be how you control a queue, but I find it more useful to split my jobs between the two additional queues I set up. You control these just like the ts queue, but the commands instead are <strong>tslight</strong> and <strong>tsheavy</strong>. For example, on my 24-core computer I would line up a bunch of OTU picking jobs set to consume 16 cores on the heavy queue which allows only a single job to process at a time, while I might put a bunch of alignment, tree building and/or core diversity jobs on the light queue (3 simultaneous jobs) to consume only 4 cores at a time. Since many of these less-consumptive jobs only need all the cores part of the time, you can likely get away with the 3 simultaneous jobs most of the time.</p>
+<h3>tslight or tsheavy queues</h3>
+<ul><li>tslight (queue #1, default allows three simultaneous jobs)</li>
+<li>tsheavy (queue #2, default allows a single job at a time)</li>
+</ul>
+<hr>
+<h2 class="heading1">Examples </h2>
+<p>Pick OTUs command to heavy queue, naming the job "otu_picking_16S" and emailing the results of the job to the user:</p>
+<pre>tsheavy -m -L otu_picking_16S otu_picking_workflow.sh ./ 16S</pre>
+<p>Alignment and tree command with name and email to light queue:</p>
+<pre>tslight -m -L align_swarm_d1 align_and_tree_workflow.sh swarm_otus_d1/ 16S</pre>
+<p>Check status of job running in light queue:</p>
+<pre>tslight -c</pre>
+<p>Clear completed jobs in heavy queue:</p>
+<pre>tsheavy -C</pre>
+<hr>
+<h3><a href="http://vicerveza.homeunix.net/~viric/soft/ts/">Task spooler man page</a> for all your other questions.</h3>
+<br>
+<hr>
+</body>
+</html>
