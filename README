@@ -27,6 +27,8 @@ sudo apt-get install git
 git clone https://github.com/alk224/akutils_ubuntu_installer.git
 sudo bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh install
 
+***** END INSTALLATION INSTRUCTIONS *****
+
 Exlanation of above commands:
 cd (takes you to your home directory)
 sudo apt-get update (updates your software cache to prepare to upgrade the system)
