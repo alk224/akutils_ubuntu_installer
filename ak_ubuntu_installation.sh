@@ -462,9 +462,14 @@ echo "QIIME base install already correct version (1.9.1).
 fi
 
 ## Copy help files to folder on desktop
+if [[ -f "$homedir/Desktop/Using\ the\ task\ spooler\ queue.html" ]]; then
 rm -r $homedir/Desktop/Using\ the\ task\ spooler\ queue.html
+fi
+if [[ -f "$homedir/Desktop/Disk\ management\ instructions.html" ]]; then
+fi
 rm -r $homedir/Desktop/Disk\ management\ instructions.html
-sudo -u $userid cp $homedir/akutils_ubuntu_installer/*.html $homedir/Desktop/akutils\ help\ files/
+fi
+sudo -u $userid cp $homedir/akutils_ubuntu_installer/*.html $homedir/Desktop/
 
 ## Install primer prospector and correct the analyze primers library
 #	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
