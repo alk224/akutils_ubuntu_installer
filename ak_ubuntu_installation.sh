@@ -466,7 +466,6 @@ if [[ -f "$homedir/Desktop/Using\ the\ task\ spooler\ queue.html" ]]; then
 rm -r $homedir/Desktop/Using\ the\ task\ spooler\ queue.html
 fi
 if [[ -f "$homedir/Desktop/Disk\ management\ instructions.html" ]]; then
-fi
 rm -r $homedir/Desktop/Disk\ management\ instructions.html
 fi
 sudo -u $userid cp $homedir/akutils_ubuntu_installer/*.html $homedir/Desktop/
