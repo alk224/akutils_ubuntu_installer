@@ -111,9 +111,11 @@ sudo mdadm -D /dev/md0
 <pre>
 sudo nano /etc/mdadm/mdadm.conf
 </pre>
-<p>   Set the following line:</p>
+<p>   Set the following lines:</p>
 <pre>
 MAILADDR abc123@nau.edu
+DEVICE /dev/sdb /dev/sdc
+ARRAY /dev/md0 devices=/dev/sdb,/dev/sdc
 </pre>
 <p>   Now test that everything is functioning by simulating a drive failure.  Don't worry, everything will be fine, and now you will know that things are working properly. Open a second terminal and run <strong>sudo mdadm -D /dev/md0</strong> in it between each command below (from a separate terminal):
 <p>Unmount the array</p>
