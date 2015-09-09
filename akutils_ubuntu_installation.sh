@@ -370,6 +370,41 @@ source $homedir/.bashrc 2>/dev/null
 sleep 1
 source /etc/environment 2>/dev/null
 
+## Install Stacks
+cd $homedir/akutils_ubuntu_installer
+tar -xzvf stacks-1.34.tar.gz
+cd stacks-1.34/
+./configure
+make
+wait
+sudo make install
+wait
+## Edit MySQL config file
+sudo cp /usr/local/share/stacks/sql/mysql.cnf.dist /usr/local/share/stacks/sql/mysql.conf
+mysql> GRANT ALL ON *.* TO 'stacks'@'localhost' IDENTIFIED BY 'stacks';
+sudo sed -i 's/password=\w\+/password=stacks/' /usr/local/share/stacks/sql/mysql.cnf
+sudo sed -i 's/user=\w\+/user=stacks/' /usr/local/share/stacks/sql/mysql.cnf
+## Enable Stacks web interface in Apache webserver
+sudo echo '<Directory "/usr/local/share/stacks/php">
+        Order deny,allow
+        Deny from all
+        Allow from all
+	Require all granted
+</Directory>
+
+Alias /stacks "/usr/local/share/stacks/php"
+' > /etc/apache2/conf-available/stacks.conf
+ln -s /etc/apache2/conf-available/stacks.conf /etc/apache2/conf-enabled/stacks.conf
+sudo apachectrl restart
+wait
+## Provide access to MySQL database from web interface
+cp /usr/local/share/stacks/php/constants.php.dist /usr/local/share/stacks/php/constants.php
+sudo sed -i 's/dbuser/stacks/' /usr/local/share/stacks/php/constants.php
+sudo sed -i 's/dbpass/stacks/' /usr/local/share/stacks/php/constants.php
+## Enable web-based exporting from MySQL database
+chown stacks /usr/local/share/stacks/php/export
+cd
+
 ## Upgrading pip
 pipver=`python -c "import pip; print pip.__version__" 2>/dev/null`
 if [[ $pipver != 7.1.2 ]]; then
