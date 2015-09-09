@@ -380,7 +380,7 @@ wait
 sudo make install
 wait
 ## Edit MySQL config file
-sudo cp /usr/local/share/stacks/sql/mysql.cnf.dist /usr/local/share/stacks/sql/mysql.conf
+sudo cp /usr/local/share/stacks/sql/mysql.cnf.dist /usr/local/share/stacks/sql/mysql.cnf
 mysql> GRANT ALL ON *.* TO 'stacks'@'localhost' IDENTIFIED BY 'stacks';
 sudo sed -i 's/password=\w\+/password=stacks/' /usr/local/share/stacks/sql/mysql.cnf
 sudo sed -i 's/user=\w\+/user=stacks/' /usr/local/share/stacks/sql/mysql.cnf
