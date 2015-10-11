@@ -214,6 +214,9 @@ strip_primers.sh $homedir/akutils/primers.16S.ITS.fa $testdir/read1.fq $testdir/
 	fi
 strip_primers.sh $homedir/akutils/primers.16S.ITS.fa $testdir/read1.fq $testdir/read2.fq $testdir/index1.fq 1>$testdir/std_out 2>$testdir/std_err || true
 wait
+	if [[ ! -f $testdir/strip_primers_out/index1.noprimers.fastq ]] && [[ -f $testdir/strip_primers_out/index1.fastq ]]; then
+	mv $testdir/strip_primers_out/index1.fastq $testdir/strip_primers_out/index1.noprimers.fastq
+	fi
 echo "
 ***** strip_primers.sh std_out:
 " >> $log
