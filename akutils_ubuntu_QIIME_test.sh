@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+## Trap function to replace temporary global config file on exit status 1
 function finish {
 if [[ ! -z $backfile ]]; then
 cp $backfile $homedir/akutils/akutils_resources/akutils.global.config
