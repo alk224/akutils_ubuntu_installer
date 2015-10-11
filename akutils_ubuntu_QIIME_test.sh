@@ -1,4 +1,11 @@
 #!/usr/bin/env bash
+function finish {
+if [[ ! -z $backfile ]]; then
+cp $backfile $homedir/akutils/akutils_resources/akutils.global.config
+rm $backfile
+fi
+}
+trap finish EXIT
 
 ## workflow of tests to examine system installation completeness
 set -e
@@ -92,6 +99,11 @@ for field in `grep -v "#" $masterconfig | cut -f 1`; do
 	if [[ $field == "Alignment_lanemask" ]]; then
 	setting=`grep $field $masterconfig | grep -v "#" | cut -f 2`
 	newsetting=($testdir/gg_database/lanemask_in_1s_and_0s)
+	sed -i -e "s@^$field\t$setting@$field\t$newsetting@" $masterconfig
+	fi
+	if [[ $field == "Rarefaction_depth" ]]; then
+	setting=`grep $field $masterconfig | grep -v "#" | cut -f 2`
+	newsetting="AUTO"
 	sed -i -e "s@^$field\t$setting@$field\t$newsetting@" $masterconfig
 	fi
 	if [[ $field == "CPU_cores" ]]; then
