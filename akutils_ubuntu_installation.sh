@@ -356,18 +356,18 @@ echo "Task spooler already installed.  Skipping.
 		lighttest=`grep "tslight" $homedir/.bashrc  2>/dev/null | wc -l`
 		if [[ $lighttest -ge 1 ]]; then
 		sed -i '/tslight/d' $homedir/.bashrc 2>/dev/null
-		sed -i '/tslight/d' /etc/environment 2>/dev/null
+		#sed -i '/tslight/d' /etc/environment 2>/dev/null
 		fi
 		echo 'alias tslight="TS_SOCKET=/tmp/socket.ts.light ts"' >> $homedir/.bashrc
-		/bin/su -c "echo 'tslight -S 3' >> /etc/environment"
+		#/bin/su -c "echo 'tslight -S 3' >> /etc/environment"
 
 		heavytest=`grep "tsheavy" $homedir/.bashrc  2>/dev/null | wc -l`
 		if [[ $heavytest -ge 1 ]]; then
 		sed -i '/tsheavy/d' $homedir/.bashrc 2>/dev/null
-		sed -i '/tsheavy/d' /etc/environment 2>/dev/null
+		#sed -i '/tsheavy/d' /etc/environment 2>/dev/null
 		fi
 		echo 'alias tsheavy="TS_SOCKET=/tmp/socket.ts.heavy ts"' >> $homedir/.bashrc
-		/bin/su -c "echo 'tsheavy -S 1' >> /etc/environment"
+		#/bin/su -c "echo 'tsheavy -S 1' >> /etc/environment"
 source $homedir/.bashrc 2>/dev/null
 sleep 1
 source /etc/environment 2>/dev/null
