@@ -31,7 +31,7 @@ sudo bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh install
 
 ***** END INSTALLATION INSTRUCTIONS *****
 
-Exlanation of above commands:
+Explanation of above commands:
 cd (takes you to your home directory)
 sudo apt-get update (updates your software cache to prepare to upgrade the system)
 sudo apt-get -yfm upgrade (upgrades your system to latest 14.04.x noninteractively)
