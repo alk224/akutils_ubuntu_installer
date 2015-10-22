@@ -503,21 +503,21 @@ fi
 sudo -u $userid cp $homedir/akutils_ubuntu_installer/*.html $homedir/Desktop/
 
 ## Install primer prospector and correct the analyze primers library
-#	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
-#	if [[ $pptest == 0 ]]; then
-#echo "Installing Primer Prospector.
-#"
-#tar -xzvf $scriptdir/pprospector-1.0.1.tar.gz -C /bin/
-#cd /bin/pprospector-1.0.1/
-#python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/
-#sed -i "s/\"$/:TARGET/" /etc/environment
-#sed -i "s|TARGET$|/bin/pprospector-1.0.1/bin\"|" /etc/environment
-#source /etc/environment
-#cp $homedir/akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/
-#else
-#echo "Primer prospector already installed.  Skipping.
-#"
-#	fi
+	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
+	if [[ $pptest == 0 ]]; then
+echo "Installing Primer Prospector.
+"
+tar -xzvf $scriptdir/pprospector-1.0.1.tar.gz -C /bin/
+cd /bin/pprospector-1.0.1/
+python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/
+sed -i "s/\"$/:TARGET/" /etc/environment
+sed -i "s|TARGET$|/bin/pprospector-1.0.1/scripts\"|" /etc/environment
+source /etc/environment
+cp $homedir/akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/
+else
+echo "Primer prospector already installed.  Skipping.
+"
+	fi
 
 ## Run QIIME deploy
 if [[ ! -d $homedir/qiime-deploy ]]; then
