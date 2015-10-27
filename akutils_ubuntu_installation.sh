@@ -7,6 +7,7 @@
 ## Version: 0.0.1
 ## Trap function to for exit status 1
 function finish {
+if [[ ! -z $log ]]; then
 echo "***** stdout:" >> $log
 cat $stout >> $log
 echo "***** stderr:" >> $log
@@ -14,7 +15,7 @@ cat $sterr >> $log
 echo "" >> $log
 rm $stdout
 rm $stderr
-
+fi
 }
 trap finish EXIT
 set -e
@@ -87,6 +88,7 @@ echo ""
 	logcount=`ls $scriptdir/log_akutils_ubuntu_installation* 2>/dev/null | wc -l`
 	stderr=($scriptdir/${rand}_stderr)
 	stdout=($scriptdir/${rand}_stdout)
+
 	if [[ $logcount -ge 1 ]]; then
 	log=`ls $scriptdir/log_akutils_ubuntu_installation* | head -1`
 	echo "
