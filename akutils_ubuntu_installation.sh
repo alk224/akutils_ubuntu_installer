@@ -86,8 +86,8 @@ echo ""
 	date0=`date +%Y%m%d_%I%M%p`
 	date1=`date -R`
 	logcount=`ls $scriptdir/log_akutils_ubuntu_installation* 2>/dev/null | wc -l`
-	stderr=($scriptdir/$rand\_stderr)
-	stdout=($scriptdir/$rand\_stdout)
+	stderr=($scriptdir/$randcode\_stderr)
+	stdout=($scriptdir/$randcode\_stdout)
 
 	if [[ $logcount -ge 1 ]]; then
 	log=`ls $scriptdir/log_akutils_ubuntu_installation* | head -1`
