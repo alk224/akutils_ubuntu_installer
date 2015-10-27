@@ -136,7 +136,7 @@ echo "Downloading Google Chrome.
 	if [[ -f $homedir/Downloads/google-chrome*.deb ]]; then
 	rm $homedir/Downloads/google-chrome*.deb 1>$stdout 2>$stderr || true
 	fi
-	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P $homedir/Downloads/
+	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P $homedir/Downloads/ 1>$stdout 2>$stderr || true
 wait
 echo "Installing Google Chrome.
 "
