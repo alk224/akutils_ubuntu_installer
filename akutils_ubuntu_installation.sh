@@ -86,7 +86,6 @@ echo ""
 	date0=`date +%Y%m%d_%I%M%p`
 	date1=`date -R`
 	logcount=`ls $scriptdir/log_akutils_ubuntu_installation* 2>/dev/null | wc -l`
-	echo $logcount
 	stderr=($scriptdir/$rand\_stderr)
 	stdout=($scriptdir/$rand\_stdout)
 
@@ -100,8 +99,9 @@ $date1
 ********************************************************************************
 " >> $log
 	fi
+
 	if [[ $logcount -eq 0 ]]; then
-	log=($scriptdir/log_akutils_ubuntu_installation_$randcode\_$date0.txt
+	log=($scriptdir/log_akutils_ubuntu_installation_$randcode\_$date0.txt)
 	echo $log
 	touch $log
 	echo "
