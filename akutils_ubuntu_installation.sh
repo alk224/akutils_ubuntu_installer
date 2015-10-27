@@ -9,9 +9,9 @@
 function finish {
 if [[ ! -z $log ]]; then
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 rm $stdout
 rm $stderr
@@ -124,9 +124,9 @@ echo "Installing dependencies for Google Chrome install.
 " >> $log
 	apt-get -y install libxss1 libappindicator1 libindicator7 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 echo "Downloading Google Chrome.
@@ -144,9 +144,9 @@ echo "Installing Google Chrome.
 " >> $log
 	dpkg -i $homedir/Downloads/google-chrome*.deb 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 
@@ -166,9 +166,9 @@ if [[ $mlicount == 0 ]]; then
 apt-add-repository -y ppa:indicator-multiload/stable-daily 1>$stdout 2>$stderr || true
 echo "Indicator mutliload ppa:" >> $log
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 ottocount=`ls /etc/apt/sources.list.d/otto-kesselgulasch-gimp*  2>/dev/null | wc -l`
@@ -176,9 +176,9 @@ if [[ $ottocount == 0 ]]; then
 add-apt-repository -y ppa:otto-kesselgulasch/gimp 1>$stdout 2>$stderr || true
 echo "Gimp ppa:" >> $log
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 rppacount=`cat /etc/apt/sources.list | grep "cran.rstudio.com"  2>/dev/null | wc -l`
@@ -187,9 +187,9 @@ if [[ $rppacount == 0 ]]; then
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 1>$stdout 2>$stderr || true
 echo "R (cran) ppa:" >> $log
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 yppacount=`ls /etc/apt/sources.list.d/webupd8team-y-ppa-manager*  2>/dev/null | wc -l`
@@ -197,9 +197,9 @@ if [[ $yppacount == 0 ]]; then
 add-apt-repository -y ppa:webupd8team/y-ppa-manager 1>$stdout 2>$stderr || true
 echo "Y ppa manager ppa:" >> $log
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 apt-get -y update 1>$stdout 2>$stderr || true
@@ -244,18 +244,18 @@ echo "Installing multiload indicator.
 " >> $log
 apt-get -yfm install htop indicator-multiload 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 echo "Installing all other programs via apt-get.
 " >> $log
 apt-get -yfm install fail2ban openssh-server gimp gimp-data gimp-plugin-registry gimp-data-extras gimp-help-en veusz clementine build-essential python-dev python-pip perl zip unzip synaptic y-ppa-manager git gpart gparted libfreetype6-dev ghc gcc g++ h5utils hdf5-tools r-base r-base-core r-base-dev r-cran-xml samtools mafft fastx-toolkit bedtools bowtie2 tophat cufflinks picard-tools abyss arb fastqc velvet staden-io-lib-utils ugene ugene-data seaview treeview treeviewx subversion zlib1g-dev libgsl0-dev cmake libncurses5-dev libssl-dev libzmq-dev libxml2 libxslt1.1 libxslt1-dev ant zlib1g-dev libpng12-dev mpich2 libreadline-dev gfortran libmysqlclient18 libmysqlclient-dev sqlite3 libsqlite3-dev libc6-i386 libbz2-dev tcl-dev tk-dev libatlas-dev libatlas-base-dev liblapack-dev swig libhdf5-serial-dev filezilla libcurl4-openssl-dev libxml2-dev openjdk-7-jdk sendmail mysql-server php5 apache2 php-mdb2 php-mdb2-driver-mysql libdbd-mysql-perl libbam-dev nfs-common nfs-kernel-server mdadm screen --quiet --force-yes 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 #apt-get -yfm install libgtk2.0-0:i386 libnss3-1d:i386 libnspr4-0d:i386 lib32nss-mdns libxml2:i386 libxslt1.1:i386 libstdc++6:i386
@@ -271,9 +271,9 @@ wget -c http://ardownload.adobe.com/pub/adobe/reader/unix/9.x/9.5.5/enu/AdbeRdr9
 export DEBIAN_FRONTEND=noninteractive
 sudo dpkg -i --force-confold --force-confdef AdbeRdr9.5.5-1_i386linux_enu.deb 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 cd
@@ -286,9 +286,9 @@ echo "Installing Microsoft Core Fonts.
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 apt-get -yfm install ttf-mscorefonts-installer 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 
@@ -312,9 +312,9 @@ echo "Cloning akutils github repository."
 echo "Cloning akutils github repository." >> $log
 sudo -u $userid git clone https://github.com/alk224/akutils.git 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 if [[ ! -d $homedir/vsearch ]]; then
@@ -322,9 +322,9 @@ echo "Cloning vsearch github repository."
 echo "Cloning vsearch github repository." >> $log
 sudo -u $userid git clone https://github.com/torognes/vsearch.git 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 if [[ ! -d $homedir/bamtools ]]; then
@@ -332,9 +332,9 @@ echo "Cloning bamtools github repository."
 echo "Cloning bamtools github repository." >> $log
 sudo -u $userid git clone git://github.com/pezmaster31/bamtools.git 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 wait
@@ -343,9 +343,9 @@ echo "Cloning QIIME test data github repository."
 echo "Cloning QIIME test data github repository." >> $log
 sudo -u $userid git clone https://github.com/alk224/QIIME_test_data_16S.git 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 wait
@@ -354,9 +354,9 @@ echo "Cloning QIIME databases github repository."
 echo "Cloning QIIME databases github repository." >> $log
 sudo -u $userid git clone https://github.com/alk224/QIIME_databases.git 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 if [[ ! -d $homedir/QIIME_databases/gg_otus-13_8-release ]]; then
@@ -366,9 +366,9 @@ cd $homedir/QIIME_databases
 tar -xzvf gg_otus-13_8-release.tar.gz 1>$stdout 2>$stderr || true
 cd $homedir
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 if [[ ! -d $homedir/QIIME_databases ]]; then
@@ -378,9 +378,9 @@ cd $homedir/QIIME_databases
 tar -xzvf UNITE_2015-03-02.tar.gz 1>$stdout 2>$stderr || true
 cd $homedir
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 fi
 wait
@@ -413,9 +413,9 @@ make 1>$stdout 2>$stderr || true
 wait
 make install 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 cp $homedir/vsearch/bin/vsearch /usr/bin/
 	else
@@ -457,9 +457,9 @@ make 1>$stdout 2>$stderr || true
 wait
 cd $homedir
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 	else
 echo "HMMer already installed.  Skipping.
@@ -504,9 +504,9 @@ cd /bin/$smaltdir/
 ./configure 1>$stdout 2>$stderr || true
 make install 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 cd $homedir
@@ -526,9 +526,9 @@ tar -xzvf $scriptdir/ea-utils.1.1.2-806.tar.gz -C /bin/
 cd /bin/ea-utils.1.1.2-806/
 make install 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 	else
@@ -549,9 +549,9 @@ make 1>$stdout 2>$stderr || true
 make install 1>$stdout 2>$stderr || true
 cd $homedir
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 	else
@@ -599,9 +599,9 @@ make  1>$stdout 2>$stderr || true
 wait
 sudo make install 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 ## Edit MySQL config file
@@ -642,9 +642,9 @@ echo "Installing pip v7.1.2.
 echo "Installing pip v7.1.2." >> $log
 pip install pip==7.1.2 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 else
@@ -660,9 +660,9 @@ echo "Installing Numpy v1.9.1.
 echo "Installing Numpy v1.9.1." >> $log
 pip install numpy==1.9.1 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 else
@@ -678,9 +678,9 @@ echo "Installing Scipy v0.15.1.
 echo "Installing Scipy v0.15.1." >> $log
 pip install scipy==0.15.1 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 else
@@ -696,9 +696,9 @@ echo "Installing Matplotlib v1.3.1.
 echo "Installing Matplotlib v1.3.1." >> $log
 pip install matplotlib==1.3.1 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 else
@@ -714,9 +714,9 @@ echo "Installing Cython v0.23.1.
 echo "Installing Cython v0.23.1." >> $log
 pip install Cython==0.23.1 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 else
 echo "Cython already correct version (0.23.1).
@@ -731,9 +731,9 @@ echo "Installing h5py v2.4.0.
 echo "Installing h5py v2.4.0." >> $log
 pip install h5py==2.4.0 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 else
@@ -747,9 +747,9 @@ echo "Installing/updating R packages.
 echo "Installing/updating R packages." >> $log
 Rscript $scriptdir/r_updates.r 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 
@@ -761,9 +761,9 @@ echo "Installing QIIME base v1.9.1.
 echo "Installing QIIME base v1.9.1." >> $log
 pip install qiime==1.9.1 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 else
@@ -790,9 +790,9 @@ tar -xzvf $scriptdir/pprospector-1.0.1.tar.gz -C /bin/ 1>$stdout 2>$stderr || tr
 cd /bin/pprospector-1.0.1/
 python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/ 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 sed -i "s/\"$/:TARGET/" /etc/environment 1>$stdout 2>$stderr || true
 sed -i "s|TARGET$|/bin/pprospector-1.0.1/scripts\"|" /etc/environment 1>$stdout 2>$stderr || true
@@ -825,9 +825,9 @@ echo "Executing QIIME deploy script." >> $log
 cd qiime-deploy/
 python qiime-deploy.py $homedir/qiime_1.9.1/ -f $scriptdir/qiime.1.9.1.custom.conf --force-remove-failed-dirs 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
-cat $stout >> $log
+cat $stdout >> $log
 echo "***** stderr:" >> $log
-cat $sterr >> $log
+cat $stderr >> $log
 echo "" >> $log
 wait
 
