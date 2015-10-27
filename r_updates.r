@@ -2,7 +2,6 @@
 
 ## Update R installation with necessary packages
 
-
 ## Set mirror
 chooseCRANmirror(graphics=FALSE, ind=85)
 
@@ -36,11 +35,9 @@ install.packages('vegan') }
 
 ## BiocLite installs
 source('http://bioconductor.org/biocLite.R')
+pkgs <- rownames(installed.packages())
+biocLite(pkgs, type="source")
 biocLite()
-#biocLite('BiocUpgrade')
-
-#biocLite('DESeq2')
-#biocLite('metagenomeSeq')
 
 if (is.element('DESeq2', installed.packages()[,1]) == FALSE) { 
 biocLite('DESeq2') }
