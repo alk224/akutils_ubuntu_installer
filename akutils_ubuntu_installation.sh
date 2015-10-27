@@ -258,9 +258,8 @@ echo "***** stderr:" >> $log
 cat $stderr >> $log
 echo "" >> $log
 wait
-apt-get -yf install
-#apt-get -yfm install libgtk2.0-0:i386 libnss3-1d:i386 libnspr4-0d:i386 lib32nss-mdns libxml2:i386 libxslt1.1:i386 libstdc++6:i386
-#wait
+apt-get -yf install  1>$stdout 2>$stderr || true
+wait
 
 ## Install Adobe Reader 9
 echo "Installing Adobe Reader 9.5.
