@@ -98,7 +98,8 @@ $date1
 
 ********************************************************************************
 " >> $log
-	else
+	fi
+	if [[ $logcount -eq 0 ]]; then
 	log=($scriptdir/log_akutils_ubuntu_installation_${randcode}_${date0}.txt
 	touch $log
 	echo "
