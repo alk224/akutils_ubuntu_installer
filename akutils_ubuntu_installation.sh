@@ -108,7 +108,7 @@ Installation script started.
 $date1
 
 ********************************************************************************
-" >> $log
+" > $log
 	fi
 
 ## Install Google Chrome
