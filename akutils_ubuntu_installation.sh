@@ -86,6 +86,7 @@ echo ""
 	date0=`date +%Y%m%d_%I%M%p`
 	date1=`date -R`
 	logcount=`ls $scriptdir/log_akutils_ubuntu_installation* 2>/dev/null | wc -l`
+	echo $logcount
 	stderr=($scriptdir/$rand\_stderr)
 	stdout=($scriptdir/$rand\_stdout)
 
