@@ -102,7 +102,6 @@ $date1
 
 	if [[ $logcount -eq 0 ]]; then
 	log=($scriptdir/log_akutils_ubuntu_installation_$randcode\_$date0.txt)
-	echo $log
 	touch $log
 	echo "
 ********************************************************************************
@@ -135,7 +134,7 @@ echo "Downloading Google Chrome.
 echo "Downloading Google Chrome.
 " >> $log
 	if [[ -f $homedir/Downloads/google-chrome*.deb ]]; then
-	rm $homedir/Downloads/google-chrome*.deb 2>/dev/null ||
+	rm $homedir/Downloads/google-chrome*.deb 1>$stdout 2>$stderr || true
 	fi
 	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -P $homedir/Downloads/
 wait
