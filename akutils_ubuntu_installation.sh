@@ -614,6 +614,7 @@ mysql> GRANT ALL ON *.* TO 'stacks'@'localhost' IDENTIFIED BY 'stacks'; 1>$stdou
 sudo sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
 sudo sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
 ## Enable Stacks web interface in Apache webserver
+echo "---Build stacks.conf file for Apache webserver." >> $log
 sudo echo '<Directory "/usr/local/share/stacks/php">
         Order deny,allow
         Deny from all
@@ -623,13 +624,46 @@ sudo echo '<Directory "/usr/local/share/stacks/php">
 
 Alias /stacks "/usr/local/share/stacks/php"
 ' > /etc/apache2/conf-available/stacks.conf 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
+echo "---Symlink to Apache2 stacks.conf file." >> $log
 ln -s /etc/apache2/conf-available/stacks.conf /etc/apache2/conf-enabled/stacks.conf 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
+echo "---Restart Apache webserver" >> $log
 sudo apachectrl restart 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
 wait
 ## Provide access to MySQL database from web interface
+echo "---Copy php constants file and change permissions." >> $log
 cp /usr/local/share/stacks/php/constants.php.dist /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
 sudo sed -i 's/dbuser/stacks/' /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
 sudo sed -i 's/dbpass/stacks/' /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
 ## Enable web-based exporting from MySQL database
 chown stacks /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 cd
