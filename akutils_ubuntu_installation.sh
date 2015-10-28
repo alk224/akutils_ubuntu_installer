@@ -904,6 +904,11 @@ wait
 ## Fix broken analyze_primers.py
 cp $homedir/akutils/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 1>$stdout 2>$stderr || true
 
+## Fix permissions
+chown -R $userid:$userid $homedir/qiime_1.9.1/
+chown -R $userid:$userid $homedir/QIIME_test_data_16S/
+chown -R $userid:$userid $homedir/akutils/
+
 ## Source files and test qiime install
 source $homedir/qiime_1.9.1/activate.sh 1>$stdout 2>$stderr || true
 source $homedir/.bashrc 1>$stdout 2>$stderr || true
