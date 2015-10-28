@@ -18,7 +18,7 @@ rm $stderr
 fi
 }
 trap finish EXIT
-set -e
+#set -e
 
 userid=`echo $SUDO_USER`
 homedir=(/home/$userid/)
@@ -593,6 +593,13 @@ sleep 1
 source /etc/environment 1>$stdout 2>$stderr || true
 
 ## Install Stacks
+	stackstest=`command -v cstacks 2>/dev/null | wc -l`
+	if [[ $stackstest -ge 1 ]]; then
+echo "Stacks already installed.  Skipping.
+"
+echo "Stacks already installed.  Skipping.
+" >> $log
+	else
 echo "Installing Stacks for RADseq applications.
 "
 echo "Installing Stacks for RADseq applications.
@@ -609,6 +616,7 @@ cat $stdout >> $log
 echo "***** stderr:" >> $log
 cat $stderr >> $log
 echo "" >> $log
+	fi
 wait
 ## Edit MySQL config file
 echo "Configuring mysql and apache webserver.
@@ -623,19 +631,19 @@ echo "***** stderr:" >> $log
 cat $stderr >> $log
 echo "" >> $log
 echo "---Change mysql permissions." >> $log
-mysql> GRANT ALL ON *.* TO 'stacks'@'localhost' IDENTIFIED BY 'stacks'; 1>$stdout 2>$stderr || true
+mysql> GRANT ALL ON *.* TO 'stacks'@'localhost' IDENTIFIED BY 'stacks';
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
 cat $stderr >> $log
 echo "" >> $log
-sudo sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
+sed -i "s/password=\w+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
 cat $stderr >> $log
 echo "" >> $log
-sudo sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
+sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
