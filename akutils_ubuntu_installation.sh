@@ -611,8 +611,8 @@ echo "Configuring mysql and apache webserver.
 " >> $log
 sudo cp /usr/local/share/stacks/sql/mysql.cnf.dist /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
 mysql> GRANT ALL ON *.* TO 'stacks'@'localhost' IDENTIFIED BY 'stacks'; 1>$stdout 2>$stderr || true
-sudo sed -i 's/password=\w\+/password=stacks/' /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
-sudo sed -i 's/user=\w\+/user=stacks/' /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
+sudo sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
+sudo sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
 ## Enable Stacks web interface in Apache webserver
 sudo echo '<Directory "/usr/local/share/stacks/php">
         Order deny,allow
