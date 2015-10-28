@@ -24,7 +24,6 @@ userid=`echo $SUDO_USER`
 homedir=(/home/$userid/)
 scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 
-## Check whether user supplied install argument.  Otherwise display help.
 	if [[ "$1" != "install" ]] && [[ "$1" != "list" ]] && [[ "$1" != "test" ]]; then
 echo "
 ak_ubuntu_installation script (v0.0.1), 2015-08-29.  Script to facilitate
@@ -268,6 +267,13 @@ apt-get -yf install  1>$stdout 2>$stderr || true
 wait
 
 ## Install Adobe Reader 9
+	adobetest=`command -v vsearch 2>/dev/null | wc -l`
+	if [[ $adobetest -ge 1 ]]; then
+echo "Adobe Reader already installed.  Skipping.
+"
+echo "Adobe Reader already installed.  Skipping.
+" >> $log
+	else
 echo "Installing Adobe Reader 9.5.
 "
 echo "Installing Adobe Reader 9.5.
@@ -281,6 +287,7 @@ cat $stdout >> $log
 echo "***** stderr:" >> $log
 cat $stderr >> $log
 echo "" >> $log
+	fi
 wait
 cd
 
@@ -659,7 +666,7 @@ sudo echo '<Directory "/usr/local/share/stacks/php">
 </Directory>
 
 Alias /stacks "/usr/local/share/stacks/php"
-' > /etc/apache2/conf-available/stacks.conf 1>$stdout 2>$stderr || true
+' > /etc/apache2/conf-available/stacks.conf 2>$stderr || true
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -673,7 +680,7 @@ echo "***** stderr:" >> $log
 cat $stderr >> $log
 echo "" >> $log
 echo "---Restart Apache webserver" >> $log
-sudo apachectrl restart 1>$stdout 2>$stderr || true
+sudo apachectl restart 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -874,14 +881,29 @@ echo "Primer prospector already installed.  Skipping.
 	fi
 
 ## Run QIIME deploy
-if [[ ! -d $homedir/qiime-deploy ]]; then
+if [[ -d $homedir/qiime-deploy ]]; then
+echo "QIIME deploy repository already present.  Skipping clone.
+"
+echo "QIIME deploy repository already present.  Skipping clone.
+" >> $log
+else
 echo "Cloning QIIME deploy repository.
 "
 echo "Cloning QIIME deploy repository.
 " >> $log
 sudo -u $userid git clone https://github.com/qiime/qiime-deploy.git 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
 fi
-if [[ ! -d $homedir/qiime-deploy-conf ]]; then
+if [[ -d $homedir/qiime-deploy-conf ]]; then
+echo "QIIME deploy conf repository already present.  Skipping clone.
+"
+echo "QIIME deploy conf repository already present.  Skipping clone.
+" >> $log
+else
 echo "Cloning QIIME deploy conf repository.
 "
 echo "Cloning QIIME deploy conf repository.
