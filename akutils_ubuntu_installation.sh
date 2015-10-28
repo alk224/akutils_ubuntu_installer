@@ -240,9 +240,15 @@ echo "Installing programs from repositories.
 echo "Installing programs from repositories.
 " >> $log
 export DEBIAN_FRONTEND=noninteractive
-echo "Installing multiload indicator.
-" >> $log
-apt-get -yfm install htop indicator-multiload 1>$stdout 2>$stderr || true
+	mlindictest=`command -v analyze_primers.py 2>/dev/null | wc -l`
+	if [[ $mdindictest -eq 1 ]]; then
+	echo "Installing multiload indicator.
+	" >> $log
+	apt-get -yfm install htop indicator-multiload 1>$stdout 2>$stderr || true
+	else
+	echo "Multiload indicator already installed.  Skipping.
+	" >> $log
+	fi
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
