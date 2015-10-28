@@ -615,10 +615,32 @@ echo "Configuring mysql and apache webserver.
 "
 echo "Configuring mysql and apache webserver.
 " >> $log
+echo "---Copy mysql.cnf file." >> $log
 sudo cp /usr/local/share/stacks/sql/mysql.cnf.dist /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
+echo "---Change mysql permissions." >> $log
 mysql> GRANT ALL ON *.* TO 'stacks'@'localhost' IDENTIFIED BY 'stacks'; 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
 sudo sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
 sudo sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
 ## Enable Stacks web interface in Apache webserver
 echo "---Build stacks.conf file for Apache webserver." >> $log
 sudo echo '<Directory "/usr/local/share/stacks/php">
