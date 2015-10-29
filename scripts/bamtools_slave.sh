@@ -14,22 +14,22 @@ homedir="$4"
 scriptdir="$5"
 date0=`date`
 
-## Install vsearch
-vsearchtest=`command -v vsearch 2>/dev/null | wc -l`
-if [[ $vsearchtest == 0 ]]; then
-echo "Installing vsearch.
+## Install bamtools
+bamtoolstest=`command -v bamtools 2>/dev/null | wc -l`
+if [[ $bamtoolstest == 0 ]]; then
+echo "Installing bamtools.
 "
-echo "Installing vsearch." >> $log
-cd $homedir/vsearch
-./autogen.sh 1>$stdout 2>$stderr || true
-./configure 1>$stdout 2>$stderr || true
+echo "Installing bamtools." >> $log
+cd $homedir/bamtools
+mkdir build 1>$stdout 2>$stderr || true
+cd build
+cmake 1>$stdout 2>$stderr || true
 make 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
-make install 1>$stdout 2>$stderr || true
-bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-cp $homedir/vsearch/bin/vsearch /usr/bin/
+cd
 	else
-echo "Vsearch already installed.  Skipping.
+echo "Bamtools already installed.  Skipping.
 "
 fi
 

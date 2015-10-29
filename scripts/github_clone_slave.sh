@@ -12,7 +12,7 @@ stderr="$2"
 log="$3"
 homedir="$4"
 scriptdir="$5"
-userid=`echo $SUDO_USER`
+userid="$6"
 date0=`date`
 
 echo "Cloning github repositories.
@@ -116,7 +116,7 @@ chown -R $userid:$userid $homedir/QIIME_databases
 fi
 
 ## QIIME deploy
-if [[ -d $homedir/qiime-deploy ]]; then
+if [[ ! -d $homedir/qiime-deploy ]]; then
 echo "Cloning QIIME deploy github repository.
 "
 echo "Cloning QIIME deploy github repository." >> $log
@@ -135,7 +135,7 @@ chown -R $userid:$userid $homedir/qiime-deploy/
 fi
 
 ## QIIME deploy-conf
-if [[ -d $homedir/qiime-deploy-conf ]]; then
+if [[ ! -d $homedir/qiime-deploy-conf ]]; then
 echo "Cloning QIIME deploy-conf github repository.
 "
 echo "Cloning QIIME deploy-conf github repository." >> $log
@@ -143,9 +143,9 @@ sudo -u $userid git clone https://github.com/qiime/qiime-deploy-conf.git 1>$stdo
 chown -R $userid:$userid $homedir/qiime-deploy-conf/
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 else
-echo "Doing fresh git pull of QIIME deploy
+echo "Doing fresh git pull of QIIME deploy-conf
 "
-echo "Doing fresh git pull of QIIME deploy." >> $log
+echo "Doing fresh git pull of QIIME deploy-conf." >> $log
 cd $homedir/qiime-deploy-conf
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd

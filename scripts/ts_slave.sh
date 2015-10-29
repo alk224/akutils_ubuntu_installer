@@ -23,7 +23,7 @@ echo "Installing Task spooler.
 "
 echo "Installing Task spooler.
 " >> $log
-tar -xzvf $scriptdir/3rd_party_packages/ts-0.7.4.tar.gz -C /bin/
+tar -xzvf $scriptdir/3rd_party_packages/ts-0.7.4.tar.gz -C /bin/ 1>$stdout 2>$stderr || true
 cd /bin/ts-0.7.4/
 make 1>$stdout 2>$stderr || true
 make install 1>$stdout 2>$stderr || true
@@ -41,7 +41,9 @@ echo "Task spooler already installed.  Skipping.
 		sed -i '/TS_MAILTO/d' /etc/environment  1>$stdout 2>$stderr || true
 		fi
 		/bin/su -c "echo 'TS_MAILTO="$email"' >> /etc/environment" 1>$stdout 2>$stderr || true
+		if [[ ! -z $host ]]; then
 		/bin/su -c "echo '$host' > /etc/hostname" 1>$stdout 2>$stderr || true
+		fi
 
 		lighttest=`grep "tslight" $homedir/.bashrc  2>/dev/null | wc -l`
 		if [[ $lighttest -ge 1 ]]; then

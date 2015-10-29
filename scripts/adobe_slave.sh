@@ -15,7 +15,7 @@ scriptdir="$5"
 date0=`date`
 
 ## Test for presence of Reader and install or skip
-	adobetest=`command -v acroread 2>/dev/null | wc -l` # Need to check this command
+	adobetest=`command -v acroread 2>/dev/null | wc -l`
 	if [[ $adobetest == 0 ]]; then
 	echo "Installing Adobe Reader 9.5.
 	"
@@ -35,7 +35,7 @@ date0=`date`
 wait
 
 ## Run apt-get -yfm install to update unmet dependencies and finish Reader install
-	adobetest=`command -v acroread 2>/dev/null | wc -l` # Need to check this command
+	adobetest=`command -v acroread 2>/dev/null | wc -l`
 	if [[ $adobetest == 0 ]]; then
 	echo "Updating dependencies via apt-get to finish Reader install.
 	"

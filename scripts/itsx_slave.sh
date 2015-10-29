@@ -21,7 +21,7 @@ date0=`date`
 echo "Installing ITSx.
 "
 echo "Installing ITSx." >> $log
-tar -xzvf $scriptdir/ITSx_1.0.11.tar.gz -C /bin/ 1>$stdout 2>$stderr || true
+tar -xzvf $scriptdir/3rd_party_packages/ITSx_1.0.11.tar.gz -C /bin/ 1>$stdout 2>$stderr || true
 sed -i "s/\"$/:TARGET/" /etc/environment 1>$stdout 2>$stderr || true
 sed -i "s|TARGET$|/bin/ITSx_1.0.11\"|" /etc/environment 1>$stdout 2>$stderr || true
 	if [[ -f /bin/ITSx_1.0.11/ITSx_db/HMMs/N.hmm ]]; then

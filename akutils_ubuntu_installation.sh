@@ -167,7 +167,7 @@ wait
 wait
 
 ## Clone github repositories or do fresh git pulls if already present
-		sudo bash $scriptdir/scripts/github_clone_slave.sh $stdout $stderr $log $homedir $scriptdir		
+		sudo bash $scriptdir/scripts/github_clone_slave.sh $stdout $stderr $log $homedir $scriptdir $userid	
 wait
 
 ## Add akutils to path if not already present
@@ -229,7 +229,7 @@ source /etc/environment 1>$stdout 2>$stderr || true
 
 ## Update R packages if not been done in over a month
 	Rdate0=`head -1 $scriptdir/temp/R_installs_and_updates.txt`
-	Rdate1=`date +%Y%M%d`
+	Rdate1=`date +%Y%m%d`
 	span=`echo "$Rdate1-$Rdate0" | bc`
 	if [[ $span -ge 31 ]]; then
 	echo "Installing/updating R packages.
@@ -240,10 +240,10 @@ source /etc/environment 1>$stdout 2>$stderr || true
 	wait
 	echo $Rdate1 > $scriptdir/temp/R_installs_and_updates.txt
 	else
-	echo "R installs/updates have been run within the past month.
-	Skipping."
-	echo "R installs/updates have been run within the past month.
-	Skipping." >> $log
+	echo "R installs/updates have been run within the past month.  Skipping.
+	"
+	echo "R installs/updates have been run within the past month.  Skipping.
+	" >> $log
 	fi
 
 ## Pip installs
@@ -264,9 +264,9 @@ source /etc/environment
 wait
 
 ## Source files and test qiime install
-source $homedir/.bashrc 1>$stdout 2>$stderr || true
-source /etc/environment 1>$stdout 2>$stderr || true
-source $homedir/qiime_1.9.1/activate.sh 1>$stdout 2>$stderr || true
+source $homedir/.bashrc
+source /etc/environment
+source $homedir/qiime_1.9.1/activate.sh
 print_qiime_config.py -tf
 
 ## Copy help files to folder on desktop

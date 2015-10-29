@@ -1,3 +1,7 @@
 ## Log file to record ppa additions to prevent duplications
 
 
+indicator-multiload
+otto-kesselgulasch-gimp
+cran.rstudio.com
+webupd8team-y-ppa-manager

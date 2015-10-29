@@ -18,7 +18,7 @@ echo "Cleaning up Ubuntu packages.
 "
 echo "Cleaning up Ubuntu packages.
 " >> $log
-sudo apt-get -f install 1>$stdout 2>$stderr || true
+sudo apt-get -yf install --quiet --force-yes 1>$stdout 2>$stderr || true
 sudo apt-get -y autoremove 1>$stdout 2>$stderr || true
 sudo apt-get -y autoclean 1>$stdout 2>$stderr || true
 sudo apt-get -y clean 1>$stdout 2>$stderr || true

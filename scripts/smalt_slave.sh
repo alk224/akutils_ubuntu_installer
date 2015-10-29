@@ -22,7 +22,7 @@ echo "Installing Smalt.
 "
 echo "Installing Smalt.
 " >> $log
-tar -xzvf $scriptdir/3rd_party_packages/smalt.tar.gz -C /bin/
+tar -xzvf $scriptdir/3rd_party_packages/smalt.tar.gz -C /bin/  1>$stdout 2>$stderr || true
 smaltdir=`ls /bin/ | grep "smalt"`
 cd /bin/$smaltdir/
 ./configure 1>$stdout 2>$stderr || true

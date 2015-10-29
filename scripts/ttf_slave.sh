@@ -25,4 +25,8 @@ apt-get -yfm install ttf-mscorefonts-installer 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 
+## Run apt-get -yfm install to update unmet dependencies and finish install
+	sudo apt-get -yfm install  1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+
 exit 0
