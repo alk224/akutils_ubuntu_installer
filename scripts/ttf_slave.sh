@@ -22,11 +22,7 @@ echo "Installing Microsoft Core Fonts.
 export DEBIAN_FRONTEND=noninteractive
 echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
 apt-get -yfm install ttf-mscorefonts-installer 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 
 exit 0

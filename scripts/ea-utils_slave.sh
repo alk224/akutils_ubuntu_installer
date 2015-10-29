@@ -24,12 +24,8 @@ echo "Installing ea-utils.
 " >> $log
 tar -xzvf $scriptdir/3rd_party_packages/ea-utils.1.1.2-806.tar.gz -C /bin/
 cd /bin/ea-utils.1.1.2-806/
-make install 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	make install 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 	else
 echo "ea-utils already installed.  Skipping.

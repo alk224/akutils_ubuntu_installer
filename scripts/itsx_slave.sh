@@ -27,6 +27,8 @@ sed -i "s|TARGET$|/bin/ITSx_1.0.11\"|" /etc/environment 1>$stdout 2>$stderr || t
 	if [[ -f /bin/ITSx_1.0.11/ITSx_db/HMMs/N.hmm ]]; then
 	echo "Fresh hmmpress of ITSx hmm files.
 	"
+	echo "Fresh hmmpress of ITSx hmm files.
+	" >> $log
 	rm /bin/ITSx_1.0.11/ITSx_db/HMMs/N.hmm 1>$stdout 2>$stderr || true
 	fi
 	# Fresh hmmpress of ITSx hmm files

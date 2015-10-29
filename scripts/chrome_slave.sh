@@ -18,11 +18,7 @@ echo "Installing dependencies for Google Chrome install.
 echo "Installing dependencies for Google Chrome install.
 " >> $log
 	apt-get -y install libxss1 libappindicator1 libindicator7 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 
 ## Download latest stable Chrome
@@ -42,10 +38,6 @@ echo "Installing Google Chrome.
 echo "Installing Google Chrome.
 " >> $log
 	dpkg -i $homedir/Downloads/google-chrome*.deb 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 exit 0

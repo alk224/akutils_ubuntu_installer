@@ -25,13 +25,10 @@ tar -xzvf $scriptdir/3rd_party_packages/hmmer-3.1b2-linux-intel-x86_64.tar.gz -C
 cd /bin/hmmer-3.1b2-linux-intel-x86_64/
 ./configure 1>$stdout 2>$stderr || true
 make 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 cd $homedir
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	else
 echo "HMMer already installed.  Skipping.
 "

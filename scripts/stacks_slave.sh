@@ -33,11 +33,7 @@ cd bin/stacks-1.34/
 make  1>$stdout 2>$stderr || true
 wait
 sudo make install 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	fi
 wait
 ## Edit MySQL config file
@@ -47,30 +43,14 @@ echo "Configuring mysql and apache webserver.
 " >> $log
 echo "---Copy mysql.cnf file." >> $log
 sudo cp /usr/local/share/stacks/sql/mysql.cnf.dist /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "---Change mysql permissions." >> $log
 mysql> GRANT ALL ON *.* TO 'stacks'@'localhost' IDENTIFIED BY 'stacks';
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 sed -i "s/password=\w+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 ## Enable Stacks web interface in Apache webserver
 echo "---Build stacks.conf file for Apache webserver." >> $log
 sudo echo '<Directory "/usr/local/share/stacks/php">
@@ -82,46 +62,22 @@ sudo echo '<Directory "/usr/local/share/stacks/php">
 
 Alias /stacks "/usr/local/share/stacks/php"
 ' > /etc/apache2/conf-available/stacks.conf 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "---Symlink to Apache2 stacks.conf file." >> $log
 ln -s /etc/apache2/conf-available/stacks.conf /etc/apache2/conf-enabled/stacks.conf 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "---Restart Apache webserver" >> $log
 sudo apachectl restart 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 ## Provide access to MySQL database from web interface
 echo "---Copy php constants file and change permissions." >> $log
 cp /usr/local/share/stacks/php/constants.php.dist /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 sudo sed -i 's/dbuser/stacks/' /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 sudo sed -i 's/dbpass/stacks/' /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 ## Enable web-based exporting from MySQL database
 chown stacks /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 cd

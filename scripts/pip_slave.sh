@@ -22,11 +22,7 @@ echo "Installing pip v7.1.2.
 "
 echo "Installing pip v7.1.2." >> $log
 pip install pip==7.1.2 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 else
 echo "Pip already correct version (7.1.2).
@@ -40,11 +36,7 @@ echo "Installing Numpy v1.9.1.
 "
 echo "Installing Numpy v1.9.1." >> $log
 pip install numpy==1.9.1 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 else
 echo "Numpy already correct version (1.9.1).
@@ -58,11 +50,7 @@ echo "Installing Scipy v0.15.1.
 "
 echo "Installing Scipy v0.15.1." >> $log
 pip install scipy==0.15.1 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 else
 echo "Scipy already correct version (0.15.1).
@@ -76,11 +64,7 @@ echo "Installing Matplotlib v1.3.1.
 "
 echo "Installing Matplotlib v1.3.1." >> $log
 pip install matplotlib==1.3.1 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 else
 echo "Matplotlib already correct version (1.3.1).
@@ -94,11 +78,7 @@ echo "Installing Cython v0.23.1.
 "
 echo "Installing Cython v0.23.1." >> $log
 pip install Cython==0.23.1 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 else
 echo "Cython already correct version (0.23.1).
 "
@@ -111,11 +91,7 @@ echo "Installing h5py v2.4.0.
 "
 echo "Installing h5py v2.4.0." >> $log
 pip install h5py==2.4.0 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 else
 echo "h5py already correct version (2.4.0).
@@ -129,11 +105,7 @@ echo "Installing QIIME base v1.9.1.
 "
 echo "Installing QIIME base v1.9.1." >> $log
 pip install qiime==1.9.1 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 else
 echo "QIIME base install already correct version (1.9.1).

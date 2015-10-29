@@ -28,11 +28,7 @@ cd /bin/ts-0.7.4/
 make 1>$stdout 2>$stderr || true
 make install 1>$stdout 2>$stderr || true
 cd $homedir
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 	else
 echo "Task spooler already installed.  Skipping.

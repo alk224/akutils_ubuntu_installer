@@ -27,11 +27,7 @@ smaltdir=`ls /bin/ | grep "smalt"`
 cd /bin/$smaltdir/
 ./configure 1>$stdout 2>$stderr || true
 make install 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 cd $homedir
 	else

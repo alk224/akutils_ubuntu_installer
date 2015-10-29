@@ -25,11 +25,7 @@ echo "Installing Primer Prospector." >> $log
 tar -xzvf $scriptdir/3rd_party_packages/pprospector-1.0.1.tar.gz -C /bin/ 1>$stdout 2>$stderr || true
 cd /bin/pprospector-1.0.1/
 python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/ 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 sed -i "s/\"$/:TARGET/" /etc/environment 1>$stdout 2>$stderr || true
 sed -i "s|TARGET$|/bin/pprospector-1.0.1/scripts\"|" /etc/environment 1>$stdout 2>$stderr || true
 source /etc/environment 1>$stdout 2>$stderr || true

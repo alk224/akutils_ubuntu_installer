@@ -29,11 +29,7 @@ date0=`date`
 	## Install Reader
 	export DEBIAN_FRONTEND=noninteractive
 	sudo dpkg -i --force-confold --force-confdef AdbeRdr9.5.5-1_i386linux_enu.deb 1>$stdout 2>$stderr || true
-	echo "***** stdout:" >> $log
-	cat $stdout >> $log
-	echo "***** stderr:" >> $log
-	cat $stderr >> $log
-	echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	cd
 	fi
 wait
@@ -46,11 +42,7 @@ wait
 	echo "Updating dependencies via apt-get to finish Reader install.
 	" >> $log
 	sudo apt-get -yfm install  1>$stdout 2>$stderr || true
-	echo "***** stdout:" >> $log
-	cat $stdout >> $log
-	echo "***** stderr:" >> $log
-	cat $stderr >> $log
-	echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	fi
 
 exit 0

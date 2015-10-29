@@ -31,11 +31,7 @@ if [[ $mlicount2 == 0 ]]; then
 apt-add-repository -y ppa:indicator-multiload/stable-daily 1>$stdout 2>$stderr || true
 echo "Indicator mutliload ppa:
 Installed on $date0" >> $log
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "indicator-multiload" >> $scriptdir/ppas/ppa_log.txt
 a="1"
 else
@@ -53,11 +49,7 @@ if [[ $ottocount2 == 0 ]]; then
 add-apt-repository -y ppa:otto-kesselgulasch/gimp 1>$stdout 2>$stderr || true
 echo "Gimp ppa:
 Installed on $date0" >> $log
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "otto-kesselgulasch-gimp" >> $scriptdir/ppas/ppa_log.txt
 b="1"
 else
@@ -76,11 +68,7 @@ if [[ $rppacount2 == 0 ]]; then
 apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9 1>$stdout 2>$stderr || true
 echo "R (cran) ppa:
 Installed on $date0" >> $log
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "cran.rstudio.com" >> $scriptdir/ppas/ppa_log.txt
 c="1"
 else
@@ -98,11 +86,7 @@ if [[ $yppacount2 == 0 ]]; then
 add-apt-repository -y ppa:webupd8team/y-ppa-manager 1>$stdout 2>$stderr || true
 echo "Y ppa manager ppa:
 Installed on $date0" >> $log
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "webupd8team-y-ppa-manager" >> $scriptdir/ppas/ppa_log.txt
 d="1"
 else

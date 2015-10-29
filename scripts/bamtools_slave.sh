@@ -26,11 +26,7 @@ cd $homedir/vsearch
 make 1>$stdout 2>$stderr || true
 wait
 make install 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 cp $homedir/vsearch/bin/vsearch /usr/bin/
 	else
 echo "Vsearch already installed.  Skipping.

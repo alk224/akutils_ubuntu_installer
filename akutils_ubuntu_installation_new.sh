@@ -10,11 +10,7 @@
 function finish {
 if [[ ! -z $stdout ]] && [[ ! -z $stderr ]]; then
 if [[ ! -z $log ]]; then
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
+bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 rm $stdout
 rm $stderr
 fi
@@ -236,11 +232,7 @@ source /etc/environment 1>$stdout 2>$stderr || true
 	"
 	echo "Installing/updating R packages." >> $log
 	Rscript $scriptdir/scripts/r_slave.r 1>$stdout 2>$stderr || true
-	echo "***** stdout:" >> $log
-	cat $stdout >> $log
-	echo "***** stderr:" >> $log
-	cat $stderr >> $log
-	echo "" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
 
 ## Pip installs
