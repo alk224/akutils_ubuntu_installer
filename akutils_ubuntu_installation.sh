@@ -5,8 +5,9 @@
 ## Date: 2015-08-29
 ## License: MIT
 ## Version: 0.0.1
-## Trap function to for exit status 1
+## Trap function for exit status 1
 function finish {
+if [[ ! -z $stdout ]] && [[ ! -z $stderr ]]; then
 if [[ ! -z $log ]]; then
 echo "***** stdout:" >> $log
 cat $stdout >> $log
@@ -15,6 +16,7 @@ cat $stderr >> $log
 echo "" >> $log
 rm $stdout
 rm $stderr
+fi
 fi
 }
 trap finish EXIT

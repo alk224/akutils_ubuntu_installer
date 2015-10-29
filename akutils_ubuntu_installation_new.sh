@@ -1,0 +1,307 @@
+#!/usr/bin/env bash
+## Script to install my favorite programs in Ubuntu
+## Should be run from home directory
+## Author: Andrew Krohn
+## Date: 2015-08-29
+## License: MIT
+## Version: 0.0.1
+
+## Trap function for exit status.
+function finish {
+if [[ ! -z $stdout ]] && [[ ! -z $stderr ]]; then
+if [[ ! -z $log ]]; then
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
+rm $stdout
+rm $stderr
+fi
+fi
+}
+trap finish EXIT
+#set -e
+
+userid=`echo $SUDO_USER`
+homedir=(/home/$userid/)
+scriptdir="$( cd "$( dirname "$0" )" && pwd )"
+
+	if [[ "$1" != "install" ]] && [[ "$1" != "list" ]] && [[ "$1" != "test" ]]; then
+echo "
+ak_ubuntu_installation script (v0.0.1), 2015-08-29.  Script to facilitate
+installation of my favorite useful bioinformatics packages on a bare Ubuntu
+14.04 LTS install.  Tested on no other distros.
+
+The script will initially ask for brief input.  If you make a mistake,
+hit <ctrl-C> and start over.
+
+There are a few items in the middle of the install that also require user
+input.  The installation should resume once input is provided.
+
+Usage:
+   bash ak_ubuntu_installer/ak_ubuntu_installation.sh (this help screen)
+   bash ak_ubuntu_installer/ak_ubuntu_installation.sh list (list of software)
+   bash ak_ubuntu_installer/ak_ubuntu_installation.sh test (test of installed software)
+   sudo bash ak_ubuntu_installer/ak_ubuntu_installation.sh install (installation)
+"
+	exit 0
+	fi
+
+## Check whether user supplied list argument.
+	if [[ "$1" == "list" ]]; then
+	less $scriptdir/software_list
+	exit 0
+	fi
+
+## Check whether user supplied test argument.
+	if [[ "$1" == "test" ]]; then
+	bash $scriptdir/slave_scripts/akutils_ubuntu_QIIME_test.sh
+	exit 0
+	fi
+
+## Check for sudo power
+	if [[ $EUID != 0 ]]; then
+	echo "This command must be executed as root (or sudo)."
+	exit 0
+	fi
+
+## Initial dialogue
+echo "
+***** Starting ak_ubuntu_installer.sh *****
+
+You can cancel during this initial dialogue with <ctrl-C>
+
+Enter your email address (to configure task spooler):
+"
+read email
+echo "
+Enter your computers hostname if it has one.
+Example: enggen.bio.nau.edu
+Just hit enter if you don't have one.
+"
+read host
+echo ""
+
+## Set log file
+	randcode=`cat /dev/urandom |tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1` 2>/dev/null
+	date0=`date +%Y%m%d_%I%M%p`
+	date1=`date -R`
+	logcount=`ls $scriptdir/log_akutils_ubuntu_installation* 2>/dev/null | wc -l`
+	stderr=($scriptdir/$randcode\_stderr)
+	stdout=($scriptdir/$randcode\_stdout)
+
+	if [[ $logcount -ge 1 ]]; then
+	log=`ls $scriptdir/log_akutils_ubuntu_installation* | head -1`
+	echo "
+********************************************************************************
+Installation script restarted.
+$date1
+
+********************************************************************************
+" >> $log
+	fi
+
+	if [[ $logcount -eq 0 ]]; then
+	log=($scriptdir/log_akutils_ubuntu_installation_$randcode\_$date0.txt)
+	touch $log
+	echo "
+********************************************************************************
+Installation script started.
+$date1
+
+********************************************************************************
+" >> $log
+	fi
+
+## Install Google Chrome
+## Test for install
+	chrometest=`command -v google-chrome 2>/dev/null | wc -l`
+	if [[ $chrometest == 0 ]]; then
+
+## Install Chrome if test failed or skip
+		sudo bash $scriptdir/slave_scripts/chrome_slave.sh $stdout $stderr $log
+	else
+	echo "Google Chrome is already installed.  Skipping.
+	"
+	echo "Google Chrome is already installed.  Skipping.
+	" >> $log
+	fi
+wait
+
+## Add additional ppas if not present (relies partially on local log file in repository directory)
+## Test for ppa log
+	mlicount=`grep "indicator-multiload" $scriptdir/ppas/ppa_log.txt  2>/dev/null | wc -l`
+	ottocount=`grep "otto-kesselgulasch-gimp" $scriptdir/ppas/ppa_log.txt 2>/dev/null | wc -l`
+	rppacount=`grep "cran.rstudio.com" $scriptdir/ppas/ppa_log.txt 2>/dev/null | wc -l`
+	yppacount=`grep "webupd8team-y-ppa-manager" $scriptdir/ppas/ppa_log.txt 2>/dev/null | wc -l`
+	if [[ $mlicount == 0 ]] && [[ $ottocount == 0 ]] && [[ $rppacount == 0 ]] && [[ $yppacount == 0 ]]; then
+
+## Add ppas if failed or skip
+		sudo bash $scriptdir/slave_scripts/ppa_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "All ppas are already present.  Skipping.
+	"
+	echo "All ppas are already present.  Skipping.
+	" >> $log
+
+	fi
+wait
+
+## Install programs from Ubuntu repositories
+		sudo bash $scriptdir/slave_scripts/ubuntu_slave.sh $stdout $stderr $log $homedir $scriptdir
+
+## Install Adobe Reader 9
+	adobetest=`command -v acroread 2>/dev/null | wc -l` # Need to check this command
+	if [[ $adobetest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/adobe_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "Adobe Reader already installed.  Skipping.
+	"
+	echo "Adobe Reader already installed.  Skipping.
+	" >> $log
+	fi
+
+## Install Microsoft core fonts
+		sudo bash $scriptdir/slave_scripts/ttf_slave.sh $stdout $stderr $log $homedir $scriptdir
+wait
+
+## Clean up Ubuntu packages
+		sudo bash $scriptdir/slave_scripts/ubuntu_cleanup_slave.sh $stdout $stderr $log $homedir $scriptdir
+wait
+
+## Clone github repositories or do fresh git pulls if already present
+		sudo bash $scriptdir/slave_scripts/github_clone_slave.sh $stdout $stderr $log $homedir $scriptdir		
+wait
+
+## Source environment file - move this down
+#source $homedir/.bashrc 1>$stdout 2>$stderr || true
+#source /etc/environment 1>$stdout 2>$stderr || true
+
+## Add akutils to path
+akutilstest=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
+	if [[ $akutilstest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/akutils_slave.sh $stdout $stderr $log $homedir $scriptdir
+	fi
+
+## Install vsearch
+	vsearchtest=`command -v vsearch 2>/dev/null | wc -l`
+	if [[ $vsearchtest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/vsearch_slave.sh $stdout $stderr $log $homedir $scriptdir
+	fi
+
+## Install bamtools
+	bamtoolstest=`command -v bamtools 2>/dev/null | wc -l`
+	if [[ $bamtoolstest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/bamtools_slave.sh $stdout $stderr $log $homedir $scriptdir
+	fi
+
+## Install HMMER
+	hmmertest=`command -v hmmsearch 2>/dev/null | wc -l`
+	if [[ $hmmertest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/hmmer_slave.sh $stdout $stderr $log $homedir $scriptdir
+	fi
+
+## Install ITSx
+	itsxtest=`command -v ITSx 2>/dev/null | wc -l`
+	if [[ $itsxtest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/itsx_slave.sh $stdout $stderr $log $homedir $scriptdir
+	fi
+
+## Install smalt
+	smalttest=`command -v smalt 2>/dev/null | wc -l`
+	if [[ $smalttest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/smalt_slave.sh $stdout $stderr $log $homedir $scriptdir
+	fi
+
+## Install ea-utils
+	eautilstest=`command -v fastq-mcf 2>/dev/null | wc -l`
+	if [[ $eautilstest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/ea-utils_slave.sh $stdout $stderr $log $homedir $scriptdir
+	fi
+
+## Install task spooler
+	tstest=`command -v ts 2>/dev/null | wc -l`
+	if [[ $tstest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/ts_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+	fi
+
+source $homedir/.bashrc 1>$stdout 2>$stderr || true
+source /etc/environment 1>$stdout 2>$stderr || true
+
+## Install Stacks
+	stackstest=`command -v cstacks 2>/dev/null | wc -l`
+	if [[ $stackstest -ge 1 ]]; then
+		sudo bash $scriptdir/slave_scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+	fi
+
+## Update R packages
+echo "Installing/updating R packages.
+"
+echo "Installing/updating R packages." >> $log
+Rscript $scriptdir/slave_scripts/r_slave.r 1>$stdout 2>$stderr || true
+echo "***** stdout:" >> $log
+cat $stdout >> $log
+echo "***** stderr:" >> $log
+cat $stderr >> $log
+echo "" >> $log
+wait
+
+## Pip installs
+		sudo bash $scriptdir/slave_scripts/pip_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+
+## Install primer prospector and correct the analyze primers library
+	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
+	if [[ $pptest == 0 ]]; then
+		sudo bash $scriptdir/slave_scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+	fi
+
+## Update sources
+source $homedir/.bashrc
+source /etc/environment
+
+## Run QIIME deploy
+		sudo bash $scriptdir/slave_scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+wait
+
+## Fix broken analyze_primers.py
+#cp $homedir/akutils/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 1>$stdout 2>$stderr || true
+
+## Source files and test qiime install
+source $homedir/.bashrc 1>$stdout 2>$stderr || true
+source /etc/environment 1>$stdout 2>$stderr || true
+source $homedir/qiime_1.9.1/activate.sh 1>$stdout 2>$stderr || true
+print_qiime_config.py -tf
+
+## Copy help files to folder on desktop
+if [[ -f "$homedir/Desktop/Using\ the\ task\ spooler\ queue.html" ]]; then
+rm -r $homedir/Desktop/Using\ the\ task\ spooler\ queue.html
+fi
+if [[ -f "$homedir/Desktop/Disk\ management\ instructions.html" ]]; then
+rm -r $homedir/Desktop/Disk\ management\ instructions.html
+fi
+sudo -u $userid cp $homedir/akutils_ubuntu_installer/*.html $homedir/Desktop/
+
+## Report on installations
+echo "
+Installations complete (hopefully).
+
+A single failure for the QIIME tests is normal since you need to provide
+your own binary for usearch (see details on qiime website).
+
+Open the dash (super key) and search for \"System Load Monitor.\"
+Start that program and you will see a small load icon appear in the
+upper left screen on the status bar.  Right click and choose
+\"Preferences.\"  Select all of the Monitored Resources options
+and choose your favorite color scheme (I like Traditional).  I also
+like to expand the monitor width to 150 pixels, but this will depend
+on your available monitor space.
+
+Check your QIIME installation with print_qiime_config.py
+If there are any issues, resolve them via the QIIME forum.  You
+should have all the tools you need to fix any problems that arise.
+
+Then reboot your system.
+"
+
+exit 0
