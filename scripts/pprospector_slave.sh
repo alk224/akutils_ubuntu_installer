@@ -22,7 +22,7 @@ date0=`date`
 echo "Installing Primer Prospector.
 "
 echo "Installing Primer Prospector." >> $log
-tar -xzvf $scriptdir/pprospector-1.0.1.tar.gz -C /bin/ 1>$stdout 2>$stderr || true
+tar -xzvf $scriptdir/3rd_party_packages/pprospector-1.0.1.tar.gz -C /bin/ 1>$stdout 2>$stderr || true
 cd /bin/pprospector-1.0.1/
 python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/ 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log

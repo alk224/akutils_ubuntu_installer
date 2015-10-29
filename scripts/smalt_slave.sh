@@ -14,26 +14,28 @@ homedir="$4"
 scriptdir="$5"
 date0=`date`
 
-## Install HMMER
-	hmmertest=`command -v hmmsearch 2>/dev/null | wc -l`
-	if [[ $hmmertest == 0 ]]; then
+## Install smalt
+	smalttest=`command -v smalt 2>/dev/null | wc -l`
+	if [[ $smalttest == 0 ]]; then
 
-echo "Installing HMMer
+echo "Installing Smalt.
 "
-echo "Installing HMMer" >> $log
-tar -xzvf $scriptdir/hmmer-3.1b2-linux-intel-x86_64.tar.gz -C /bin/  1>$stdout 2>$stderr || true
-cd /bin/hmmer-3.1b2-linux-intel-x86_64/
+echo "Installing Smalt.
+" >> $log
+tar -xzvf $scriptdir/3rd_party_packages/smalt.tar.gz -C /bin/
+smaltdir=`ls /bin/ | grep "smalt"`
+cd /bin/$smaltdir/
 ./configure 1>$stdout 2>$stderr || true
-make 1>$stdout 2>$stderr || true
-wait
-cd $homedir
+make install 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
 cat $stderr >> $log
 echo "" >> $log
+wait
+cd $homedir
 	else
-echo "HMMer already installed.  Skipping.
+echo "Smalt already installed.  Skipping.
 "
 	fi
 

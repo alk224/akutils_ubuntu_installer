@@ -20,7 +20,7 @@ echo "Executing QIIME deploy script.
 "
 echo "Executing QIIME deploy script." >> $log
 cd
-python $homedir/qiime-deploy/qiime-deploy.py $homedir/qiime_1.9.1/ -f $scriptdir/qiime.1.9.1.custom.conf --force-remove-failed-dirs 1>$stdout 2>$stderr || true
+python $homedir/qiime-deploy/qiime-deploy.py $homedir/qiime_1.9.1/ -f $scriptdir/docs/qiime.1.9.1.custom.conf --force-remove-failed-dirs 1>$stdout 2>$stderr || true
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log

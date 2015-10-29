@@ -50,13 +50,13 @@ Usage:
 
 ## Check whether user supplied list argument.
 	if [[ "$1" == "list" ]]; then
-	less $scriptdir/software_list
+	less $scriptdir/docs/software_list
 	exit 0
 	fi
 
 ## Check whether user supplied test argument.
 	if [[ "$1" == "test" ]]; then
-	bash $scriptdir/slave_scripts/akutils_ubuntu_QIIME_test.sh
+	bash $scriptdir/scripts/akutils_ubuntu_QIIME_test.sh
 	exit 0
 	fi
 
@@ -88,8 +88,8 @@ echo ""
 	date0=`date +%Y%m%d_%I%M%p`
 	date1=`date -R`
 	logcount=`ls $scriptdir/log_akutils_ubuntu_installation* 2>/dev/null | wc -l`
-	stderr=($scriptdir/$randcode\_stderr)
-	stdout=($scriptdir/$randcode\_stdout)
+	stderr=($scriptdir/temp/$randcode\_stderr)
+	stdout=($scriptdir/temp/$randcode\_stdout)
 
 	if [[ $logcount -ge 1 ]]; then
 	log=`ls $scriptdir/log_akutils_ubuntu_installation* | head -1`
@@ -113,14 +113,14 @@ $date1
 ********************************************************************************
 " >> $log
 	fi
+	## Set permissions of log file
+	chown $userid:$userid $log
+	chmod 666 $log
 
-## Install Google Chrome
-## Test for install
+## Install Google Chrome if not already present
 	chrometest=`command -v google-chrome 2>/dev/null | wc -l`
 	if [[ $chrometest == 0 ]]; then
-
-## Install Chrome if test failed or skip
-		sudo bash $scriptdir/slave_scripts/chrome_slave.sh $stdout $stderr $log
+		sudo bash $scriptdir/scripts/chrome_slave.sh $stdout $stderr $log
 	else
 	echo "Google Chrome is already installed.  Skipping.
 	"
@@ -137,8 +137,8 @@ wait
 	yppacount=`grep "webupd8team-y-ppa-manager" $scriptdir/ppas/ppa_log.txt 2>/dev/null | wc -l`
 	if [[ $mlicount == 0 ]] && [[ $ottocount == 0 ]] && [[ $rppacount == 0 ]] && [[ $yppacount == 0 ]]; then
 
-## Add ppas if failed or skip
-		sudo bash $scriptdir/slave_scripts/ppa_slave.sh $stdout $stderr $log $homedir $scriptdir
+## Add ppas if failed or skip if already present
+		sudo bash $scriptdir/scripts/ppa_slave.sh $stdout $stderr $log $homedir $scriptdir
 	else
 	echo "All ppas are already present.  Skipping.
 	"
@@ -149,12 +149,12 @@ wait
 wait
 
 ## Install programs from Ubuntu repositories
-		sudo bash $scriptdir/slave_scripts/ubuntu_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/ubuntu_slave.sh $stdout $stderr $log $homedir $scriptdir
 
-## Install Adobe Reader 9
-	adobetest=`command -v acroread 2>/dev/null | wc -l` # Need to check this command
+## Install Adobe Reader 9 if not already present
+	adobetest=`command -v acroread 2>/dev/null | wc -l`
 	if [[ $adobetest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/adobe_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/adobe_slave.sh $stdout $stderr $log $homedir $scriptdir
 	else
 	echo "Adobe Reader already installed.  Skipping.
 	"
@@ -163,97 +163,93 @@ wait
 	fi
 
 ## Install Microsoft core fonts
-		sudo bash $scriptdir/slave_scripts/ttf_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/ttf_slave.sh $stdout $stderr $log $homedir $scriptdir
 wait
 
 ## Clean up Ubuntu packages
-		sudo bash $scriptdir/slave_scripts/ubuntu_cleanup_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/ubuntu_cleanup_slave.sh $stdout $stderr $log $homedir $scriptdir
 wait
 
 ## Clone github repositories or do fresh git pulls if already present
-		sudo bash $scriptdir/slave_scripts/github_clone_slave.sh $stdout $stderr $log $homedir $scriptdir		
+		sudo bash $scriptdir/scripts/github_clone_slave.sh $stdout $stderr $log $homedir $scriptdir		
 wait
 
-## Source environment file - move this down
-#source $homedir/.bashrc 1>$stdout 2>$stderr || true
-#source /etc/environment 1>$stdout 2>$stderr || true
-
-## Add akutils to path
+## Add akutils to path if not already present
 akutilstest=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
 	if [[ $akutilstest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/akutils_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/akutils_slave.sh $stdout $stderr $log $homedir $scriptdir
 	fi
 
-## Install vsearch
+## Install vsearch if not already present
 	vsearchtest=`command -v vsearch 2>/dev/null | wc -l`
 	if [[ $vsearchtest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/vsearch_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/vsearch_slave.sh $stdout $stderr $log $homedir $scriptdir
 	fi
 
-## Install bamtools
+## Install bamtools if not already present
 	bamtoolstest=`command -v bamtools 2>/dev/null | wc -l`
 	if [[ $bamtoolstest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/bamtools_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/bamtools_slave.sh $stdout $stderr $log $homedir $scriptdir
 	fi
 
-## Install HMMER
+## Install HMMER if not already present
 	hmmertest=`command -v hmmsearch 2>/dev/null | wc -l`
 	if [[ $hmmertest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/hmmer_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/hmmer_slave.sh $stdout $stderr $log $homedir $scriptdir
 	fi
 
-## Install ITSx
+## Install ITSx if not already present
 	itsxtest=`command -v ITSx 2>/dev/null | wc -l`
 	if [[ $itsxtest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/itsx_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/itsx_slave.sh $stdout $stderr $log $homedir $scriptdir
 	fi
 
-## Install smalt
+## Install smalt if not already present
 	smalttest=`command -v smalt 2>/dev/null | wc -l`
 	if [[ $smalttest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/smalt_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/smalt_slave.sh $stdout $stderr $log $homedir $scriptdir
 	fi
 
-## Install ea-utils
+## Install ea-utils if not already present
 	eautilstest=`command -v fastq-mcf 2>/dev/null | wc -l`
 	if [[ $eautilstest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/ea-utils_slave.sh $stdout $stderr $log $homedir $scriptdir
+		sudo bash $scriptdir/scripts/ea-utils_slave.sh $stdout $stderr $log $homedir $scriptdir
 	fi
 
-## Install task spooler
+## Install task spooler if not already present
 	tstest=`command -v ts 2>/dev/null | wc -l`
 	if [[ $tstest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/ts_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+		sudo bash $scriptdir/scripts/ts_slave.sh $stdout $stderr $log $homedir $scriptdir $email
 	fi
 
 source $homedir/.bashrc 1>$stdout 2>$stderr || true
 source /etc/environment 1>$stdout 2>$stderr || true
 
-## Install Stacks
-	stackstest=`command -v cstacks 2>/dev/null | wc -l`
-	if [[ $stackstest -ge 1 ]]; then
-		sudo bash $scriptdir/slave_scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir $email
-	fi
+## Install Stacks if not already present
+#	stackstest=`command -v cstacks 2>/dev/null | wc -l`
+#	if [[ $stackstest -ge 1 ]]; then
+#		sudo bash $scriptdir/scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+#	fi
 
 ## Update R packages
-echo "Installing/updating R packages.
-"
-echo "Installing/updating R packages." >> $log
-Rscript $scriptdir/slave_scripts/r_slave.r 1>$stdout 2>$stderr || true
-echo "***** stdout:" >> $log
-cat $stdout >> $log
-echo "***** stderr:" >> $log
-cat $stderr >> $log
-echo "" >> $log
-wait
+	echo "Installing/updating R packages.
+	"
+	echo "Installing/updating R packages." >> $log
+	Rscript $scriptdir/scripts/r_slave.r 1>$stdout 2>$stderr || true
+	echo "***** stdout:" >> $log
+	cat $stdout >> $log
+	echo "***** stderr:" >> $log
+	cat $stderr >> $log
+	echo "" >> $log
+	wait
 
 ## Pip installs
-		sudo bash $scriptdir/slave_scripts/pip_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+		sudo bash $scriptdir/scripts/pip_slave.sh $stdout $stderr $log $homedir $scriptdir $email
 
-## Install primer prospector and correct the analyze primers library
+## Install primer prospector and correct the analyze primers library if not already present
 	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
 	if [[ $pptest == 0 ]]; then
-		sudo bash $scriptdir/slave_scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+		sudo bash $scriptdir/scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir $email
 	fi
 
 ## Update sources
@@ -261,11 +257,8 @@ source $homedir/.bashrc
 source /etc/environment
 
 ## Run QIIME deploy
-		sudo bash $scriptdir/slave_scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $email
 wait
-
-## Fix broken analyze_primers.py
-#cp $homedir/akutils/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 1>$stdout 2>$stderr || true
 
 ## Source files and test qiime install
 source $homedir/.bashrc 1>$stdout 2>$stderr || true
@@ -280,7 +273,7 @@ fi
 if [[ -f "$homedir/Desktop/Disk\ management\ instructions.html" ]]; then
 rm -r $homedir/Desktop/Disk\ management\ instructions.html
 fi
-sudo -u $userid cp $homedir/akutils_ubuntu_installer/*.html $homedir/Desktop/
+sudo -u $userid cp $homedir/akutils_ubuntu_installer/docs/*.html $homedir/Desktop/
 
 ## Report on installations
 echo "

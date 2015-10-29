@@ -23,7 +23,7 @@ echo "Installing Task spooler.
 "
 echo "Installing Task spooler.
 " >> $log
-tar -xzvf $scriptdir/ts-0.7.4.tar.gz -C /bin/
+tar -xzvf $scriptdir/3rd_party_packages/ts-0.7.4.tar.gz -C /bin/
 cd /bin/ts-0.7.4/
 make 1>$stdout 2>$stderr || true
 make install 1>$stdout 2>$stderr || true

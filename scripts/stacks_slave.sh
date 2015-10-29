@@ -27,9 +27,8 @@ echo "Installing Stacks for RADseq applications.
 "
 echo "Installing Stacks for RADseq applications.
 " >> $log
-cd $homedir/akutils_ubuntu_installer
-tar -xzvf stacks-1.34.tar.gz  1>$stdout 2>$stderr || true
-cd stacks-1.34/
+tar -xzvf $scriptdir/3rd_party_packages/stacks-1.34.tar.gz  -C /bin/ 1>$stdout 2>$stderr || true
+cd bin/stacks-1.34/
 ./configure  1>$stdout 2>$stderr || true
 make  1>$stdout 2>$stderr || true
 wait
