@@ -79,7 +79,7 @@ fi
 fi
 
 ## Yppa Manager source
-yppacount1=`grep "webupd8team-y-ppa-manager" 2>/dev/null | wc -l`
+yppacount1=`grep "webupd8team-y-ppa-manager" $scriptdir/ppas/ppa_log.txt 2>/dev/null | wc -l`
 yppacount2=`ls /etc/apt/sources.list.d/webupd8team-y-ppa-manager*  2>/dev/null | wc -l`
 if [[ $yppacount1 == 0 ]]; then
 if [[ $yppacount2 == 0 ]]; then

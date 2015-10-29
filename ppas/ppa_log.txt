@@ -1,1 +1,3 @@
-## Log file to record ppa additions to prevent duplications
+## Log file to record ppa additions to prevent duplicationsindicator-multiload
+otto-kesselgulasch-gimp
+cran.rstudio.com

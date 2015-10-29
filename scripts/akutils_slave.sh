@@ -25,4 +25,14 @@ sed -i "s/\"$/:TARGET/" /etc/environment 2>/dev/null || true
 sed -i "s|TARGET$|$homedir/akutils\"|" /etc/environment 2>/dev/null || true
 	fi
 
+akutilstest=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
+	if [[ $akutilstest -ge 1 ]]; then
+	echo "akutils is in your path.
+	" >> $stdout
+	else
+	echo "Failed to add akutils to your path.
+	" >> $stderr
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	fi
+
 exit 0

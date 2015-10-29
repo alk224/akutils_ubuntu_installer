@@ -35,6 +35,15 @@ sed -i "s|TARGET$|/bin/ITSx_1.0.11\"|" /etc/environment 1>$stdout 2>$stderr || t
 	for hmm in `ls /bin/ITSx_1.0.11/ITSx_db/HMMs/*.hmm`; do
 		hmmpress -f $hmm 1>$stdout 2>$stderr || true
 	done
+	itsxtest=`command -v ITSx 2>/dev/null | wc -l`
+	if [[ $itsxtest -ge 1 ]]; then
+	echo "ITSx successfully installed.
+	" >> $stdout
+	else
+	echo "ITSx failed to properly install.
+	" >> $stderr
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	fi
 wait
 cd $homedir
 	else
