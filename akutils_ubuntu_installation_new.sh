@@ -227,13 +227,24 @@ source /etc/environment 1>$stdout 2>$stderr || true
 #		sudo bash $scriptdir/scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir $email
 #	fi
 
-## Update R packages
+## Update R packages if not been done in over a month
+	Rdate0=`head -1 $scriptdir/temp/R_installs_and_updates.txt`
+	Rdate1=`date +%Y%M%d`
+	span=`echo "$Rdate1-$Rdate0" | bc`
+	if [[ $span -ge 31 ]]; then
 	echo "Installing/updating R packages.
 	"
 	echo "Installing/updating R packages." >> $log
 	Rscript $scriptdir/scripts/r_slave.r 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
+	echo $Rdate1 > $scriptdir/temp/R_installs_and_updates.txt
+	else
+	echo "R installs/updates have been run within the past month.
+	Skipping."
+	echo "R installs/updates have been run within the past month.
+	Skipping." >> $log
+	fi
 
 ## Pip installs
 		sudo bash $scriptdir/scripts/pip_slave.sh $stdout $stderr $log $homedir $scriptdir $email
