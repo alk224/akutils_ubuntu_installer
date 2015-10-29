@@ -116,7 +116,7 @@ $date1
 ## Install Google Chrome if not already present
 	chrometest=`command -v google-chrome 2>/dev/null | wc -l`
 	if [[ $chrometest == 0 ]]; then
-		sudo bash $scriptdir/scripts/chrome_slave.sh $stdout $stderr $log
+		sudo bash $scriptdir/scripts/chrome_slave.sh $stdout $stderr $log $homedir $scriptdir
 	else
 	echo "Google Chrome is already installed.  Skipping.
 	"
