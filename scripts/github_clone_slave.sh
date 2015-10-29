@@ -26,6 +26,7 @@ echo "Cloning akutils github repository.
 "
 echo "Cloning akutils github repository." >> $log
 sudo -u $userid git clone https://github.com/alk224/akutils.git 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/akutils/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -38,6 +39,7 @@ echo "Doing fresh git pull of akutils." >> $log
 cd $homedir/akutils
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd
+chown -R $userid:$userid $homedir/akutils/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -51,6 +53,7 @@ echo "Cloning vsearch github repository.
 "
 echo "Cloning vsearch github repository." >> $log
 sudo -u $userid git clone https://github.com/torognes/vsearch.git 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/vsearch/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -63,6 +66,7 @@ echo "Doing fresh git pull of vsearch." >> $log
 cd $homedir/vsearch
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd
+chown -R $userid:$userid $homedir/vsearch/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -76,6 +80,7 @@ echo "Cloning bamtools github repository.
 "
 echo "Cloning bamtools github repository." >> $log
 sudo -u $userid git clone git://github.com/pezmaster31/bamtools.git 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/bamtools/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -88,6 +93,7 @@ echo "Doing fresh git pull of bamtools." >> $log
 cd $homedir/bamtools
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd
+chown -R $userid:$userid $homedir/bamtools/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -101,6 +107,7 @@ echo "Cloning QIIME test data github repository.
 "
 echo "Cloning QIIME test data github repository." >> $log
 sudo -u $userid git clone https://github.com/alk224/QIIME_test_data_16S.git 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/QIIME_test_data_16S/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -113,6 +120,7 @@ echo "Doing fresh git pull of QIIME_test_data_16S." >> $log
 cd $homedir/QIIME_test_data_16S
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd
+chown -R $userid:$userid $homedir/QIIME_test_data_16S/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -126,6 +134,7 @@ echo "Cloning QIIME databases github repository.
 "
 echo "Cloning QIIME databases github repository." >> $log
 sudo -u $userid git clone https://github.com/alk224/QIIME_databases.git 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/QIIME_databases
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -138,6 +147,7 @@ echo "Doing fresh git pull of QIIME_databases." >> $log
 cd $homedir/QIIME_databases
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd
+chown -R $userid:$userid $homedir/QIIME_databases
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -151,6 +161,7 @@ echo "Cloning QIIME deploy github repository.
 "
 echo "Cloning QIIME deploy github repository." >> $log
 sudo -u $userid git clone https://github.com/qiime/qiime-deploy.git 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/qiime-deploy/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -163,6 +174,7 @@ echo "Doing fresh git pull of QIIME deploy." >> $log
 cd $homedir/qiime-deploy
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd
+chown -R $userid:$userid $homedir/qiime-deploy/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -176,6 +188,7 @@ echo "Cloning QIIME deploy-conf github repository.
 "
 echo "Cloning QIIME deploy-conf github repository." >> $log
 sudo -u $userid git clone https://github.com/qiime/qiime-deploy-conf.git 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/qiime-deploy-conf/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log
@@ -188,6 +201,7 @@ echo "Doing fresh git pull of QIIME deploy." >> $log
 cd $homedir/qiime-deploy-conf
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd
+chown -R $userid:$userid $homedir/qiime-deploy-conf/
 echo "***** stdout:" >> $log
 cat $stdout >> $log
 echo "***** stderr:" >> $log

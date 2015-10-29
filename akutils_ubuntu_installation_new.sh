@@ -115,7 +115,7 @@ $date1
 	fi
 	## Set permissions of log file
 	chown $userid:$userid $log
-	chmod 666 $log
+	chmod 664 $log
 
 ## Install Google Chrome if not already present
 	chrometest=`command -v google-chrome 2>/dev/null | wc -l`
