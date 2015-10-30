@@ -48,14 +48,18 @@ sudo -u $userid git clone https://github.com/torognes/vsearch.git 1>$stdout 2>$s
 chown -R $userid:$userid $homedir/vsearch/
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 else
-echo "Doing fresh git pull of vsearch.
+echo "Vsearch repo present.  Not pulling from github.
 "
-echo "Doing fresh git pull of vsearch." >> $log
-cd $homedir/vsearch
-sudo -u $userid git pull 1>$stdout 2>$stderr || true
-cd
-chown -R $userid:$userid $homedir/vsearch/
-	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+echo "Vsearch repo present.  Not pulling from github.
+" >> $log
+#echo "Doing fresh git pull of vsearch.
+#"
+#echo "Doing fresh git pull of vsearch." >> $log
+#cd $homedir/vsearch
+#sudo -u $userid git pull 1>$stdout 2>$stderr || true
+#cd
+#chown -R $userid:$userid $homedir/vsearch/
+#	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 fi
 
 ## bamtools
@@ -67,14 +71,18 @@ sudo -u $userid git clone git://github.com/pezmaster31/bamtools.git 1>$stdout 2>
 chown -R $userid:$userid $homedir/bamtools/
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 else
-echo "Doing fresh git pull of bamtools.
+echo "Bamtools repo present.  Not pulling from github.
 "
-echo "Doing fresh git pull of bamtools." >> $log
-cd $homedir/bamtools
-sudo -u $userid git pull 1>$stdout 2>$stderr || true
-cd
-chown -R $userid:$userid $homedir/bamtools/
-	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+echo "Bamtools repo present.  Not pulling from github.
+" >> $log
+#echo "Doing fresh git pull of bamtools.
+#"
+#echo "Doing fresh git pull of bamtools." >> $log
+#cd $homedir/bamtools
+#sudo -u $userid git pull 1>$stdout 2>$stderr || true
+#cd
+#chown -R $userid:$userid $homedir/bamtools/
+#	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 fi
 
 ## QIIME_test_data_16S
