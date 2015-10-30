@@ -114,8 +114,11 @@ $date1
 	chmod 664 $log
 
 ## Source existing files
+source $homedir/.bashrc
+source /etc/environment
 sudo -s source $homedir/.bashrc
 sudo -s source /etc/environment
+
 
 ## Install Google Chrome if not already present
 	chrometest=`command -v google-chrome 2>/dev/null | wc -l`
@@ -178,7 +181,6 @@ wait
 akutilstest=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
 	if [[ $akutilstest == 0 ]]; then
 		sudo bash $scriptdir/scripts/akutils_slave.sh $stdout $stderr $log $homedir $scriptdir
-$scriptdir
 	else
 	echo "akutils already in your path.
 	"
@@ -249,6 +251,8 @@ $scriptdir
 
 sudo -s source $homedir/.bashrc 1>$stdout 2>$stderr || true
 sudo -s source /etc/environment 1>$stdout 2>$stderr || true
+source $homedir/.bashrc 1>$stdout 2>$stderr || true
+source /etc/environment 1>$stdout 2>$stderr || true
 
 ## Install Stacks if not already present
 #	stackstest=`command -v cstacks 2>/dev/null | wc -l`
@@ -290,6 +294,8 @@ sudo -s source /etc/environment 1>$stdout 2>$stderr || true
 ## Update sources
 sudo -s source $homedir/.bashrc
 sudo -s source /etc/environment
+source $homedir/.bashrc
+source /etc/environment
 
 ## Run QIIME deploy
 		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
@@ -299,6 +305,9 @@ wait
 sudo -s source $homedir/.bashrc
 sudo -s source /etc/environment
 sudo -s source $homedir/qiime_1.9.1/activate.sh
+source $homedir/.bashrc
+source /etc/environment
+source $homedir/qiime_1.9.1/activate.sh
 print_qiime_config.py -tf
 
 ## Copy help files to folder on desktop
@@ -306,7 +315,7 @@ if [[ -f "$homedir/Desktop/Using\ the\ task\ spooler\ queue.html" ]]; then
 rm -r $homedir/Desktop/Using\ the\ task\ spooler\ queue.html
 fi
 if [[ -f "$homedir/Desktop/Disk\ management\ instructions.html" ]]; then
-rm -r $homedir/Desktop/Disk\ management\ instructions.html
+rm -r $homedir/Desktop/RAID\ disk\ management\ instructions.html
 fi
 sudo -u $userid cp $homedir/akutils_ubuntu_installer/docs/*.html $homedir/Desktop/
 

@@ -39,6 +39,7 @@ sed -i "s|TARGET$|/bin/ITSx_1.0.11\"|" /etc/environment 1>$stdout 2>$stderr || t
 wait
 
 sudo -s source /etc/environment
+source /etc/environment
 	itsxtest1=`command -v ITSx 2>/dev/null | wc -l`
 	if [[ $itsxtest1 -ge 1 ]]; then
 	echo "ITSx successfully installed.

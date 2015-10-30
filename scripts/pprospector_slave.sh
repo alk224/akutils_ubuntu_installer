@@ -28,6 +28,7 @@ python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/ 1>$stdout 
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 sed -i "s/\"$/:TARGET/" /etc/environment 1>$stdout 2>$stderr || true
 sed -i "s|TARGET$|/bin/pprospector-1.0.1/scripts\"|" /etc/environment 1>$stdout 2>$stderr || true
+sudo -s source /etc/environment 1>$stdout 2>$stderr || true
 source /etc/environment 1>$stdout 2>$stderr || true
 cp $homedir/akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/ 1>$stdout 2>$stderr || true
 else
