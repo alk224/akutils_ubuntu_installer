@@ -1,7 +1,7 @@
-*** 2015-10-28
-Installer seems to be broken.  I am working on it and will advise
-when it is again functioning.  Sorry for the inconvenience.
-
+*** 2015-10-30
+Installer has been completely restructured and is functional again after breaking
+a few days ago.  I took out the Stacks component where the trouble was so I can
+troubleshoot it later.  Happy QIIMEing again.
 
 Date: 2015-08-29
 Author: Andrew Krohn
