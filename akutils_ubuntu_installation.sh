@@ -114,11 +114,10 @@ $date1
 	chmod 664 $log
 
 ## Source existing files
-source $homedir/.bashrc
-source /etc/environment
 sudo -s source $homedir/.bashrc
 sudo -s source /etc/environment
-
+source $homedir/.bashrc
+source /etc/environment
 
 ## Install Google Chrome if not already present
 	chrometest=`command -v google-chrome 2>/dev/null | wc -l`
