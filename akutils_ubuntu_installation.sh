@@ -292,7 +292,7 @@ source $homedir/.bashrc
 source /etc/environment
 
 ## Run QIIME deploy
-		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
 wait
 
 ## Source files and test qiime install
