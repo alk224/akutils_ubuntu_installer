@@ -109,9 +109,16 @@ $date1
 ********************************************************************************
 " >> $log
 	fi
-	## Set permissions of log file
-	chown $userid:$userid $log
-	chmod 664 $log
+
+## Set permissions of log file
+chown $userid:$userid $log
+chmod 664 $log
+
+## Set R_updates and ppa_log files to be ignored during future git pulls
+cd $homedir/akutils_ubuntu_installer/
+git update-index --assume-unchanged updates/ppa_log.txt
+git update-index --assume-unchanged updates/R_installs_and_updates
+cd
 
 ## Source existing files
 sudo -s source $homedir/.bashrc

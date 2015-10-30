@@ -12,6 +12,10 @@ log="$3"
 homedir="$4"
 scriptdir="$5"
 
+## Secondary test for chrome
+	chrometest=`command -v google-chrome 2>/dev/null | wc -l`
+	if [[ $chrometest == 0 ]]; then
+
 ## Install dependencies first via apt-get
 echo "Installing dependencies for Google Chrome install.
 "
@@ -40,4 +44,6 @@ echo "Installing Google Chrome.
 	dpkg -i $homedir/Downloads/google-chrome*.deb 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
+	fi
+
 exit 0
