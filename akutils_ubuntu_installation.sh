@@ -114,8 +114,8 @@ $date1
 	chmod 664 $log
 
 ## Source existing files
-source $homedir/.bashrc
-source /etc/environment
+sudo -s source $homedir/.bashrc
+sudo -s source /etc/environment
 
 ## Install Google Chrome if not already present
 	chrometest=`command -v google-chrome 2>/dev/null | wc -l`
@@ -247,8 +247,8 @@ $scriptdir
 	"
 	fi
 
-source $homedir/.bashrc 1>$stdout 2>$stderr || true
-source /etc/environment 1>$stdout 2>$stderr || true
+sudo -s source $homedir/.bashrc 1>$stdout 2>$stderr || true
+sudo -s source /etc/environment 1>$stdout 2>$stderr || true
 
 ## Install Stacks if not already present
 #	stackstest=`command -v cstacks 2>/dev/null | wc -l`
@@ -288,17 +288,17 @@ source /etc/environment 1>$stdout 2>$stderr || true
 	fi
 
 ## Update sources
-source $homedir/.bashrc
-source /etc/environment
+sudo -s source $homedir/.bashrc
+sudo -s source /etc/environment
 
 ## Run QIIME deploy
 		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
 wait
 
 ## Source files and test qiime install
-source $homedir/.bashrc
-source /etc/environment
-source $homedir/qiime_1.9.1/activate.sh
+sudo -s source $homedir/.bashrc
+sudo -s source /etc/environment
+sudo -s source $homedir/qiime_1.9.1/activate.sh
 print_qiime_config.py -tf
 
 ## Copy help files to folder on desktop

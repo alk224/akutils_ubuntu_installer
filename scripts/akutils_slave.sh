@@ -24,6 +24,7 @@ echo "Adding akutils repository to path (/etc/environment).
 sed -i "s/\"$/:TARGET/" /etc/environment 2>/dev/null || true
 sed -i "s|TARGET$|$homedir/akutils\"|" /etc/environment 2>/dev/null || true
 	fi
+sudo -s source /etc/environment
 
 akutilstest1=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
 	if [[ $akutilstest1 -ge 1 ]]; then
