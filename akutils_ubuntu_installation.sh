@@ -131,10 +131,10 @@ wait
 
 ## Add additional ppas if not present (relies partially on local log file in repository directory)
 ## Test for ppa log
-	mlicount=`grep "indicator-multiload" $scriptdir/ppas/ppa_log.txt  2>/dev/null | wc -l`
-	ottocount=`grep "otto-kesselgulasch-gimp" $scriptdir/ppas/ppa_log.txt 2>/dev/null | wc -l`
-	rppacount=`grep "cran.rstudio.com" $scriptdir/ppas/ppa_log.txt 2>/dev/null | wc -l`
-	yppacount=`grep "webupd8team-y-ppa-manager" $scriptdir/ppas/ppa_log.txt 2>/dev/null | wc -l`
+	mlicount=`grep "indicator-multiload" $scriptdir/updates/ppa_log.txt  2>/dev/null | wc -l`
+	ottocount=`grep "otto-kesselgulasch-gimp" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
+	rppacount=`grep "cran.rstudio.com" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
+	yppacount=`grep "webupd8team-y-ppa-manager" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
 	if [[ $mlicount == 0 ]] && [[ $ottocount == 0 ]] && [[ $rppacount == 0 ]] && [[ $yppacount == 0 ]]; then
 
 ## Add ppas if failed or skip if already present
@@ -257,7 +257,7 @@ source /etc/environment 1>$stdout 2>$stderr || true
 #	fi
 
 ## Update R packages if not been done in over a month
-	Rdate0=`head -1 $scriptdir/temp/R_installs_and_updates.txt`
+	Rdate0=`head -1 $scriptdir/updates/R_installs_and_updates.txt`
 	Rdate1=`date +%Y%m%d`
 	span=`echo "$Rdate1-$Rdate0" | bc`
 	if [[ $span -ge 31 ]]; then
