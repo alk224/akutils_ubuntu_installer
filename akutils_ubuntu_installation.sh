@@ -113,6 +113,10 @@ $date1
 	chown $userid:$userid $log
 	chmod 664 $log
 
+## Source existing files
+source $homedir/.bashrc
+source /etc/environment
+
 ## Install Google Chrome if not already present
 	chrometest=`command -v google-chrome 2>/dev/null | wc -l`
 	if [[ $chrometest == 0 ]]; then
@@ -174,48 +178,73 @@ wait
 akutilstest=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
 	if [[ $akutilstest == 0 ]]; then
 		sudo bash $scriptdir/scripts/akutils_slave.sh $stdout $stderr $log $homedir $scriptdir
+$scriptdir
+	else
+	echo "akutils already in your path.
+	"
 	fi
 
 ## Install vsearch if not already present
 	vsearchtest=`command -v vsearch 2>/dev/null | wc -l`
 	if [[ $vsearchtest == 0 ]]; then
 		sudo bash $scriptdir/scripts/vsearch_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "Vsearch already installed.
+	"
 	fi
 
 ## Install bamtools if not already present
 	bamtoolstest=`command -v bamtools 2>/dev/null | wc -l`
 	if [[ $bamtoolstest == 0 ]]; then
 		sudo bash $scriptdir/scripts/bamtools_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "Bamtools already installed.
+	"
 	fi
 
 ## Install HMMER if not already present
 	hmmertest=`command -v hmmsearch 2>/dev/null | wc -l`
 	if [[ $hmmertest == 0 ]]; then
 		sudo bash $scriptdir/scripts/hmmer_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "Hmmer already installed.
+	"
 	fi
 
 ## Install ITSx if not already present
 	itsxtest=`command -v ITSx 2>/dev/null | wc -l`
 	if [[ $itsxtest == 0 ]]; then
 		sudo bash $scriptdir/scripts/itsx_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "ITSx already installed.
+	"
 	fi
 
 ## Install smalt if not already present
 	smalttest=`command -v smalt 2>/dev/null | wc -l`
 	if [[ $smalttest == 0 ]]; then
 		sudo bash $scriptdir/scripts/smalt_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "Smalt already installed.
+	"
 	fi
 
 ## Install ea-utils if not already present
 	eautilstest=`command -v fastq-mcf 2>/dev/null | wc -l`
 	if [[ $eautilstest == 0 ]]; then
 		sudo bash $scriptdir/scripts/ea-utils_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "ea-utils already installed.
+	"
 	fi
 
 ## Install task spooler if not already present
 	tstest=`command -v ts 2>/dev/null | wc -l`
 	if [[ $tstest == 0 ]]; then
 		sudo bash $scriptdir/scripts/ts_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+	else
+	echo "Task spooler already installed.
+	"
 	fi
 
 source $homedir/.bashrc 1>$stdout 2>$stderr || true
@@ -253,6 +282,9 @@ source /etc/environment 1>$stdout 2>$stderr || true
 	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
 	if [[ $pptest == 0 ]]; then
 		sudo bash $scriptdir/scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+	else
+	echo "Primer prospector already installed.
+	"
 	fi
 
 ## Update sources

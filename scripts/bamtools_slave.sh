@@ -16,15 +16,16 @@ date0=`date`
 
 ## Install bamtools
 bamtoolstest=`command -v bamtools 2>/dev/null | wc -l`
-if [[ $bamtoolstest == 0 ]]; then
+	if [[ $bamtoolstest == 0 ]]; then
 echo "Installing bamtools.
 "
 echo "Installing bamtools." >> $log
 cd $homedir/bamtools
 mkdir build 1>$stdout 2>$stderr || true
 cd build
-cmake 1>$stdout 2>$stderr || true
+cmake .. 1>$stdout 2>$stderr || true
 make 1>$stdout 2>$stderr || true
+cp $homedir/bamtools/bin/bamtools /bin/
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 cd

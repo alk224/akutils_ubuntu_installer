@@ -24,7 +24,7 @@ echo "Installing programs from repositories.
 
 ## Install system load indicator if not present
 	mlindictest=`command -v indicator-multiload 2>/dev/null | wc -l`
-	if [[ $mdindictest -ge 1 ]]; then
+	if [[ $mdindictest == 0 ]]; then
 	echo "Installing multiload indicator.
 	" >> $log
 	apt-get -yfm install indicator-multiload 1>$stdout 2>$stderr || true

@@ -20,7 +20,8 @@ date0=`date`
 
 echo "Installing ITSx.
 "
-echo "Installing ITSx." >> $log
+echo "Installing ITSx.
+" >> $log
 tar -xzvf $scriptdir/3rd_party_packages/ITSx_1.0.11.tar.gz -C /bin/ 1>$stdout 2>$stderr || true
 sed -i "s/\"$/:TARGET/" /etc/environment 1>$stdout 2>$stderr || true
 sed -i "s|TARGET$|/bin/ITSx_1.0.11\"|" /etc/environment 1>$stdout 2>$stderr || true
@@ -35,8 +36,9 @@ sed -i "s|TARGET$|/bin/ITSx_1.0.11\"|" /etc/environment 1>$stdout 2>$stderr || t
 	for hmm in `ls /bin/ITSx_1.0.11/ITSx_db/HMMs/*.hmm`; do
 		hmmpress -f $hmm 1>$stdout 2>$stderr || true
 	done
-	itsxtest=`command -v ITSx 2>/dev/null | wc -l`
-	if [[ $itsxtest -ge 1 ]]; then
+wait
+	itsxtest1=`command -v ITSx 2>/dev/null | wc -l`
+	if [[ $itsxtest1 -ge 1 ]]; then
 	echo "ITSx successfully installed.
 	" >> $stdout
 	else

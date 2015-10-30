@@ -25,8 +25,8 @@ sed -i "s/\"$/:TARGET/" /etc/environment 2>/dev/null || true
 sed -i "s|TARGET$|$homedir/akutils\"|" /etc/environment 2>/dev/null || true
 	fi
 
-akutilstest=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
-	if [[ $akutilstest -ge 1 ]]; then
+akutilstest1=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
+	if [[ $akutilstest1 -ge 1 ]]; then
 	echo "akutils is in your path.
 	" >> $stdout
 	else
