@@ -25,15 +25,18 @@ scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 
 	if [[ "$1" != "install" ]] && [[ "$1" != "list" ]] && [[ "$1" != "test" ]]; then
 echo "
-ak_ubuntu_installation script (v0.0.1), 2015-08-29.  Script to facilitate
+ak_ubuntu_installation script (v1.0.1), 2015-10-31.  Script to facilitate
 installation of my favorite useful bioinformatics packages on a bare Ubuntu
 14.04 LTS install.  Tested on no other distros.
 
 The script will initially ask for brief input.  If you make a mistake,
 hit <ctrl-C> and start over.
 
-There are a few items in the middle of the install that also require user
-input.  The installation should resume once input is provided.
+Installation should be completely automatic and non-interactive.  If there are
+any errors during install, try rebooting your system first, then rerun the
+install script.  This often fixes installation errors that occur when
+dependencies are indeed installed, but the system fails to recognize their
+presence until the system is refreshed.
 
 Usage:
    bash ak_ubuntu_installer/ak_ubuntu_installation.sh (this help screen)
