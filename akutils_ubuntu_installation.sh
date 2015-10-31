@@ -143,8 +143,7 @@ wait
 	mlicount=`grep "indicator-multiload" $scriptdir/updates/ppa_log.txt  2>/dev/null | wc -l`
 	ottocount=`grep "otto-kesselgulasch-gimp" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
 	rppacount=`grep "cran.rstudio.com" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
-	yppacount=`grep "webupd8team-y-ppa-manager" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
-	if [[ $mlicount == 0 ]] && [[ $ottocount == 0 ]] && [[ $rppacount == 0 ]] && [[ $yppacount == 0 ]]; then
+	if [[ $mlicount == 0 ]] && [[ $ottocount == 0 ]] && [[ $rppacount == 0 ]]; then
 
 ## Add ppas if failed or skip if already present
 		sudo bash $scriptdir/scripts/ppa_slave.sh $stdout $stderr $log $homedir $scriptdir
