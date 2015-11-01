@@ -291,13 +291,13 @@ source /etc/environment 1>$stdout 2>$stderr || true
 		sudo bash $scriptdir/scripts/pip_slave.sh $stdout $stderr $log $homedir $scriptdir $email
 
 ## Install primer prospector and correct the analyze primers library if not already present
-	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
-	if [[ $pptest == 0 ]]; then
-		sudo bash $scriptdir/scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir $email
-	else
-	echo "Primer prospector already installed.
-	"
-	fi
+#	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
+#	if [[ $pptest == 0 ]]; then
+#		sudo bash $scriptdir/scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir $email
+#	else
+#	echo "Primer prospector already installed.
+#	"
+#	fi
 
 ## Update sources
 sudo -s source $homedir/.bashrc
@@ -308,6 +308,16 @@ source /etc/environment
 ## Run QIIME deploy
 		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
 wait
+
+## Update analyze_primers.py python library if necessary
+	pptest=`ls $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 2>/dev/null | wc -l`
+	if [[ $pptest == 1 ]]; then
+		sudo bash $scriptdir/scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir $email 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	else
+	echo "analyze_primers.py not where expected.  Python library not corrected.
+	"
+	fi
 
 ## Source files and test qiime install
 sudo -s source $homedir/.bashrc
