@@ -278,8 +278,9 @@ source /etc/environment 1>$stdout 2>$stderr || true
 	echo "Installing/updating R packages." >> $log
 	Rscript $scriptdir/scripts/r_slave.r 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	echo $Rdate1 > $scriptdir/updates/R_installs_and_updates.txt
 	wait
-	echo $Rdate1 > $scriptdir/temp/R_installs_and_updates.txt
+	echo $Rdate1 > $scriptdir/updates/R_installs_and_updates.txt
 	else
 	echo "R installs/updates have been run within the past month.  Skipping.
 	"
