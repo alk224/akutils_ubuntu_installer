@@ -16,24 +16,32 @@ email="$6"
 date0=`date`
 
 ## Install primer prospector and replace python library
-	pptest=`command -v analyze_primers.py 2>/dev/null | wc -l`
-	if [[ $pptest == 0 ]]; then
+	pptest=`ls $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 2>/dev/null | wc -l`
+	if [[ $pptest == 1 ]]; then
+	echo "Updating python library for analyze_primers.py script.
+	"
+	echo "Updating python library for analyze_primers.py script." >> $log
 
-echo "Installing Primer Prospector.
-"
-echo "Installing Primer Prospector." >> $log
-tar -xzvf $scriptdir/3rd_party_packages/pprospector-1.0.1.tar.gz -C /bin/ 1>$stdout 2>$stderr || true
-cd /bin/pprospector-1.0.1/
-python setup.py install --install-scripts=/bin/pprospector-1.0.1/bin/ 1>$stdout 2>$stderr || true
-	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-sed -i "s/\"$/:TARGET/" /etc/environment 1>$stdout 2>$stderr || true
-sed -i "s|TARGET$|/bin/pprospector-1.0.1/scripts\"|" /etc/environment 1>$stdout 2>$stderr || true
-sudo -s source /etc/environment 1>$stdout 2>$stderr || true
-source /etc/environment 1>$stdout 2>$stderr || true
-cp $homedir/akutils/akutils_resources/analyze_primers.py /bin/pprospector-1.0.1/primerprospector/ 1>$stdout 2>$stderr || true
-else
-echo "Primer prospector already installed.  Skipping.
-"
+## Check md5sums of existing and corrected libraries and replace if necessary
+	md5existing=`md5sum $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py | cut -f1 -d" " 2>/dev/null`
+	md5correct=`md5sum $homedir/akutils/akutils_resources/analyze_primers.py | cut -f1 -d" " 2>/dev/null`
+	echo "md5sum existing file: $md5existing"
+	echo "md5sum corrected file: $md5correct"
+	if [[ "$md5existing" -ne "$md5correct" ]]; then
+	echo "md5sums do not match.  Replacing existing file.
+	"
+
+## Replace old python library for analyze_primers.py script
+	cp $homedir/akutils/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 1>$stdout 2>$stderr
+
+	else
+	echo "md5sums match.  No changes made.
+	"
+	fi
+
+	else
+	echo "analyze_primers.py not where expected.  Python library not corrected.
+	"
 	fi
 
 exit 0
