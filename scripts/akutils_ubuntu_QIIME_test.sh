@@ -2,8 +2,7 @@
 ## Trap function to replace temporary global config file on exit status 1
 function finish {
 if [[ ! -z $backfile ]]; then
-cp $backfile $homedir/akutils/akutils_resources/akutils.global.config
-rm $backfile
+mv $backfile $homedir/akutils/akutils_resources/akutils.global.config
 fi
 }
 trap finish EXIT
@@ -554,17 +553,6 @@ $log
 	echo "Errors observed in $errorcount/$testcount tests.
 	" >> $log
 	fi
-
-
-
-
-## Replace config file for test if previous global config exists
-	if [[ $configtest == 1 ]]; then
-	mv $backfile $homedir/akutils/akutils_resources/akutils.global.config 2>/dev/null
-	fi
-
-#rm $testdir/std_err
-#rm $testdir/std_out
 
 res2=$(date +%s.%N)
 dt=$(echo "$res2 - $res0" | bc)
