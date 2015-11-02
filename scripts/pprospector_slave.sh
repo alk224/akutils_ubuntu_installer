@@ -26,7 +26,7 @@ date0=`date`
 	echo "Checking analyze_primers.py library file.
 md5sum existing file: $md5existing
 md5sum corrected file: $md5correct"
-	if [[ "$md5existing" -ne "$md5correct" ]]; then
+	if [[ "$md5existing" != "$md5correct" ]]; then
 	echo "md5sums do not match.  Replacing existing file.
 	"
 
