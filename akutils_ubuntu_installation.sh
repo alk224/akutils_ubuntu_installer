@@ -271,7 +271,7 @@ source /etc/environment 1>$stdout 2>$stderr || true
 ## Update R packages if not been done in over a month
 	Rdate0=`head -1 $scriptdir/updates/R_installs_and_updates.txt`
 	Rdate1=`date +%Y,%m,%d`
-	span=`python -c "from datetime import date; print (date($date1)-date($date0)).days"`
+	span=`python -c "from datetime import date; print (date($Rdate1)-date($Rdate0)).days"`
 	if [[ $span -ge 31 ]]; then
 	echo "Installing/updating R packages.
 	"
