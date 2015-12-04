@@ -287,6 +287,15 @@ source /etc/environment 1>$stdout 2>$stderr || true
 	" >> $log
 	fi
 
+## Install Rstudio if not already present
+	rstudiotest=`command -v rstudio 2>/dev/null | wc -l`
+	if [[ $rstudiotest == 0 ]]; then
+		sudo bash $scriptdir/scripts/rstudio_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "Rstudio already installed.
+	"
+	fi
+
 ## Pip installs
 		sudo bash $scriptdir/scripts/pip_slave.sh $stdout $stderr $log $homedir $scriptdir $email
 
