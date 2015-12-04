@@ -33,6 +33,33 @@ install.packages('randomForest') }
 if (is.element('vegan', installed.packages()[,1]) == FALSE) { 
 install.packages('vegan') }
 
+if (is.element('openxlsx', installed.packages()[,1]) == FALSE) { 
+install.packages('openxlsx') }
+
+if (is.element('coin', installed.packages()[,1]) == FALSE) { 
+install.packages('coin') }
+
+if (is.element('doParallel', installed.packages()[,1]) == FALSE) { 
+install.packages('doParallel') }
+
+if (is.element('DT', installed.packages()[,1]) == FALSE) { 
+install.packages('DT') }
+
+if (is.element('exactRankTests', installed.packages()[,1]) == FALSE) { 
+install.packages('exactRankTests') }
+
+if (is.element('foreach', installed.packages()[,1]) == FALSE) { 
+install.packages('foreach') }
+
+if (is.element('ggplot2', installed.packages()[,1]) == FALSE) { 
+install.packages('ggplot2') }
+
+if (is.element('Rcpp', installed.packages()[,1]) == FALSE) { 
+install.packages('Rcpp') }
+
+if (is.element('shiny', installed.packages()[,1]) == FALSE) { 
+install.packages('shiny') }
+
 ## BiocLite installs
 source('http://bioconductor.org/biocLite.R')
 pkgs <- rownames(installed.packages())
