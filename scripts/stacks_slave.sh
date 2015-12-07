@@ -17,7 +17,7 @@ date0=`date`
 
 ## Test for dependencies (use apache2)
 	apachetest=`command -v apache2 2>/dev/null | wc -l`
-	if [[ $apachetest -ge 1 ]]; then
+	if [[ "$apachetest" -eq "0" ]]; then
 echo "Dependencies are unmet. Correct this by running
 the installer once without passing --stacks.
 Exiting.
@@ -29,7 +29,7 @@ echo "Dependencies unmet.  Exiting.
 
 ## Install Stacks
 	stackstest=`command -v cstacks 2>/dev/null | wc -l`
-	if [[ $stackstest -ge 1 ]]; then
+	if [[ "$stackstest" -ge "1" ]]; then
 echo "Stacks already seems to be installed.
 Exiting.
 "
@@ -95,6 +95,11 @@ sudo sed -i 's/dbpass/stacks/' /usr/local/share/stacks/php/constants.php 1>$stdo
 ## Enable web-based exporting from MySQL database
 chown stacks /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 cd
+
+echo "Stacks installation complete.
+"
+echo "Stacks installation complete.
+" >> $log
 	fi
 	fi
 

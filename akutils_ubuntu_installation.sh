@@ -181,8 +181,8 @@ $date1
 ## Set R_updates and ppa_log files to be ignored during future git pulls
 cd $homedir/akutils_ubuntu_installer/
 git update-index --assume-unchanged updates/ppa_log.txt 1>$stdout 2>$stderr || true
-git update-index --assume-unchanged updates/R_installs_and_updates 1>$stdout 2>$stderr || true
-git update-index --assume-unchanged updates/R_installs_and_updates 1>$stdout 2>$stderr || true
+git update-index --assume-unchanged updates/R_installs_and_updates.txt 1>$stdout 2>$stderr || true
+git update-index --assume-unchanged updates/stacks.txt 1>$stdout 2>$stderr || true
 cd
 
 ## Source existing files
