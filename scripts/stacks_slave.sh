@@ -15,13 +15,27 @@ scriptdir="$5"
 email="$6"
 date0=`date`
 
+## Test for dependencies (use apache2)
+	apachetest=`command -v apache2 2>/dev/null | wc -l`
+	if [[ $apachetest -ge 1 ]]; then
+echo "Dependencies are unmet. Correct this by running
+the installer once without passing --stacks.
+Exiting.
+	"
+echo "Dependencies unmet.  Exiting.
+	" >> $log
+	exit 1
+	else
+
 ## Install Stacks
 	stackstest=`command -v cstacks 2>/dev/null | wc -l`
 	if [[ $stackstest -ge 1 ]]; then
-echo "Stacks already installed.  Skipping.
+echo "Stacks already seems to be installed.
+Exiting.
 "
-echo "Stacks already installed.  Skipping.
+echo "Stacks already installed.  Exiting.
 " >> $log
+	exit 1
 	else
 echo "Installing Stacks for RADseq applications.
 "
@@ -34,8 +48,8 @@ make  1>$stdout 2>$stderr || true
 wait
 sudo make install 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-	fi
-wait
+	wait
+
 ## Edit MySQL config file
 echo "Configuring mysql and apache webserver.
 "
@@ -81,5 +95,7 @@ sudo sed -i 's/dbpass/stacks/' /usr/local/share/stacks/php/constants.php 1>$stdo
 ## Enable web-based exporting from MySQL database
 chown stacks /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 cd
+	fi
+	fi
 
 exit 0

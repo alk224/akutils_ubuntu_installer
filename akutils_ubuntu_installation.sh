@@ -44,6 +44,7 @@ Usage:
    bash ak_ubuntu_installer/ak_ubuntu_installation.sh test (test of installed software)
    sudo bash ak_ubuntu_installer/ak_ubuntu_installation.sh install (installation)
    sudo bash ak_ubuntu_installer/ak_ubuntu_installation.sh install --force-R (run R updates only)
+   sudo bash ak_ubuntu_installer/ak_ubuntu_installation.sh install --stacks (install Stacks)
 "
 	exit 0
 	fi
@@ -83,11 +84,11 @@ Usage:
 
 ## Update R packages if --force-R supplied
 	if [[ "$2" == "--force-R" ]]; then
-	Rdate1=`date +%Y,%m,%d`
+	Rdate=`date +%Y,%m,%d`
 	echo "--force-R supplied.
 
-Installing/updating R packages and exiting.  This takes a while so please
-be patient.
+Installing/updating R packages and exiting.
+This takes a while so please be patient.
 	"
 	echo "--force-R supplied.
 
@@ -96,9 +97,9 @@ Installing/updating R packages and exiting." >> $log
 
 	rtest=`command -v R 2>/dev/null | wc -l`
 	if [[ $rtest == 0 ]]; then
-		echo "R does not seem to be installed.  Install it manually
-or run the installer script without --force-R (this will install R and run
-all updates.
+		echo "R does not seem to be installed.
+Install it manually or run the installer script without
+--force-R (this will install R and run all updates).
 		"
 		
 		exit 1
@@ -106,7 +107,7 @@ all updates.
 	Rscript $scriptdir/scripts/r_slave.r 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
-	echo $Rdate1 > $scriptdir/updates/R_installs_and_updates.txt
+	echo $Rdate > $scriptdir/updates/R_installs_and_updates.txt
 
 	echo "R updates completed.
 	"
@@ -114,6 +115,31 @@ all updates.
 	" >> $log
 	exit 0
 	fi
+	fi
+
+## Run Stacks installer if --stacks supplied
+	if [[ "$2" == "--stacks" ]]; then
+	stacksdate=`date +%Y,%m,%d`
+	echo "--stacks supplied.
+
+Installing/updating Stacks and exiting.  This takes a while so please
+be patient.
+	"
+	echo "--stacks supplied.
+
+Installing/updating Stacks and exiting." >> $log
+	date >> $log
+
+	sudo bash $scriptdir/scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+	echo $stacksdate > $scriptdir/updates/stacks.txt
+
+	echo "Stacks installation completed.
+	"
+	echo "Stacks installation completed.
+	" >> $log
+	exit 0
 	fi
 
 ## Initial dialogue
