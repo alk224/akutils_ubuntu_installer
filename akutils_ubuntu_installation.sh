@@ -117,6 +117,40 @@ $date1
 chown $userid:$userid $log
 chmod 664 $log
 
+## Update R packages if --force-R supplied
+	if [[ "$2" == "--force-R" ]]; then
+	Rdate1=`date +%Y,%m,%d`
+	echo "--force-R supplied.
+
+Installing/updating R packages and exiting.  This takes a while so please
+be patient.
+	"
+	echo "--force-R supplied.
+
+Installing/updating R packages and exiting." >> $log
+
+	rtest=`command -v R 2>/dev/null | wc -l`
+	if [[ $rtest == 0 ]]; then
+		echo "R does not seem to be installed.  Install it manually
+or run the installer script without --force-R (this will install R and run
+all updates.
+		"
+		
+		exit 1
+	else
+	Rscript $scriptdir/scripts/r_slave.r 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+	echo $Rdate1 > $scriptdir/updates/R_installs_and_updates.txt
+
+	echo "R updates completed.
+	"
+	echo "R updates completed.
+	" >> $log
+	exit 0
+	fi
+	fi
+
 ## Set R_updates and ppa_log files to be ignored during future git pulls
 cd $homedir/akutils_ubuntu_installer/
 git update-index --assume-unchanged updates/ppa_log.txt 1>$stdout 2>$stderr || true

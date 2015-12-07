@@ -66,12 +66,19 @@ watch cat /proc/mdstat
 cat /proc/sys/dev/raid/speed_limit_min
 cat /proc/sys/dev/raid/speed_limit_max
 </pre>
-<p>   I like to increase the default values (1000 and 200000, respectively) to 20000 and 1000000.  You will need to use sudo and nano to change the values in these files:</p>
+<p>   I like to increase the default values (1000 and 200000, respectively) to 50000 and 2000000 (dependent on your system specs).  You will need to use sudo and nano to change the values in these files:</p>
 <pre>
 sudo nano /proc/sys/dev/raid/speed_limit_min
 sudo nano /proc/sys/dev/raid/speed_limit_max
 </pre>
-<p>   Even if your RAID is actively resyncing, a speed increase may immediately be noticable, so keep an eye on the terminal watching <strong>/proc/mdstat</strong>. Once the resync is done, you can finally format and mount your array. Again, use gparted since even if you used 2TB or smaller disks, your assembled RAID is likely to be much larger. Create a GPT partition table in gparted, close gparted, and then format the disk thusly (assuming your RAID device is called "md0"):</p>
+<p>   Additional speed improvements can be had by setting read-ahead option (all RAID levels), strip-cache size (RAID 5 or 6 only), and disabling NCQ on RAID-member drives which can interfere with Linux RAID optimizations:</p>
+<pre>
+sudo blockdev --setra 65536 /dev/md0
+sudo nano /sys/block/md0/md/stripe_cache_size # set value to 32768 (max) and will use system RAM
+sudo nano /sys/block/sdb/device/queue_depth # set value to 1
+sudo nano /sys/block/sdc/device/queue_depth # set value to 1
+</pre>
+<p>   Even if your RAID is actively resyncing, a speed increase may immediately be noticable, so keep an eye on the terminal watching <strong>/proc/mdstat</strong>. Once the resync is done, you can finally format and mount your array (can actually do this while syncing). Format the disk thusly (assuming your RAID device is called "md0"):</p>
 <pre>
 sudo mkfs.ext4 /dev/md0
 </pre>
@@ -152,6 +159,8 @@ sudo mdadm /dev/md0 --add /dev/sdb
 <a href="https://www.thomas-krenn.com/en/wiki/Mdadm_recover_degraded_Array">Mdadm recover degraded array</a>
 <br>
 <a href="http://www.woktron.com/secure/knowledgebase/196/How-to-recover-from-a-broken-RAID-array-with-MDADM.html">How to recover from a broken RAID array with MDADM</a>
+<br>
+<a href="http://www.cyberciti.biz/tips/linux-raid-increase-resync-rebuild-speed.html">5 Tips To Speed Up Linux Software Raid Rebuilding And Re-syncing</a>
 </h3>
 <br>
 <hr>
