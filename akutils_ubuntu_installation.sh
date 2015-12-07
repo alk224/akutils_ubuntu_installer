@@ -43,6 +43,7 @@ Usage:
    bash ak_ubuntu_installer/ak_ubuntu_installation.sh list (list of software)
    bash ak_ubuntu_installer/ak_ubuntu_installation.sh test (test of installed software)
    sudo bash ak_ubuntu_installer/ak_ubuntu_installation.sh install (installation)
+   sudo bash ak_ubuntu_installer/ak_ubuntu_installation.sh install --force-R (run R updates only)
 "
 	exit 0
 	fi
@@ -65,23 +66,6 @@ Usage:
 	exit 0
 	fi
 
-## Initial dialogue
-echo "
-***** Starting ak_ubuntu_installer.sh *****
-
-You can cancel during this initial dialogue with <ctrl-C>
-
-Enter your email address (to configure task spooler):
-"
-read email
-echo "
-Enter your computers hostname if it has one.
-Example: enggen.bio.nau.edu
-Just hit enter if you don't have one.
-"
-read host
-echo ""
-
 ## Set log file
 	randcode=`cat /dev/urandom |tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1` 2>/dev/null
 	date0=`date +%Y%m%d_%I%M%p`
@@ -92,30 +76,10 @@ echo ""
 
 	if [[ $logcount -ge 1 ]]; then
 	log=`ls $scriptdir/log_akutils_ubuntu_installation* | head -1`
-	echo "
-********************************************************************************
-Installation script restarted.
-$date1
-
-********************************************************************************
-" >> $log
-	fi
-
-	if [[ $logcount -eq 0 ]]; then
-	log=($scriptdir/log_akutils_ubuntu_installation_$randcode\_$date0.txt)
-	touch $log
-	echo "
-********************************************************************************
-Installation script started.
-$date1
-
-********************************************************************************
-" >> $log
-	fi
 
 ## Set permissions of log file
-chown $userid:$userid $log
-chmod 664 $log
+	chown $userid:$userid $log
+	chmod 664 $log
 
 ## Update R packages if --force-R supplied
 	if [[ "$2" == "--force-R" ]]; then
@@ -128,6 +92,7 @@ be patient.
 	echo "--force-R supplied.
 
 Installing/updating R packages and exiting." >> $log
+	date >> $log
 
 	rtest=`command -v R 2>/dev/null | wc -l`
 	if [[ $rtest == 0 ]]; then
@@ -149,6 +114,44 @@ all updates.
 	" >> $log
 	exit 0
 	fi
+	fi
+
+## Initial dialogue
+echo "
+***** Starting ak_ubuntu_installer.sh *****
+
+You can cancel during this initial dialogue with <ctrl-C>
+
+Enter your email address (to configure task spooler):
+"
+read email
+echo "
+Enter your computers hostname if it has one.
+Example: enggen.bio.nau.edu
+Just hit enter if you don't have one.
+"
+read host
+echo ""
+
+	echo "
+********************************************************************************
+Installation script restarted.
+$date1
+
+********************************************************************************
+" >> $log
+	fi
+
+	if [[ $logcount -eq 0 ]]; then
+	log=($scriptdir/log_akutils_ubuntu_installation_$randcode\_$date0.txt)
+	touch $log
+	echo "
+********************************************************************************
+Installation script started.
+$date1
+
+********************************************************************************
+" >> $log
 	fi
 
 ## Set R_updates and ppa_log files to be ignored during future git pulls
