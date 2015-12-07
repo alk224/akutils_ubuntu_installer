@@ -42,7 +42,8 @@ echo "Installing Stacks for RADseq applications.
 echo "Installing Stacks for RADseq applications.
 " >> $log
 tar -xzvf $scriptdir/3rd_party_packages/stacks-1.35.tar.gz  -C /bin/ 1>$stdout 2>$stderr || true
-cd bin/stacks-1.35/
+wait
+cd /bin/stacks-1.35/
 ./configure  1>$stdout 2>$stderr || true
 make  1>$stdout 2>$stderr || true
 wait
