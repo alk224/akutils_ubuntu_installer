@@ -73,7 +73,9 @@ Usage:
 	date1=`date -R`
 	logcount=`ls $scriptdir/log_akutils_ubuntu_installation* 2>/dev/null | wc -l`
 	stderr=($scriptdir/temp/$randcode\_stderr)
+	touch $stderr
 	stdout=($scriptdir/temp/$randcode\_stdout)
+	touch $stdout
 
 	if [[ $logcount -ge 1 ]]; then
 	log=`ls $scriptdir/log_akutils_ubuntu_installation* | head -1`
@@ -133,12 +135,8 @@ Installing/updating Stacks and exiting." >> $log
 	sudo bash $scriptdir/scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
-	echo $stacksdate > $scriptdir/updates/stacks.txt
+	sudo -s echo $stacksdate > $scriptdir/updates/stacks.txt
 
-	echo "Stacks installation completed.
-	"
-	echo "Stacks installation completed.
-	" >> $log
 	exit 0
 	fi
 
@@ -183,6 +181,7 @@ $date1
 ## Set R_updates and ppa_log files to be ignored during future git pulls
 cd $homedir/akutils_ubuntu_installer/
 git update-index --assume-unchanged updates/ppa_log.txt 1>$stdout 2>$stderr || true
+git update-index --assume-unchanged updates/R_installs_and_updates 1>$stdout 2>$stderr || true
 git update-index --assume-unchanged updates/R_installs_and_updates 1>$stdout 2>$stderr || true
 cd
 
