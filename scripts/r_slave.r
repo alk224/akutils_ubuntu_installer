@@ -60,6 +60,10 @@ install.packages('Rcpp') }
 if (is.element('shiny', installed.packages()[,1]) == FALSE) { 
 install.packages('shiny') }
 
+## ANCOM install
+if (is.element('ancom.R', installed.packages()[,1]) == FALSE) { 
+install.packages('akutils_ubuntu_installer/3rd_party_packages/ancom.R_1.1-2.tar.gz') }
+
 ## BiocLite installs
 source('http://bioconductor.org/biocLite.R')
 pkgs <- rownames(installed.packages())
