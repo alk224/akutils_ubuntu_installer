@@ -75,6 +75,18 @@ install.packages('jagsUI') }
 if (is.element('BEST', installed.packages()[,1]) == FALSE) { 
 install.packages('BEST') }
 
+if (is.element('qiimer', installed.packages()[,1]) == FALSE) { 
+install.packages('qiimer') }
+
+if (is.element('testthat', installed.packages()[,1]) == FALSE) { 
+install.packages('testthat') }
+
+if (is.element('devtools', installed.packages()[,1]) == FALSE) { 
+install.packages('devtools') }
+
+if (is.element('biomformat', installed.packages()[,1]) == FALSE) {
+devtools::install_github("biomformat", "joey711") }
+
 ## ANCOM install
 if (is.element('ancom.R', installed.packages()[,1]) == FALSE) { 
 install.packages('akutils_ubuntu_installer/3rd_party_packages/ancom.R_1.1-2.tar.gz') }
@@ -90,4 +102,10 @@ biocLite('DESeq2') }
 
 if (is.element('metagenomeSeq', installed.packages()[,1]) == FALSE) { 
 biocLite('metagenomeSeq') }
+
+if (is.element('phyloseq', installed.packages()[,1]) == FALSE) { 
+biocLite('phyloseq') }
+
+if (is.element('rhdf5', installed.packages()[,1]) == FALSE) { 
+biocLite('rhdf5') }
  

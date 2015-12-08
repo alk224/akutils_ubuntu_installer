@@ -64,7 +64,11 @@ sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-	mysql -u root --execute="GRANT ALL ON *.* TO "$userid"@"localhost""; #$stdout $stderr $log
+
+	mysql -u root -e "FLUSH PRIVILEGES";
+	mysql -u root -e "SET PASSWORD FOR root@localhost=PASSWORD('')";
+	mysql -u root -e "SET PASSWORD FOR $userid@localhost=PASSWORD('')";
+	mysql -u root --execute="GRANT ALL ON *.* TO "$userid"@"localhost"";
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 
 ## Enable Stacks web interface in Apache webserver
