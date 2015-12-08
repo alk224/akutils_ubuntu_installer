@@ -12,7 +12,7 @@ stderr="$2"
 log="$3"
 homedir="$4"
 scriptdir="$5"
-email="$6"
+userid="$6"
 date0=`date`
 
 ## Test for dependencies (use apache2)
@@ -60,12 +60,13 @@ echo "---Copy mysql.cnf file." >> $log
 sudo cp /usr/local/share/stacks/sql/mysql.cnf.dist /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "---Change mysql permissions." >> $log
-mysql> GRANT ALL ON *.* TO 'stacks'@'localhost' IDENTIFIED BY 'stacks';
-	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-sed -i "s/password=\w+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf
-	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	mysql -u root --execute="GRANT ALL ON *.* TO "$userid"@"localhost""; #$stdout $stderr $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+
 ## Enable Stacks web interface in Apache webserver
 echo "---Build stacks.conf file for Apache webserver." >> $log
 sudo echo '<Directory "/usr/local/share/stacks/php">

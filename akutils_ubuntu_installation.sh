@@ -132,7 +132,7 @@ be patient.
 Installing/updating Stacks and exiting." >> $log
 	date >> $log
 
-	sudo bash $scriptdir/scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir
+	sudo bash $scriptdir/scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
 	sudo -s echo $stacksdate > $scriptdir/updates/stacks.txt
