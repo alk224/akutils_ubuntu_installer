@@ -78,6 +78,25 @@ Installed previously." >> $log
 fi
 fi
 
+## LibreOffice update to version 5
+libreppacount1=`grep "libreoffice" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
+libreppacount2=`cat /etc/apt/sources.list | grep "libreoffice"  2>/dev/null | wc -l`
+if [[ $libreppacount1 == 0 ]]; then
+if [[ $libreppacount2 == 0 ]]; then
+add-apt-repository -y ppa:libreoffice/ppa
+echo "LibreOffice ppa:
+Installed on $date0" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+echo "libreoffice" >> $scriptdir/updates/ppa_log.txt
+d="1"
+else
+echo "libreoffice" >> $scriptdir/updates/ppa_log.txt
+echo "LibreOffice ppa:
+Installed previously." >> $log
+fi
+fi
+
+
 ## Filter ppa list if any new ppas were actually installed
 installcount=`echo "$a+$b+$c+$d" | bc`
 if [[ $installcount -ge 1 ]]; then
