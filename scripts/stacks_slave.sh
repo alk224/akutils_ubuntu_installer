@@ -44,7 +44,7 @@ echo "Installing Stacks for RADseq applications.
 tar -xzvf $scriptdir/3rd_party_packages/stacks-1.35.tar.gz  -C /bin/ 1>$stdout 2>$stderr || true
 wait
 cd /bin/stacks-1.35/
-./configure  1>$stdout 2>$stderr || true
+./configure --enable-bam --with-bam-include-path=/usr/include/samtools --with-bam-lib-path=/usr/lib 1>$stdout 2>$stderr || true
 make  1>$stdout 2>$stderr || true
 wait
 sudo make install 1>$stdout 2>$stderr || true
@@ -66,9 +66,9 @@ sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 
 	mysql -u root -e "FLUSH PRIVILEGES";
-	mysql -u root -e "SET PASSWORD FOR root@localhost=PASSWORD('')";
-	mysql -u root -e "SET PASSWORD FOR $userid@localhost=PASSWORD('')";
-	mysql -u root --execute="GRANT ALL ON *.* TO "$userid"@"localhost"";
+	mysql -u root -e "SET PASSWORD FOR root@localhost=''";
+	mysql -u root -e "SET PASSWORD FOR $userid@localhost=''";
+	mysql -u root -e "GRANT ALL ON *.* TO $userid@localhost";
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 
 ## Enable Stacks web interface in Apache webserver
@@ -94,12 +94,14 @@ wait
 echo "---Copy php constants file and change permissions." >> $log
 cp /usr/local/share/stacks/php/constants.php.dist /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-sudo sed -i 's/dbuser/stacks/' /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
+sudo sed -i "s/dbuser/$userid/" /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-sudo sed -i 's/dbpass/stacks/' /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
+sudo sed -i "s/dbpass/\"\"/" /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+
 ## Enable web-based exporting from MySQL database
-chown stacks /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
+chown $userid /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
+chmod 775 /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 cd
 
 echo "Stacks installation complete.
