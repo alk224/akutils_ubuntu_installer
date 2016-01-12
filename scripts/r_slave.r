@@ -84,6 +84,15 @@ install.packages('testthat') }
 if (is.element('devtools', installed.packages()[,1]) == FALSE) { 
 install.packages('devtools') }
 
+if (is.element('plyr', installed.packages()[,1]) == FALSE) { 
+install.packages('plyr') }
+
+if (is.element('dplyr', installed.packages()[,1]) == FALSE) { 
+install.packages('dplyr') }
+
+if (is.element('reshape2', installed.packages()[,1]) == FALSE) { 
+install.packages('reshape2') }
+
 if (is.element('biomformat', installed.packages()[,1]) == FALSE) {
 devtools::install_github("biomformat", "joey711") }
 
