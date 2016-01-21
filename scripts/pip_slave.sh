@@ -43,6 +43,20 @@ echo "Numpy already correct version (1.9.1).
 "
 fi
 
+## Install cutadapt
+	cutadapttest=`command -v cutadapt 2>/dev/null | wc -l`
+	if [[ $cutadapttest == 0 ]]; then
+echo "Installing Cutadapt.
+"
+echo "Installing Cutadapt." >> $log
+pip install cutadapt 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+wait
+else
+echo "Cutadapt already installed.
+"
+fi
+
 ## Install scipy
 scipyver=`python -c "import scipy; print scipy.version.version" 2>/dev/null`
 if [[ $scipyver != 0.15.1 ]]; then
