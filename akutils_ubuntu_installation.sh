@@ -248,7 +248,7 @@ wait
 wait
 
 ## Add akutils to path if not already present
-akutilstest=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
+akutilstest=`command -v akutils 2>/dev/null | wc -l`
 	if [[ $akutilstest == 0 ]]; then
 		sudo bash $scriptdir/scripts/akutils_slave.sh $stdout $stderr $log $homedir $scriptdir
 	else
@@ -271,6 +271,15 @@ akutilstest=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
 		sudo bash $scriptdir/scripts/bamtools_slave.sh $stdout $stderr $log $homedir $scriptdir
 	else
 	echo "Bamtools already installed.
+	"
+	fi
+
+## Install ghost-tree if not already present
+	ghosttreetest=`command -v ghost-tree 2>/dev/null | wc -l`
+	if [[ $ghosttreetest == 0 ]]; then
+		sudo bash $scriptdir/scripts/ghost-tree_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "ghost-tree already installed.
 	"
 	fi
 

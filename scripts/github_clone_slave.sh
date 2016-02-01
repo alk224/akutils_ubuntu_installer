@@ -21,21 +21,21 @@ echo "Cloning github repositories.
 " >> $log
 
 ## akutils
-if [[ ! -d $homedir/akutils ]]; then
-echo "Cloning akutils github repository.
+if [[ ! -d $homedir/akutils-v1.2 ]]; then
+echo "Cloning akutils-v1.2 github repository.
 "
-echo "Cloning akutils github repository." >> $log
-sudo -u $userid git clone https://github.com/alk224/akutils.git 1>$stdout 2>$stderr || true
-chown -R $userid:$userid $homedir/akutils/
+echo "Cloning akutils-v1.2 github repository." >> $log
+sudo -u $userid git clone https://github.com/alk224/akutils-v1.2.git 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/akutils-v1.2/
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 else
-echo "Doing fresh git pull of akutils.
+echo "Doing fresh git pull of akutils-v1.2.
 "
-echo "Doing fresh git pull of akutils." >> $log
-cd $homedir/akutils
+echo "Doing fresh git pull of akutils-v1.2." >> $log
+cd $homedir/akutils-v1.2
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd
-chown -R $userid:$userid $homedir/akutils/
+chown -R $userid:$userid $homedir/akutils-v1.2/
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 fi
 
@@ -106,9 +106,9 @@ fi
 
 ## QIIME_databases
 if [[ ! -d $homedir/QIIME_databases ]]; then
-echo "Cloning QIIME databases github repository.
+echo "Cloning_QIIME databases github repository.
 "
-echo "Cloning QIIME databases github repository." >> $log
+echo "Cloning_QIIME databases github repository." >> $log
 sudo -u $userid git clone https://github.com/alk224/QIIME_databases.git 1>$stdout 2>$stderr || true
 chown -R $userid:$userid $homedir/QIIME_databases
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
@@ -120,6 +120,25 @@ cd $homedir/QIIME_databases
 sudo -u $userid git pull 1>$stdout 2>$stderr || true
 cd
 chown -R $userid:$userid $homedir/QIIME_databases
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+fi
+
+## ghost-tree
+if [[ ! -d $homedir/ghost-tree ]]; then
+echo "Cloning ghost-tree github repository.
+"
+echo "Cloning ghost-tree github repository." >> $log
+sudo -u $userid git clone https://github.com/JTFouquier/ghost-tree.git 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/ghost-tree
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+else
+echo "Doing fresh git pull of ghost-tree.
+"
+echo "Doing fresh git pull of ghost-tree." >> $log
+cd $homedir/ghost-tree
+sudo -u $userid git pull 1>$stdout 2>$stderr || true
+cd
+chown -R $userid:$userid $homedir/ghost-tree
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 fi
 
