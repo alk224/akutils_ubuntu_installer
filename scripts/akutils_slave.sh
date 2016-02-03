@@ -15,18 +15,23 @@ scriptdir="$5"
 date0=`date`
 
 ## Add akutils to path
-akutilstest=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
+akutilstest=`command -v akutils 2>/dev/null | wc -l`
 	if [[ $akutilstest == 0 ]]; then
-echo "Adding akutils repository to path (/etc/environment).
+	if [[ -d ~/akutils-v1.2 ]]; then
+echo "Adding akutils repository to path (~/.bashrc).
 "
-echo "Adding akutils repository to path (/etc/environment).
+echo "Adding akutils repository to path (~/.bashrc).
 " >> $log
-sed -i "s/\"$/:TARGET/" /etc/environment 2>/dev/null || true
-sed -i "s|TARGET$|$homedir/akutils\"|" /etc/environment 2>/dev/null || true
+cd
+cd akutils-v1.2
+cd
+bash install 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	fi
-source /etc/environment
+	fi
+source ~/.bashrc
 
-akutilstest1=`command -v akutils_config_utility.sh 2>/dev/null | wc -l`
+akutilstest1=`command -v akutils 2>/dev/null | wc -l`
 	if [[ $akutilstest1 -ge 1 ]]; then
 	echo "akutils is in your path.
 	" >> $stdout

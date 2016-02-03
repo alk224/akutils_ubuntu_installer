@@ -123,6 +123,26 @@ chown -R $userid:$userid $homedir/QIIME_databases
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 fi
 
+## fqgrep
+if [[ ! -d $homedir/fqgrep ]]; then
+echo "Cloning fqgrep github repository.
+"
+echo "Cloning fqgrep github repository." >> $log
+sudo -u $userid git clone git://github.com/indraniel/fqgrep.git;
+ 1>$stdout 2>$stderr || true
+chown -R $userid:$userid $homedir/fqgrep
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+else
+echo "Doing fresh git pull of fqgrep.
+"
+echo "Doing fresh git pull of fqgrep." >> $log
+cd $homedir/fqgrep
+sudo -u $userid git pull 1>$stdout 2>$stderr || true
+cd
+chown -R $userid:$userid $homedir/fqgrep
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+fi
+
 ## ghost-tree
 if [[ ! -d $homedir/ghost-tree ]]; then
 echo "Cloning ghost-tree github repository.
