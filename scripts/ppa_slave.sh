@@ -17,6 +17,7 @@ a="0"
 b="0"
 c="0"
 d="0"
+e="0"
 
 echo "Adding extra ppas.
 "
@@ -43,7 +44,7 @@ fi
 
 ## Gimp Image Editor source
 ottocount1=`grep "otto-kesselgulasch-gimp" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
-ottocount2=`ls /etc/apt/sources.list.d/otto-kesselgulasch-gimp*  2>/dev/null | wc -l`
+ottocount2=`ls /etc/apt/sources.list.d/otto-kesselgulasch-gimp* 2>/dev/null | wc -l`
 if [[ $ottocount1 == 0 ]]; then
 if [[ $ottocount2 == 0 ]]; then
 add-apt-repository -y ppa:otto-kesselgulasch/gimp 1>$stdout 2>$stderr || true
@@ -59,9 +60,27 @@ Installed previously." >> $log
 fi
 fi
 
+## Systemback source
+sbcount1=`grep "nemh" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
+sbcount2=`ls /etc/apt/sources.list.d/nemh* 2>/dev/null | wc -l`
+if [[ $ottocount1 == 0 ]]; then
+if [[ $ottocount2 == 0 ]]; then
+add-apt-repository -y ppa:nemh/systemback 1>$stdout 2>$stderr || true
+echo "Systemback ppa:
+Installed on $date0" >> $log
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+echo "nemh" >> $scriptdir/updates/ppa_log.txt
+c="1"
+else
+echo "nemh" >> $scriptdir/updates/ppa_log.txt
+echo "Systemback ppa:
+Installed previously." >> $log
+fi
+fi
+
 ## Cran R source
 rppacount1=`grep "cran.rstudio.com" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
-rppacount2=`cat /etc/apt/sources.list | grep "cran.rstudio.com"  2>/dev/null | wc -l`
+rppacount2=`cat /etc/apt/sources.list | grep "cran.rstudio.com" 2>/dev/null | wc -l`
 if [[ $rppacount1 == 0 ]]; then
 if [[ $rppacount2 == 0 ]]; then
 /bin/su -c "echo 'deb http://cran.rstudio.com/bin/linux/ubuntu trusty/' >> /etc/apt/sources.list"
@@ -70,7 +89,7 @@ echo "R (cran) ppa:
 Installed on $date0" >> $log
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "cran.rstudio.com" >> $scriptdir/updates/ppa_log.txt
-c="1"
+d="1"
 else
 echo "cran.rstudio.com" >> $scriptdir/updates/ppa_log.txt
 echo "R (cran) ppa:
@@ -88,7 +107,7 @@ echo "LibreOffice ppa:
 Installed on $date0" >> $log
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "libreoffice" >> $scriptdir/updates/ppa_log.txt
-d="1"
+e="1"
 else
 echo "libreoffice" >> $scriptdir/updates/ppa_log.txt
 echo "LibreOffice ppa:
@@ -98,7 +117,7 @@ fi
 
 
 ## Filter ppa list if any new ppas were actually installed
-installcount=`echo "$a+$b+$c+$d" | bc`
+installcount=`echo "$a+$b+$c+$d+$e" | bc`
 if [[ $installcount -ge 1 ]]; then
 echo "Filtering ppa list.
 "
