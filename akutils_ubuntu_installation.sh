@@ -319,6 +319,15 @@ akutilstest=`command -v akutils 2>/dev/null | wc -l`
 	"
 	fi
 
+## Install spades if not already present
+	spadestest=`command -v spades.py 2>/dev/null | wc -l`
+	if [[ $spadestest == 0 ]]; then
+		sudo bash $scriptdir/scripts/spades_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "SPAdes already installed.
+	"
+	fi
+
 ## Install task spooler if not already present
 	tstest=`command -v ts 2>/dev/null | wc -l`
 	if [[ $tstest == 0 ]]; then
