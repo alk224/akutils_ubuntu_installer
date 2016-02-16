@@ -43,7 +43,7 @@ sudo apt-get update
 sudo apt-get -yfm upgrade
 sudo apt-get install git
 git clone https://github.com/alk224/akutils_ubuntu_installer.git
-sudo bash ~/akutils_ubuntu_installer/ak_ubuntu_installation.sh install
+sudo bash ~/akutils_ubuntu_installer/akutils_ubuntu_installation.sh install
 
 ***** END INSTALLATION INSTRUCTIONS *****
 
