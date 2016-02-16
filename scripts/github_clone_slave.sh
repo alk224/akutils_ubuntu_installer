@@ -128,8 +128,7 @@ if [[ ! -d $homedir/fqgrep ]]; then
 echo "Cloning fqgrep github repository.
 "
 echo "Cloning fqgrep github repository." >> $log
-sudo -u $userid git clone git://github.com/indraniel/fqgrep.git;
- 1>$stdout 2>$stderr || true
+sudo -u $userid git clone git://github.com/indraniel/fqgrep.git 1>$stdout 2>$stderr || true
 chown -R $userid:$userid $homedir/fqgrep
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 else
