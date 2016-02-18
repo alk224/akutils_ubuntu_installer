@@ -13,7 +13,6 @@ log="$3"
 homedir="$4"
 scriptdir="$5"
 date0=`date`
-repodir=$(dirname $scriptdir)
 
 ## Install bamtools
 datamashtest=`command -v datamash 2>/dev/null | wc -l`
@@ -21,7 +20,7 @@ datamashtest=`command -v datamash 2>/dev/null | wc -l`
 echo "Installing datamash.
 "
 echo "Installing datamash." >> $log
-dpkg -i $repodir/3rd_party_packages/datamash_1.0.6-1_amd64.deb 1>$stdout 2>$stderr || true
+dpkg -i $scriptdir/3rd_party_packages/datamash_1.0.6-1_amd64.deb 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 	else
