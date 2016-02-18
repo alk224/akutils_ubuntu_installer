@@ -243,6 +243,15 @@ wait
 		sudo bash $scriptdir/scripts/ubuntu_cleanup_slave.sh $stdout $stderr $log $homedir $scriptdir
 wait
 
+## Install datamash if not already present
+	datamashtest=`command -v datamash 2>/dev/null | wc -l`
+	if [[ $datamashtest == 0 ]]; then
+		sudo bash $scriptdir/scripts/datamash_slave.sh $stdout $stderr $log $homedir $scriptdir
+	else
+	echo "datamash already installed.
+	"
+	fi
+
 ## Clone github repositories or do fresh git pulls if already present
 		sudo bash $scriptdir/scripts/github_clone_slave.sh $stdout $stderr $log $homedir $scriptdir $userid	
 wait
