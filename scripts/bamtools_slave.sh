@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-## Add extra ppas slave script
+## bamtools slave script
 ## Author: Andrew Krohn
 ## Date: 2015-10-28
 ## License: MIT
