@@ -24,11 +24,11 @@ echo "Adding akutils repository to path (~/.bashrc).
 " >> $log
 cd
 cd akutils-v1.2
-cd
 bash install 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	fi
 	fi
+cd
 source ~/.bashrc
 
 akutilstest1=`command -v akutils 2>/dev/null | wc -l`
