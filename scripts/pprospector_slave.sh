@@ -14,13 +14,16 @@ homedir="$4"
 scriptdir="$5"
 email="$6"
 date0=`date`
+akutilspath=$(which akutils)
+akutilsscripts=$(dirname akutilspath)
+akutilsrepo=$(dirname akutilsscripts)
 
 ## Install primer prospector and replace python library
 	pptest=`ls $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 2>/dev/null | wc -l`
 	if [[ $pptest == 1 ]]; then
 ## Check md5sums of existing and corrected libraries and replace if necessary
 	md5existing=`md5sum $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py | cut -f1 -d" " 2>/dev/null`
-	md5correct=`md5sum $homedir/akutils/akutils_resources/analyze_primers.py | cut -f1 -d" " 2>/dev/null`
+	md5correct=`md5sum $akutilsrepo/akutils_resources/analyze_primers.py | cut -f1 -d" " 2>/dev/null`
 	echo "Checking analyze_primers.py library file.
 	"
 	echo "Checking analyze_primers.py library file.
@@ -31,7 +34,7 @@ md5sum corrected file: $md5correct"
 	"
 
 ## Replace old python library for analyze_primers.py script
-	cp $homedir/akutils/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 1>$stdout 2>$stderr
+	cp $akutilsrepo/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 1>$stdout 2>$stderr
 
 	else
 	echo "md5sums match.  No changes made.
