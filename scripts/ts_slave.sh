@@ -31,7 +31,7 @@ cd $homedir
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 	else
-echo "Task spooler already installed.  Skipping.
+echo "Task spooler already installed.
 "
 	fi
 
