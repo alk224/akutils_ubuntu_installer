@@ -14,10 +14,10 @@ homedir="$4"
 scriptdir="$5"
 email="$6"
 date0=`date`
+source ~/.bashrc
 akutilspath=$(which akutils)
 akutilsscripts=$(dirname $akutilspath)
 akutilsrepo=$(dirname $akutilsscripts)
-source ~/.bashrc
 
 ## Install primer prospector and replace python library
 	pptest=`ls $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 2>/dev/null | wc -l`
