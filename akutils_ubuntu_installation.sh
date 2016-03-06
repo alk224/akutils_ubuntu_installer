@@ -79,6 +79,10 @@ Usage:
 
 	if [[ $logcount -ge 1 ]]; then
 	log=`ls $scriptdir/log_akutils_ubuntu_installation* | head -1`
+	elif [[ $logcount -eq 0 ]]; then
+	log=($scriptdir/log_akutils_ubuntu_installation_$randcode\_$date0.txt)
+	touch $log
+	fi
 
 ## Set permissions of log file
 	chown $userid:$userid $log
@@ -142,7 +146,7 @@ Installing/updating Stacks and exiting." >> $log
 
 ## Initial dialogue
 echo "
-***** Starting ak_ubuntu_installer.sh *****
+***** Starting akutils_ubuntu_installer.sh *****
 
 You can cancel during this initial dialogue with <ctrl-C>
 
@@ -164,11 +168,8 @@ $date1
 
 ********************************************************************************
 " >> $log
-	fi
 
 	if [[ $logcount -eq 0 ]]; then
-	log=($scriptdir/log_akutils_ubuntu_installation_$randcode\_$date0.txt)
-	touch $log
 	echo "
 ********************************************************************************
 Installation script started.
