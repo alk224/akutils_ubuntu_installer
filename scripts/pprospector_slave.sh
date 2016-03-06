@@ -5,19 +5,14 @@
 ## License: MIT
 ## Version 0.0.1
 #set -e
-
+echo "start"
 ## Define variables from inputs
 stdout="$1"
 stderr="$2"
 log="$3"
 homedir="$4"
 scriptdir="$5"
-email="$6"
 date0=`date`
-source ~/.bashrc
-akutilspath=$(which akutils)
-akutilsscripts=$(dirname $akutilspath)
-akutilsrepo=$(dirname $akutilsscripts)
 
 ## Install primer prospector and replace python library
 	pptest=`ls $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 2>/dev/null | wc -l`
