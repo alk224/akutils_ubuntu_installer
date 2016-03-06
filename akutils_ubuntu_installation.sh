@@ -28,18 +28,11 @@ scriptdir: $scriptdir
 
 	if [[ "$1" != "install" ]] && [[ "$1" != "list" ]] && [[ "$1" != "test" ]]; then
 echo "
-ak_ubuntu_installation script (v1.0.1), 2015-10-31.  Script to facilitate
-installation of my favorite useful bioinformatics packages on a bare Ubuntu
-14.04 LTS install.  Tested on no other distros.
+ak_ubuntu_installation script (v1.0.1), 2015-10-31. Script to facilitate installation of my favorite useful bioinformatics packages on a bare Ubuntu 14.04 LTS install. Tested on no other distros.
 
-The script will initially ask for brief input.  If you make a mistake,
-hit <ctrl-C> and start over.
+The script will initially ask for brief input. If you make a mistake, hit <ctrl-C> and start over.
 
-Installation should be completely automatic and non-interactive.  If there are
-any errors during install, try rebooting your system first, then rerun the
-install script.  This often fixes installation errors that occur when
-dependencies are indeed installed, but the system fails to recognize their
-presence until the system is refreshed.
+Installation should be completely automatic and non-interactive. If there are any errors during install, try rebooting your system first, then rerun the install script. This often fixes installation errors that occur when dependencies are indeed installed, but the system fails to recognize their presence until the system is refreshed.
 
 Usage:
    bash ak_ubuntu_installer/ak_ubuntu_installation.sh (this help screen)
@@ -106,9 +99,7 @@ Installing/updating R packages and exiting." >> $log
 
 	rtest=`command -v R 2>/dev/null | wc -l`
 	if [[ $rtest == 0 ]]; then
-		echo "R does not seem to be installed.
-Install it manually or run the installer script without
---force-R (this will install R and run all updates).
+		echo "R does not seem to be installed. Install it manually or run the installer script without --force-R (this will install R and run all updates).
 		"
 		
 		exit 1
@@ -131,8 +122,7 @@ Install it manually or run the installer script without
 	stacksdate=`date +%Y,%m,%d`
 	echo "--stacks supplied.
 
-Installing/updating Stacks and exiting.  This takes a while so please
-be patient.
+Installing/updating Stacks and exiting. This takes a while so please be patient.
 	"
 	echo "--stacks supplied.
 
@@ -200,9 +190,9 @@ source /etc/environment
 	if [[ $chrometest == 0 ]]; then
 		sudo bash $scriptdir/scripts/chrome_slave.sh $stdout $stderr $log $homedir $scriptdir
 	else
-	echo "Google Chrome is already installed.  Skipping.
+	echo "Google Chrome is already installed. Skipping.
 	"
-	echo "Google Chrome is already installed.  Skipping.
+	echo "Google Chrome is already installed. Skipping.
 	" >> $log
 	fi
 wait
@@ -217,9 +207,9 @@ wait
 ## Add ppas if failed or skip if already present
 		sudo bash $scriptdir/scripts/ppa_slave.sh $stdout $stderr $log $homedir $scriptdir
 	else
-	echo "All ppas are already present.  Skipping.
+	echo "All ppas are already present. Skipping.
 	"
-	echo "All ppas are already present.  Skipping.
+	echo "All ppas are already present. Skipping.
 	" >> $log
 
 	fi
@@ -233,9 +223,9 @@ wait
 	if [[ $adobetest == 0 ]]; then
 		sudo bash $scriptdir/scripts/adobe_slave.sh $stdout $stderr $log $homedir $scriptdir
 	else
-	echo "Adobe Reader already installed.  Skipping.
+	echo "Adobe Reader already installed. Skipping.
 	"
-	echo "Adobe Reader already installed.  Skipping.
+	echo "Adobe Reader already installed. Skipping.
 	" >> $log
 	fi
 
@@ -374,9 +364,9 @@ source /etc/environment 1>$stdout 2>$stderr || true
 	wait
 	echo $Rdate1 > $scriptdir/updates/R_installs_and_updates.txt
 	else
-	echo "R installs/updates have been run within the past year.  Skipping.
+	echo "R installs/updates have been run within the past year. Skipping.
 	"
-	echo "R installs/updates have been run within the past year.  Skipping.
+	echo "R installs/updates have been run within the past year. Skipping.
 	" >> $log
 	fi
 
@@ -419,7 +409,7 @@ wait
 		sudo bash $scriptdir/scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir 1>$stdout 2>$stderr || true
 		bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	else
-	echo "analyze_primers.py not where expected.  Python library not corrected.
+	echo "analyze_primers.py not where expected. Python library not corrected.
 	"
 	fi
 
@@ -445,20 +435,11 @@ sudo -u $userid cp $homedir/akutils_ubuntu_installer/docs/*.html $homedir/Deskto
 echo "
 Installations complete (hopefully).
 
-A single failure for the QIIME tests is normal since you need to provide
-your own binary for usearch (see details on qiime website).
+A single failure for the QIIME tests is normal since you need to provide your own binary for usearch (see details on qiime website).
 
-Open the dash (super key) and search for \"System Load Monitor.\"
-Start that program and you will see a small load icon appear in the
-upper left screen on the status bar.  Right click and choose
-\"Preferences.\"  Select all of the Monitored Resources options
-and choose your favorite color scheme (I like Traditional).  I also
-like to expand the monitor width to 150 pixels, but this will depend
-on your available monitor space.
+Open the dash (super key) and search for \"System Load Monitor.\" Start that program and you will see a small load icon appear in the upper left screen on the status bar. Right click and choose \"Preferences.\" Select all of the Monitored Resources options and choose your favorite color scheme (I like Traditional). I also like to expand the monitor width to 150 pixels, but this will depend on your available monitor space.
 
-Check your QIIME installation with print_qiime_config.py
-If there are any issues, resolve them via the QIIME forum.  You
-should have all the tools you need to fix any problems that arise.
+Check your QIIME installation with print_qiime_config.py. If there are any issues, resolve them via the QIIME forum. You should have all the tools you need to fix any problems that arise.
 
 Then reboot your system.
 "
