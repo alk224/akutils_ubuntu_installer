@@ -5,7 +5,6 @@
 ## License: MIT
 ## Version 0.0.1
 #set -e
-echo "start"
 ## Define variables from inputs
 stdout="$1"
 stderr="$2"
@@ -19,7 +18,7 @@ date0=`date`
 	if [[ $pptest == 1 ]]; then
 ## Check md5sums of existing and corrected libraries and replace if necessary
 	md5existing=`md5sum $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py | cut -f1 -d" " 2>/dev/null`
-	md5correct=`md5sum $akutilsrepo/akutils_resources/analyze_primers.py | cut -f1 -d" " 2>/dev/null`
+	md5correct=`md5sum $homedir/akutils-v1.2/akutils_resources/analyze_primers.py | cut -f1 -d" " 2>/dev/null`
 	echo "Checking analyze_primers.py library file.
 	"
 	echo "Checking analyze_primers.py library file.
@@ -30,7 +29,7 @@ md5sum corrected file: $md5correct"
 	"
 
 ## Replace old python library for analyze_primers.py script
-	cp $akutilsrepo/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 1>$stdout 2>$stderr
+	cp $homedir/akutils-v1.2/akutils_resources/analyze_primers.py $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 1>$stdout 2>$stderr
 
 	else
 	echo "md5sums match.  No changes made.
