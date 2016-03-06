@@ -22,6 +22,9 @@ trap finish EXIT
 userid=`echo $SUDO_USER`
 homedir=(/home/$userid/)
 scriptdir="$( cd "$( dirname "$0" )" && pwd )"
+echo "
+scriptdir: $scriptdir
+"
 
 	if [[ "$1" != "install" ]] && [[ "$1" != "list" ]] && [[ "$1" != "test" ]]; then
 echo "
@@ -339,12 +342,12 @@ akutilstest=`command -v akutils 2>/dev/null | wc -l`
 
 ## Install task spooler if not already present
 	tstest=`command -v ts 2>/dev/null | wc -l`
-	if [[ $tstest == 0 ]]; then
+#	if [[ $tstest == 0 ]]; then
 		sudo bash $scriptdir/scripts/ts_slave.sh $stdout $stderr $log $homedir $scriptdir $email
-	else
-	echo "Task spooler already installed.
-	"
-	fi
+#	else
+#	echo "Task spooler already installed.
+#	"
+#	fi
 
 sudo -s source $homedir/.bashrc 1>$stdout 2>$stderr || true
 sudo -s source /etc/environment 1>$stdout 2>$stderr || true
@@ -398,21 +401,21 @@ source /etc/environment 1>$stdout 2>$stderr || true
 #	fi
 
 ## Update sources
-sudo -s source $homedir/.bashrc
 sudo -s source /etc/environment
-source $homedir/.bashrc
+sudo -s source $homedir/.bashrc
 source /etc/environment
+source $homedir/.bashrc
 
 ## Run QIIME deploy
-		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
-wait
+#		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
+#wait
 
 ## Update analyze_primers.py python library if necessary
 	pptest=`ls $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 2>/dev/null | wc -l`
 	if [[ $pptest == 1 ]]; then
 		echo "Checking analyze_primers.py library file.
 		"
-		sudo bash $scriptdir/scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir $email 1>$stdout 2>$stderr || true
+		sudo bash $scriptdir/scripts/pprospector_slave.sh $stdout $stderr $log $homedir $scriptdir 1>$stdout 2>$stderr || true
 		bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	else
 	echo "analyze_primers.py not where expected.  Python library not corrected.
