@@ -408,8 +408,8 @@ source /etc/environment
 source $homedir/.bashrc
 
 ## Run QIIME deploy
-#		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
-#wait
+		sudo bash $scriptdir/scripts/qiime_deploy_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
+wait
 
 ## Update analyze_primers.py python library if necessary
 	pptest=`ls $homedir/qiime_1.9.1/pprospector-1.0.1-release/lib/python2.7/site-packages/primerprospector/analyze_primers.py 2>/dev/null | wc -l`
