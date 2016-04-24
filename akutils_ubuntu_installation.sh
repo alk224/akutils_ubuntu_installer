@@ -97,6 +97,11 @@ This takes a while so please be patient.
 Installing/updating R packages and exiting." >> $log
 	date >> $log
 
+	## set update file if necessary (first time only)
+	if [[ ! -f $scriptdir/updates/R_installs_and_updates.txt ]]; then
+		cp $scriptdir/updates/.R_installs_and_updates.txt $scriptdir/updates/R_installs_and_updates.txt
+	fi
+
 	rtest=`command -v R 2>/dev/null | wc -l`
 	if [[ $rtest == 0 ]]; then
 		echo "R does not seem to be installed. Install it manually or run the installer script without --force-R (this will install R and run all updates).
@@ -175,7 +180,6 @@ $date1
 ## Set R_updates and ppa_log files to be ignored during future git pulls
 cd $homedir/akutils_ubuntu_installer/
 git update-index --assume-unchanged updates/ppa_log.txt 1>$stdout 2>$stderr || true
-git update-index --assume-unchanged updates/R_installs_and_updates.txt 1>$stdout 2>$stderr || true
 git update-index --assume-unchanged updates/stacks.txt 1>$stdout 2>$stderr || true
 cd
 
@@ -352,6 +356,10 @@ source /etc/environment 1>$stdout 2>$stderr || true
 #	fi
 
 ## Update R packages if not been done in over a month
+	## set update file if necessary (first time only)
+	if [[ ! -f $scriptdir/updates/R_installs_and_updates.txt ]]; then
+		cp $scriptdir/updates/.R_installs_and_updates.txt $scriptdir/updates/R_installs_and_updates.txt
+	fi
 	Rdate0=`head -1 $scriptdir/updates/R_installs_and_updates.txt`
 	Rdate1=`date +%Y,%m,%-d`
 	span=`python -c "from datetime import date; print (date($Rdate1)-date($Rdate0)).days"`
