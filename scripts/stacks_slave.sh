@@ -18,9 +18,8 @@ date0=`date`
 ## Test for dependencies (use apache2)
 	apachetest=`command -v apache2 2>/dev/null | wc -l`
 	if [[ "$apachetest" -eq "0" ]]; then
-echo "Dependencies are unmet. Correct this by running
-the installer once without passing --stacks.
-Exiting.
+echo "Dependencies are unmet. Correct this by running the installer once without
+passing --stacks. Exiting.
 	"
 echo "Dependencies unmet.  Exiting.
 	" >> $log
@@ -41,9 +40,9 @@ echo "Installing Stacks for RADseq applications.
 "
 echo "Installing Stacks for RADseq applications.
 " >> $log
-tar -xzvf $scriptdir/3rd_party_packages/stacks-1.35.tar.gz  -C /bin/ 1>$stdout 2>$stderr || true
+tar -xzvf $scriptdir/3rd_party_packages/stacks-1.39.tar.gz  -C /bin/ 1>$stdout 2>$stderr || true
 wait
-cd /bin/stacks-1.35/
+cd /bin/stacks-1.39/
 ./configure --enable-bam --with-bam-include-path=/usr/include/samtools --with-bam-lib-path=/usr/lib 1>$stdout 2>$stderr || true
 make  1>$stdout 2>$stderr || true
 wait
