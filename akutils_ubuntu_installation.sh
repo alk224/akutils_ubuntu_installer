@@ -11,21 +11,24 @@ function finish {
 if [[ ! -z $stdout ]] && [[ ! -z $stderr ]]; then
 if [[ ! -z $log ]]; then
 bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-rm $stdout
-rm $stderr
+rm $stdout 2>/dev/null
+rm $stderr 2>/dev/null
 fi
 fi
 }
 trap finish EXIT
 #set -e
 
-userid=`echo $SUDO_USER`
-homedir=(/home/$userid/)
-scriptdir="$( cd "$( dirname "$0" )" && pwd )"
-echo "
-scriptdir: $scriptdir
-"
+## Setup variables
+	userid=`echo $SUDO_USER`
+	homedir=(/home/$userid/)
+	scriptdir="$( cd "$( dirname "$0" )" && pwd )"
 
+	bold=$(tput bold)
+	normal=$(tput sgr0)
+
+
+## Parse input command, print usage
 	if [[ "$1" != "install" ]] && [[ "$1" != "list" ]] && [[ "$1" != "test" ]]; then
 echo "
 ak_ubuntu_installation script (v1.0.1), 2015-10-31. Script to facilitate installation of my favorite useful bioinformatics packages on a bare Ubuntu 14.04 LTS install. Tested on no other distros.
@@ -142,22 +145,34 @@ Installing/updating Stacks and exiting." >> $log
 	exit 0
 	fi
 
-## Initial dialogue
-echo "
+## Initial dialogue (main installer)
+	echo "
 ***** Starting akutils_ubuntu_installer.sh *****
 
 You can cancel during this initial dialogue with <ctrl-C>
 
 Enter your email address (to configure task spooler):
 "
-read email
-echo "
-Enter your computers hostname if it has one.
-Example: enggen.bio.nau.edu
-Just hit enter if you don't have one.
+	read email
+
+	host=$(hostname)
+	
+	echo "
+Example hostname: enggen.bio.nau.edu
+
+I think your hostname is: $hostname
+
+Hit enter if this is correct, or enter a new hostname here:
 "
-read host
-echo ""
+	read host1
+	if [[ ! -z $host1 ]]; then
+	host="$host1"
+	fi
+	echo "
+Email:    $email
+Hostname: $host
+"
+	sleep 1
 
 	echo "
 ********************************************************************************
@@ -178,10 +193,10 @@ $date1
 	fi
 
 ## Set R_updates and ppa_log files to be ignored during future git pulls
-cd $homedir/akutils_ubuntu_installer/
+	cd $homedir/akutils_ubuntu_installer/
 git update-index --assume-unchanged updates/ppa_log.txt 1>$stdout 2>$stderr || true
 git update-index --assume-unchanged updates/stacks.txt 1>$stdout 2>$stderr || true
-cd
+	cd
 
 ## Source existing files
 sudo -s source $homedir/.bashrc
