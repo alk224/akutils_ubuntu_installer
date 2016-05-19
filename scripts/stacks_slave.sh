@@ -30,7 +30,7 @@ echo "Dependencies unmet.  Exiting.
 
 ## Install Stacks
 	stackstest=`command -v cstacks 2>/dev/null | wc -l`
-	if [[ ! -z "$stackstest" ]]; then
+	if [[ -z "$stackstest" ]]; then
 #	if [[ "$stackstest" -ge "1" ]]; then
 echo "Stacks already seems to be installed.
 Exiting.
