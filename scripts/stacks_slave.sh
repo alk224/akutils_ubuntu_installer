@@ -44,13 +44,13 @@ echo "Installing Stacks for RADseq applications (bam-enabled).
 "
 echo "Installing Stacks for RADseq applications (bam-enabled).
 " >> $log
-tar -xzvf $scriptdir/3rd_party_packages/stacks-1.39.tar.gz  -C /bin/ 1>$stdout 2>$stderr || true
+	tar -xzvf $scriptdir/3rd_party_packages/stacks-1.39.tar.gz  -C /bin/ 1>$stdout 2>$stderr || true
 wait
-cd /bin/stacks-1.39/
-./configure --enable-bam --with-bam-include-path=/usr/include/samtools --with-bam-lib-path=/usr/lib 1>$stdout 2>$stderr || true
-make  1>$stdout 2>$stderr || true
+	cd /bin/stacks-1.39/
+	./configure --enable-bam --with-bam-include-path=/usr/include/samtools --with-bam-lib-path=/usr/lib 1>$stdout 2>$stderr || true
+	make  1>$stdout 2>$stderr || true
 wait
-sudo make install 1>$stdout 2>$stderr || true
+	sudo make install 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
 
@@ -60,12 +60,12 @@ echo "Configuring mysql and apache webserver.
 echo "Configuring mysql and apache webserver.
 " >> $log
 echo "---Copy mysql.cnf file." >> $log
-sudo cp /usr/local/share/stacks/sql/mysql.cnf.dist /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
+	sudo cp /usr/local/share/stacks/sql/mysql.cnf.dist /usr/local/share/stacks/sql/mysql.cnf 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "---Change mysql permissions." >> $log
-sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf
+	sed -i "s/user=\w\+/user=${userid}/" /usr/local/share/stacks/sql/mysql.cnf
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf
+	sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 
 	mysql -u root -e "FLUSH PRIVILEGES";
@@ -89,10 +89,10 @@ Alias /stacks "/usr/local/share/stacks/php"
 ' > /etc/apache2/conf-available/stacks.conf 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "---Symlink to Apache2 stacks.conf file." >> $log
-ln -s /etc/apache2/conf-available/stacks.conf /etc/apache2/conf-enabled/stacks.conf 1>$stdout 2>$stderr || true
+	ln -s /etc/apache2/conf-available/stacks.conf /etc/apache2/conf-enabled/stacks.conf 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 echo "---Restart Apache webserver" >> $log
-sudo apachectl restart 1>$stdout 2>$stderr || true
+	sudo apachectl restart 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 
@@ -100,31 +100,31 @@ wait
 echo "---Copy php constants file and change permissions.
 "
 echo "---Copy php constants file and change permissions." >> $log
-cp /usr/local/share/stacks/php/constants.php.dist /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
+	cp /usr/local/share/stacks/php/constants.php.dist /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-sudo sed -i "s/dbuser/$userid/" /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
+	sudo sed -i "s/dbuser/$userid/" /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-sudo sed -i "s/dbpass/\"\"/" /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
+	sudo sed -i "s/dbpass/\"\"/" /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 
 ## Enable web-based exporting from MySQL database
 echo "---Enable web-based exporting from MySQL database.
 "
 echo "---Enable web-based exporting from MySQL database." >> $log
-chown $userid /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
-chmod 775 /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
-cd
+	chown $userid /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
+	chmod 775 /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
+	cd
 
 ## Update stacks_export_notify.pl
 echo "---Update stacks_export_notify.pl script for exporting.
 "
 echo "---Update stacks_export_notify.pl script for exporting." >> $log
-sudo sed -i "s|url           = \"http://stackshost.edu|url           = \"http://$domain|" /usr/local/bin/stacks_export_notify.pl
-sudo sed -i "s|local_host    = \"localhost|local_host    = \"$domain|" /usr/local/bin/stacks_export_notify.pl
-sudo sed -i "s|from          = \"stacks\@stackshost.edu|from          = \"$userid@$domain|" /usr/local/bin/stacks_export_notify.pl
+	sudo sed -i "s|url           = \"http://stackshost.edu|url           = \"http://$domain|" /usr/local/bin/stacks_export_notify.pl
+	sudo sed -i "s|local_host    = \"localhost|local_host    = \"$domain|" /usr/local/bin/stacks_export_notify.pl
+	sudo sed -i "s|from          = \"stacks\@stackshost.edu|from          = \"$userid@$domain|" /usr/local/bin/stacks_export_notify.pl
 
 ## Clone and install akutils_RADseq_utility if necessary
-cd
+	cd
 	# Fresh git pull if repo already exists
 	if [[ -d ~/akutils_RADseq_utility ]]; then
 	echo "akutils_RADseq_utility repository already present. Performing fresh git pull.
@@ -134,6 +134,7 @@ cd
 	git pull
 	wait
 	bash install
+	# Add repo if missing and adjust ownership
 	else
 	echo "akutils_RADseq_utility not present. Cloning repository from github.
 	"
