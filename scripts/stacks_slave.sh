@@ -119,9 +119,9 @@ cd
 echo "---Update stacks_export_notify.pl script for exporting.
 "
 echo "---Update stacks_export_notify.pl script for exporting." >> $log
-sudo sed -i "s|url           = \"http://stackshost.edu|url           = \"http://$domain|"
-sudo sed -i "s|local_host    = \"localhost|local_host    = \"$domain|"
-sudo sed -i "s|from          = \"stacks\@stackshost.edu|from          = \"$userid@$domain|"
+sudo sed -i "s|url           = \"http://stackshost.edu|url           = \"http://$domain|" /usr/local/bin/stacks_export_notify.pl
+sudo sed -i "s|local_host    = \"localhost|local_host    = \"$domain|" /usr/local/bin/stacks_export_notify.pl
+sudo sed -i "s|from          = \"stacks\@stackshost.edu|from          = \"$userid@$domain|" /usr/local/bin/stacks_export_notify.pl
 
 ## Report completion
 echo "Stacks installation complete.
