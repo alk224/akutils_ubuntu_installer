@@ -107,7 +107,11 @@ chmod 775 /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 cd
 
 ## Update stacks_export_notify.pl
+sudo sed -i "s|url           = \"http://stackshost.edu|url           = \"http://$domain|"
+sudo sed -i "s|local_host    = \"localhost|local_host    = \"$domain|"
+sudo sed -i "s|from          = \"stacks\@stackshost.edu|from          = \"$userid@$domain|"
 
+## Report completion
 echo "Stacks installation complete.
 "
 echo "Stacks installation complete.
