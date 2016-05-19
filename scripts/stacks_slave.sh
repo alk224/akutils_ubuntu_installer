@@ -131,18 +131,18 @@ cd
 	"
 	echo "akutils_RADseq_utility repository already present. Performing fresh git pull." >> $log
 	cd ~/akutils_RADseq_utility
-	sudo -u $userid git pull
+	git pull
 	wait
 	bash install
 	else
 	echo "akutils_RADseq_utility not present. Cloning repository from github.
 	"
 	echo "akutils_RADseq_utility not present. Cloning repository from github." >> $log
-	sudo -u $userid git clone https://github.com/alk224/akutils_RADseq_utility.git
+	git clone https://github.com/alk224/akutils_RADseq_utility.git
 	wait
-	cd ~/akutils_RADseq_utility
-	bash install
+	chown -R $userid:$userid ~/akutils_RADseq_utility
 	cd
+	bash ~/akutils_RADseq_utility/install
 	fi
 
 ## Report completion
