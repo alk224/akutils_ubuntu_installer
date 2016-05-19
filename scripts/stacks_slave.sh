@@ -30,7 +30,6 @@ echo "Dependencies unmet.  Exiting.
 
 ## Install Stacks
 	stackstest=`command -v cstacks 2>/dev/null | wc -l`
-	if [[ -z "$stackstest" ]]; then
 #	if [[ "$stackstest" -ge "1" ]]; then
 ## If this conditional is removed, upgrades will be possible, though it will always take longer
 echo "Stacks already seems to be installed.
@@ -151,7 +150,7 @@ echo "Stacks installation complete.
 "
 echo "Stacks installation complete.
 " >> $log
-	fi
+#	fi
 	fi
 
 exit 0
