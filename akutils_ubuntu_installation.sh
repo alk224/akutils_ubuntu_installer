@@ -125,26 +125,6 @@ Installing/updating R packages and exiting." >> $log
 	fi
 	fi
 
-## Run Stacks installer if --stacks supplied
-	if [[ "$2" == "--stacks" ]]; then
-	stacksdate=`date +%Y,%m,%d`
-	echo "--stacks supplied.
-
-Installing/updating Stacks and exiting. This takes a while so please be patient.
-	"
-	echo "--stacks supplied.
-
-Installing/updating Stacks and exiting." >> $log
-	date >> $log
-
-	sudo bash $scriptdir/scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir $userid
-	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-	wait
-	sudo -s echo $stacksdate > $scriptdir/updates/stacks.txt
-
-	exit 0
-	fi
-
 ## Initial dialogue (main installer)
 	echo "
 ***** Starting akutils_ubuntu_installer.sh *****
@@ -160,19 +140,56 @@ Enter your email address (to configure task spooler):
 	echo "
 Example hostname: enggen.bio.nau.edu
 
-I think your hostname is: $hostname
+I think your hostname is: ${bold}${hostname}${normal}
 
-Hit enter if this is correct, or enter a new hostname here:
+Hit enter if this is correct, or enter a new hostname here (for task spooler
+and stacks):
 "
 	read host1
 	if [[ ! -z $host1 ]]; then
 	host="$host1"
 	fi
+
+	domain=$(echo $host | cut -d"." -f2-)
+
 	echo "
-Email:    $email
-Hostname: $host
+Example domain name: nau.edu
+
+I think your domain name is: ${bold}${domain}${normal}
+
+Hit enter if this is correct, or enter a new domain name here (for stacks only):
+"
+	read domain1
+	if [[ ! -z $domain1 ]]; then
+	domain="$domain1"
+	fi
+
+	echo "
+Email:    ${bold}$email${normal}
+Hostname: ${bold}$host${normal}
+Domain:   ${bold}$domain${normal}
 "
 	sleep 1
+
+## Run Stacks installer if --stacks supplied, then exit
+	if [[ "$2" == "--stacks" ]]; then
+	stacksdate=`date +%Y,%m,%d`
+	echo "--stacks supplied.
+
+Installing/updating Stacks and exiting. This takes a while so please be patient.
+	"
+	echo "--stacks supplied.
+
+Installing/updating Stacks and exiting." >> $log
+	date >> $log
+
+	sudo bash $scriptdir/scripts/stacks_slave.sh $stdout $stderr $log $homedir $scriptdir $userid $host $domain
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+	sudo -s echo $stacksdate > $scriptdir/updates/stacks.txt
+
+	exit 0
+	fi
 
 	echo "
 ********************************************************************************
