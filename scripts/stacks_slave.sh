@@ -4,7 +4,7 @@
 ## Date: 2015-10-28
 ## License: MIT
 ## Version 0.0.1
-set -e
+#set -e
 
 ## Define variables from inputs
 stdout="$1"
