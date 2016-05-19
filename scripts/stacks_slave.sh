@@ -13,6 +13,8 @@ log="$3"
 homedir="$4"
 scriptdir="$5"
 userid="$6"
+host="$7"
+domain="$8"
 date0=`date`
 
 ## Test for dependencies (use apache2)
@@ -89,6 +91,7 @@ echo "---Restart Apache webserver" >> $log
 sudo apachectl restart 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
+
 ## Provide access to MySQL database from web interface
 echo "---Copy php constants file and change permissions." >> $log
 cp /usr/local/share/stacks/php/constants.php.dist /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
@@ -102,6 +105,8 @@ sudo sed -i "s/dbpass/\"\"/" /usr/local/share/stacks/php/constants.php 1>$stdout
 chown $userid /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 chmod 775 /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 cd
+
+## Update stacks_export_notify.pl
 
 echo "Stacks installation complete.
 "
