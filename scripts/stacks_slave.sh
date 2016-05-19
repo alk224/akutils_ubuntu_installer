@@ -123,6 +123,26 @@ sudo sed -i "s|url           = \"http://stackshost.edu|url           = \"http://
 sudo sed -i "s|local_host    = \"localhost|local_host    = \"$domain|" /usr/local/bin/stacks_export_notify.pl
 sudo sed -i "s|from          = \"stacks\@stackshost.edu|from          = \"$userid@$domain|" /usr/local/bin/stacks_export_notify.pl
 
+## Clone and install akutils_RADseq_utility if necessary
+cd
+	# Fresh git pull if repo already exists
+	if [[ -d ~/akutils_RADseq_utility ]]; then
+	echo "akutils_RADseq_utility repository already present. Performing fresh git pull.
+	"
+	echo "akutils_RADseq_utility repository already present. Performing fresh git pull." >> $log
+	cd ~/akutils_RADseq_utility
+	git pull
+	bash install
+	else
+	echo "akutils_RADseq_utility not present. Cloning repository from github.
+	"
+	echo "akutils_RADseq_utility not present. Cloning repository from github." >> $log
+	git clone https://github.com/alk224/akutils_RADseq_utility.git
+	cd ~/akutils_RADseq_utility
+	bash install
+	cd
+	fi
+
 ## Report completion
 echo "Stacks installation complete.
 "
