@@ -32,6 +32,7 @@ echo "Dependencies unmet.  Exiting.
 	stackstest=`command -v cstacks 2>/dev/null | wc -l`
 	if [[ -z "$stackstest" ]]; then
 #	if [[ "$stackstest" -ge "1" ]]; then
+## If this conditional is removed, upgrades will be possible, though it will always take longer
 echo "Stacks already seems to be installed.
 Exiting.
 "
@@ -39,9 +40,9 @@ echo "Stacks already installed.  Exiting.
 " >> $log
 	exit 1
 	else
-echo "Installing Stacks for RADseq applications.
+echo "Installing Stacks for RADseq applications (bam-enabled).
 "
-echo "Installing Stacks for RADseq applications.
+echo "Installing Stacks for RADseq applications (bam-enabled).
 " >> $log
 tar -xzvf $scriptdir/3rd_party_packages/stacks-1.39.tar.gz  -C /bin/ 1>$stdout 2>$stderr || true
 wait
@@ -74,6 +75,8 @@ sed -i "s/password=\w\+/password=\"\"/" /usr/local/share/stacks/sql/mysql.cnf
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 
 ## Enable Stacks web interface in Apache webserver
+echo "---Build stacks.conf file for Apache webserver.
+"
 echo "---Build stacks.conf file for Apache webserver." >> $log
 sudo echo '<Directory "/usr/local/share/stacks/php">
         Order deny,allow
@@ -94,6 +97,8 @@ sudo apachectl restart 1>$stdout 2>$stderr || true
 wait
 
 ## Provide access to MySQL database from web interface
+echo "---Copy php constants file and change permissions.
+"
 echo "---Copy php constants file and change permissions." >> $log
 cp /usr/local/share/stacks/php/constants.php.dist /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
@@ -103,11 +108,17 @@ sudo sed -i "s/dbpass/\"\"/" /usr/local/share/stacks/php/constants.php 1>$stdout
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 
 ## Enable web-based exporting from MySQL database
+echo "---Enable web-based exporting from MySQL database.
+"
+echo "---Enable web-based exporting from MySQL database." >> $log
 chown $userid /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 chmod 775 /usr/local/share/stacks/php/export 1>$stdout 2>$stderr || true
 cd
 
 ## Update stacks_export_notify.pl
+echo "---Update stacks_export_notify.pl script for exporting.
+"
+echo "---Update stacks_export_notify.pl script for exporting." >> $log
 sudo sed -i "s|url           = \"http://stackshost.edu|url           = \"http://$domain|"
 sudo sed -i "s|local_host    = \"localhost|local_host    = \"$domain|"
 sudo sed -i "s|from          = \"stacks\@stackshost.edu|from          = \"$userid@$domain|"
