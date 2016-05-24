@@ -103,7 +103,7 @@ echo "---Copy php constants file and change permissions." >> $log
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	sudo sed -i "s/dbuser/$userid/" /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-	sudo sed -i "s/dbpass/\"\"/" /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
+	sudo sed -i "s/dbpass//" /usr/local/share/stacks/php/constants.php 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 
 ## Enable web-based exporting from MySQL database
