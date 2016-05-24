@@ -32,12 +32,12 @@ echo "Dependencies unmet.  Exiting.
 	stackstest=`command -v cstacks 2>/dev/null | wc -l`
 #	if [[ "$stackstest" -ge "1" ]]; then
 ## If this conditional is removed, upgrades will be possible, though it will always take longer
-echo "Stacks already seems to be installed.
-Exiting.
-"
-echo "Stacks already installed.  Exiting.
-" >> $log
-	exit 1
+#echo "Stacks already seems to be installed.
+#Exiting.
+#"
+#echo "Stacks already installed.  Exiting.
+#" >> $log
+#	exit 1
 #	else
 echo "Installing Stacks for RADseq applications (bam-enabled).
 "
