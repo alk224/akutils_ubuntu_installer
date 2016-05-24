@@ -138,7 +138,7 @@ Enter your email address (to configure task spooler):
 	host=$(hostname)
 	
 	echo "
-Example hostname: enggen.bio.nau.edu
+Example hostname: enggen.bio.nau.edu or localhost
 
 I think your hostname is: ${bold}${hostname}${normal}
 
