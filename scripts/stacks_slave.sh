@@ -38,7 +38,7 @@ Exiting.
 echo "Stacks already installed.  Exiting.
 " >> $log
 	exit 1
-	else
+#	else
 echo "Installing Stacks for RADseq applications (bam-enabled).
 "
 echo "Installing Stacks for RADseq applications (bam-enabled).
