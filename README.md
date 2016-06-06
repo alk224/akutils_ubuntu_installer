@@ -46,6 +46,8 @@ sudo apt-get install git (install git)
 git clone https://github.com/alk224/akutils_ubuntu_installer.git (clone the installer repository)  
 sudo bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh install (run the installer script)  
 
+Sometimes the installation is not completed on the first pass, so it is probably useful to reboot now, then rerun the last command a second time. The scripts are built on conditional statments so most of the steps are skipped if they were successfully completed already.  
+
 **OTHER FUNCTIONS**  
 
     sudo bash ~/akutils_ubuntu_installer/akutils_ubuntu_installation.sh install --stacks (install stacks for RADseq analysis -- only after installer has been run at least once)  
