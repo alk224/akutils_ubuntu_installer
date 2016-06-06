@@ -51,91 +51,15 @@ Sometimes the installation is not completed on the first pass, so it is probably
 
 **OTHER FUNCTIONS**  
 
-    sudo bash ~/akutils_ubuntu_installer/akutils_ubuntu_installation.sh install --stacks (install stacks for RADseq analysis -- only after installer has been run at least once)  
+    sudo bash ~/akutils_ubuntu_installer/akutils_ubuntu_installation.sh install --stacks (install Stacks for RADseq analysis -- only after installer has been run at least once)  
     sudo bash ~/akutils_ubuntu_installer/akutils_ubuntu_installation.sh install --force-R (run all R package updates)  
 
     bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh (print help screen)  
     bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh list (list of software to be installed)  
     bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh test (test of installed software via QIIME)  
 
-**QIIME INSTALLATION RESULT**  
+**Important notes**  
 
-This is from my iPlant instance:  
+You can expect the QIIME test at the end of the installer to fail the Usearch test. If you want Usearch, you must install it yourself and this failure will go away. The binaries must be properly named for QIIME to address it (see the [QIIME installation page](http://qiime.org/install/install.html) for more details).  
 
-System information  
-==================  
-         Platform:	linux2  
-   Python version:	2.7.6 (default, Jun 22 2015, 17:58:13)  [GCC 4.8.2]  
-Python executable:	/usr/bin/python  
-
-QIIME default reference information  
-===================================  
-For details on what files are used as QIIME's default references, see here:  
- https://github.com/biocore/qiime-default-reference/releases/tag/0.1.3  
-
-Dependency versions  
-===================  
-                QIIME library version:	1.9.1  
-                 QIIME script version:	1.9.1  
-      qiime-default-reference version:	0.1.3  
-                        NumPy version:	1.9.1  
-                        SciPy version:	0.15.1  
-                       pandas version:	0.16.2  
-                   matplotlib version:	1.3.1  
-                  biom-format version:	2.1.4  
-                         h5py version:	2.4.0 (HDF5 version: 1.8.11)  
-                         qcli version:	0.1.1  
-                         pyqi version:	0.3.2  
-                   scikit-bio version:	0.2.3  
-                       PyNAST version:	1.2.2  
-                      Emperor version:	0.9.51  
-                      burrito version:	0.9.1  
-             burrito-fillings version:	0.1.1  
-                    sortmerna version:	SortMeRNA version 2.0, 29/11/2014  
-                    sumaclust version:	SUMACLUST Version 1.0.00  
-                        swarm version:	Swarm 1.2.19 [Sep  1 2015 21:06:49]  
-                                gdata:	Installed.  
-RDP Classifier version (if installed):	rdp_classifier-2.2.jar  
-          Java version (if installed):	1.7.0_79  
-  
-QIIME config values  
-===================  
-For definitions of these settings and to learn how to configure QIIME, see here:  
- http://qiime.org/install/qiime_config.html  
- http://qiime.org/tutorials/parallel_qiime.html  
-  
-                     blastmat_dir:	/home/alk224/qiime_1.9.1/blast-2.2.22-release/data  
-      pick_otus_reference_seqs_fp:  	/usr/local/lib/python2.7/dist-packages/qiime_default_reference/gg_13_8_otus/rep_set/97_otus.fasta  
-                         sc_queue:	all.q  
-      topiaryexplorer_project_dir:	None  
-     pynast_template_alignment_fp:  	/usr/local/lib/python2.7/dist-packages/qiime_default_reference/gg_13_8_otus/rep_set_aligned/85_otus.pynast.fasta  
-                  cluster_jobs_fp:	start_parallel_jobs.py  
-pynast_template_alignment_blastdb:	None  
-assign_taxonomy_reference_seqs_fp:  	/usr/local/lib/python2.7/dist-packages/qiime_default_reference/gg_13_8_otus/rep_set/97_otus.fasta  
-                     torque_queue:	friendlyq  
-                    jobs_to_start:	1  
-                       slurm_time:	None  
-            denoiser_min_per_core:	50  
-assign_taxonomy_id_to_taxonomy_fp:  	/usr/local/lib/python2.7/dist-packages/qiime_default_reference/gg_13_8_otus/taxonomy/97_otu_taxonomy.txt  
-                         temp_dir:	/tmp/  
-                     slurm_memory:	None  
-                      slurm_queue:	None  
-                      blastall_fp:	/home/alk224/qiime_1.9.1/blast-2.2.22-release/bin/blastall  
-                 seconds_to_sleep:	1  
-  
-QIIME full install test results  
-===============================  
-..........................F  
-======================================================================  
-FAIL: test_usearch_supported_version (__main__.QIIMEDependencyFull)  
-usearch is in path and version is supported  
-----------------------------------------------------------------------  
-Traceback (most recent call last):  
-  File "/usr/local/bin/print_qiime_config.py", line 650, in test_usearch_supported_version  
-    "which components of QIIME you plan to use.")  
-AssertionError: usearch not found. This may or may not be a problem depending on which components of QIIME you plan to use.  
-  
-----------------------------------------------------------------------  
-Ran 27 tests in 0.197s  
-  
-FAILED (failures=1)  
+If installing as a guest within a virtual environment (VirtualBox, for instance), make sure your hostname is entered as "localhost" and your domain is specific to your network (nau.edu for me). However, there is a good chance these settings won't matter for you anyway. Hostname and domain are important when you need your system to email you results, such as from a Stacks web interface, or to receive emails from the Task Spooler utility as jobs complete or fail. This works well on stand-alone systems with a static IP address and from cloud accounts on iPlant and EC2. You may need to run the sendmail config program once (choose defaults) to get everything work properly.  
