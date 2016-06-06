@@ -15,7 +15,7 @@ Probably best for a fresh install.  If you have some other verison of python or 
 
 **PRE-INSTALLATION INSTRUCTIONS (Virtualbox)**  
 
-1) Download and install virtualbox (https://www.virtualbox.org/)  
+1) Download and install [virtualbox](https://www.virtualbox.org/)  
 2) Download ubuntu 14.04.1 iso (some problems with .2 and .3 versions, http://old-releases.ubuntu.com/releases/14.04.0/ubuntu-14.04.1-desktop-amd64.iso)  
 3) Start virtualbox, and install the .iso file (find instructions elsewhere)  
 4) Run the following command upon initial reboot to gain full-screen functionality  
