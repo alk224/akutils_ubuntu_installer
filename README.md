@@ -42,7 +42,7 @@ Explanation of above commands:
 
     cd (takes you to your home directory)  
     sudo apt-get update (updates your software cache to prepare to upgrade the system)  
-    sudo apt-get -yfm upgrade (upgrades your system to latest 14.04.x noninteractively)  
+    sudo apt-get -yfm upgrade (noninteractively upgrades your system to latest 14.04.x)  
     sudo apt-get install git (install git)  
     git clone https://github.com/alk224/akutils_ubuntu_installer.git (clone the installer repository)  
     sudo bash ~/ak_ubuntu_installer/ak_ubuntu_installation.sh install (run the installer script)  
