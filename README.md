@@ -1,8 +1,8 @@
-*** 2016-06-30
-Stacks component now functional. This is great if you do your analysis on a cluster and need to view your database locally. See below for instructions.
+**2016-06-06 update**  
+Stacks component now functional. This is great if you do your analysis on a cluster and need to view your database locally. See below for instructions.  
 
-Date: 2015-08-29  
-Author: Andrew Krohn  
+***Date: 2015-08-29  
+Author: Andrew Krohn***  
 
 This is a script meant to ease rebuilding of my bioinformatics computer when (not if) the system drive fails.  It also facilitates establishing a new cloud instance (say on EC2 or iPLANT) or if you wish to set up a VM in some other environment.  
 
