@@ -6,7 +6,7 @@ Author: Andrew Krohn
 
 This is a script meant to ease rebuilding of my bioinformatics computer when (not if) the system drive fails.  It also facilitates establishing a new cloud instance (say on EC2 or iPLANT) or if you wish to set up a VM in some other environment.  
 
-***REQUIREMENTS FOR THIS TO WORK***
+**REQUIREMENTS FOR THIS TO WORK**
 
 1) Functioning Ubuntu install (tested only on 14.04 LTS)  
 2) All updates in place  
