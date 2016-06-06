@@ -60,6 +60,6 @@ Sometimes the installation is not completed on the first pass, so it is probably
 
 **Important notes**  
 
-You can expect the QIIME test at the end of the installer to fail the Usearch test. If you want Usearch, you must install it yourself and this failure will go away. The binaries must be properly named for QIIME to address it (see the [QIIME installation page](http://qiime.org/install/install.html) for more details).  
+You can expect the QIIME test at the end of the installer to fail the Usearch and INFERNAL tests. If you want Usearch, you must install it yourself and this failure will go away. The binaries must be properly named for QIIME to address it (see the [QIIME installation page](http://qiime.org/install/install.html) for more details).  
 
 If installing as a guest within a virtual environment (VirtualBox, for instance), make sure your hostname is entered as "localhost" and your domain is specific to your network (nau.edu for me). However, there is a good chance these settings won't matter for you anyway. Hostname and domain are important when you need your system to email you results, such as from a Stacks web interface, or to receive emails from the Task Spooler utility as jobs complete or fail. This works well on stand-alone systems with a static IP address and from cloud accounts on iPlant and EC2. You may need to run the sendmail config program once (choose defaults) to get everything work properly.  
