@@ -66,6 +66,7 @@ If installing as a guest within a virtual environment (VirtualBox, for instance)
 
 **Citing this repository**  
 
-Andrew Krohn (2016). akutils_ubuntu_installer v1.1.0: Simple bioinformatic software installer. https://zenodo.org/record/56762  
+Andrew Krohn. (2016). akutils_ubuntu_installer v1.1.0: Simple bioinformatic software installer. Zenodo. 10.5281/zenodo.56762  
 
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.56762.svg)](http://dx.doi.org/10.5281/zenodo.56762)  
 
