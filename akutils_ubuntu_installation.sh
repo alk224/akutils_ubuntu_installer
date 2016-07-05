@@ -390,7 +390,8 @@ source /etc/environment 1>$stdout 2>$stderr || true
 ## Update R packages if not been done in over a month
 	## set update file if necessary (first time only)
 	if [[ ! -f $scriptdir/updates/R_installs_and_updates.txt ]]; then
-		cp $scriptdir/updates/.R_installs_and_updates.txt $scriptdir/updates/R_installs_and_updates.txt
+		touch $scriptdir/updates/R_installs_and_updates.txt
+		echo "2013,12,31" > $scriptdir/updates/R_installs_and_updates.txt
 	fi
 	Rdate0=`head -1 $scriptdir/updates/R_installs_and_updates.txt`
 	Rdate1=`date +%Y,%m,%-d`
