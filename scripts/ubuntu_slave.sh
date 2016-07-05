@@ -38,7 +38,7 @@ wait
 ## Install R (v3.2 only)
 	echo "Installing R-base-core (version 3.2.3) via apt-get.
 	" >> $log
-	apt-get -yfm install r-base-core=3.2.3-1trusty0
+	apt-get -yfm --force-yes install r-base-core=3.2.3-1trusty0
 
 ## Install other programs via apt-get
 	echo "Installing all other programs via apt-get.
