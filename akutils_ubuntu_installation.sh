@@ -141,7 +141,7 @@ Enter your email address (to configure task spooler):
 	echo "
 Example hostname: enggen.bio.nau.edu or localhost
 
-I think your hostname is: ${bold}${hostname}${normal}
+I think your hostname is: ${bold}${host}${normal}
 
 Hit enter if this is correct, or enter a new hostname here (for task spooler
 and stacks):
@@ -254,6 +254,26 @@ wait
 
 ## Install programs from Ubuntu repositories
 		sudo bash $scriptdir/scripts/ubuntu_slave.sh $stdout $stderr $log $homedir $scriptdir
+
+#	## If dependencies not met, install dependencies, then reattempt ubuntu installations
+#	unmettest=$(grep "The following packages have unmet dependencies:" $stdout 2>/dev/null | wc -l)
+#	if [[ "$unmettest" -ge "1" ]]; then
+#	echo "unmettest = $unmettest"
+#		echo "Unmet dependencies during apt-get command. Missing packages:" >> $log
+#		grep -w "Depends:" $stdout | sed "s/.\+Depends:\s//g" | cut -d" " -f1 > $scriptdir/temp/unmet.depends
+#		cat $scriptdir/temp/unmet.depends >> $log
+#		cat $scriptdir/temp/unmet.depends
+#		echo "" >> $log
+#		for line in `cat $scriptdir/temp/unmet.depends`; do
+#			echo "sudo apt-get remove -y $line" >> $log
+#			sudo apt-get remove -y $line #1>$stdout 2>$stderr
+#			#bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+#		done
+#		sudo apt-get autoremove
+#
+#		## Rerun ubuntu_slave.sh
+#		sudo bash $scriptdir/scripts/ubuntu_slave.sh $stdout $stderr $log $homedir $scriptdir
+#	fi
 
 ## Install Adobe Reader 9 if not already present
 	adobetest=`command -v acroread 2>/dev/null | wc -l`
