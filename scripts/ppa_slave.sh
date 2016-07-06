@@ -78,7 +78,7 @@ Installed previously." >> $log
 fi
 fi
 
-## Cran R source
+## Cran R source (specify marutter ppa to enforce correct version 3.2.4)
 rppacount1=`grep "cran.rstudio.com" $scriptdir/updates/ppa_log.txt 2>/dev/null | wc -l`
 rppacount2=`cat /etc/apt/sources.list | grep "cran.rstudio.com" 2>/dev/null | wc -l`
 if [[ $rppacount1 == 0 ]]; then
