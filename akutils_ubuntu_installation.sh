@@ -102,7 +102,8 @@ Installing/updating R packages and exiting." >> $log
 
 	## set update file if necessary (first time only)
 	if [[ ! -f $scriptdir/updates/R_installs_and_updates.txt ]]; then
-		cp $scriptdir/updates/.R_installs_and_updates.txt $scriptdir/updates/R_installs_and_updates.txt
+		touch $scriptdir/updates/R_installs_and_updates.txt
+		echo "2013,12,31" > $scriptdir/updates/R_installs_and_updates.txt
 	fi
 
 	rtest=`command -v R 2>/dev/null | wc -l`
