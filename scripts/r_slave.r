@@ -78,6 +78,9 @@ install.packages('BEST') }
 if (is.element('qiimer', installed.packages()[,1]) == FALSE) { 
 install.packages('qiimer') }
 
+if (is.element('indicspecies', installed.packages()[,1]) == FALSE) { 
+install.packages('indicspecies') }
+
 if (is.element('testthat', installed.packages()[,1]) == FALSE) { 
 install.packages('testthat') }
 
