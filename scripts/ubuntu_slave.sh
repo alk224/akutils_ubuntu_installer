@@ -77,7 +77,7 @@ Uninstalling existing R packages.
 wait
 
 ## Remove anything unneeded
-sudo apt-get -y autoremove
+sudo apt-get -y autoremove  &>/dev/null
 #echo "
 #stdout"
 #cat $stdout
