@@ -109,13 +109,46 @@ Installing/updating R packages and exiting." >> $log
 	rtest=`command -v R 2>/dev/null | wc -l`
 	if [[ $rtest == 0 ]]; then
 		echo "R does not seem to be installed. Install it manually or run the installer script without --force-R (this will install R and run all updates).
+
+Manually install R (v3.2.3):
+sudo apt-get -y --force-yes install r-base-core=3.2.3-1trusty0 r-base-dev=3.2.3-1trusty0
 		"
 		
 		exit 1
 	else
-	Rscript $scriptdir/scripts/r_slave.r 1>$stdout 2>$stderr || true
+
+	echo "R updates/installs from CRAN:
+	"
+	echo "
+R updates/installs from CRAN:" >> $log
+	Rscript $scriptdir/scripts/r_cran_slave.r $scriptdir/scripts/R_CRAN_package_list.txt 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
+
+	echo "R updates/installs from github:
+	"
+	echo "
+R updates/installs from github:" >> $log
+	Rscript $scriptdir/scripts/r_github_slave.r $scriptdir/scripts/R_github_package_list.txt 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+
+	echo "R updates/installs from biocLite:
+	"
+	echo "
+R updates/installs from biocLite:" >> $log
+	Rscript $scriptdir/scripts/r_bioclite_slave.r $scriptdir/scripts/R_bioclite_package_list.txt 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+
+	echo "R updates/installs from local:
+	"
+	echo "
+R updates/installs from local:" >> $log
+	Rscript $scriptdir/scripts/r_local_slave.r $scriptdir/scripts/R_local_package_list.txt $scriptdir/3rd_party_packages/ 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+
 	echo $Rdate > $scriptdir/updates/R_installs_and_updates.txt
 
 	echo "R updates completed.
@@ -421,9 +454,39 @@ source /etc/environment 1>$stdout 2>$stderr || true
 	echo "Installing/updating R packages.
 	"
 	echo "Installing/updating R packages." >> $log
-	Rscript $scriptdir/scripts/r_slave.r 1>$stdout 2>$stderr || true
+
+	echo "R updates/installs from CRAN:
+	"
+	echo "
+R updates/installs from CRAN:" >> $log
+	Rscript $scriptdir/scripts/r_cran_slave.r $scriptdir/scripts/R_CRAN_package_list.txt 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
+
+	echo "R updates/installs from github:
+	"
+	echo "
+R updates/installs from github:" >> $log
+	Rscript $scriptdir/scripts/r_github_slave.r $scriptdir/scripts/R_github_package_list.txt 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+
+	echo "R updates/installs from biocLite:
+	"
+	echo "
+R updates/installs from biocLite:" >> $log
+	Rscript $scriptdir/scripts/r_bioclite_slave.r $scriptdir/scripts/R_bioclite_package_list.txt 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+
+	echo "R updates/installs from local:
+	"
+	echo "
+R updates/installs from local:" >> $log
+	Rscript $scriptdir/scripts/r_local_slave.r $scriptdir/scripts/R_local_package_list.txt $scriptdir/3rd_party_packages/ 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+
 	echo $Rdate1 > $scriptdir/updates/R_installs_and_updates.txt
 	else
 	echo "R installs/updates have been run within the past year. Skipping.
