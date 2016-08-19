@@ -16,7 +16,6 @@ ggplot2
 Rcpp
 shiny
 R2WinBUGS
-rube
 rjags
 jagsUI
 BEST
@@ -28,8 +27,3 @@ plyr
 dplyr
 reshape2
 biomformat
-ancom.R
-DESeq2
-metagenomeSeq
-phyloseq
-rhdf5

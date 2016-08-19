@@ -1,4 +1,4 @@
- r_list <- readLines("R_package_list.txt")
+r_list <- readLines("R_package_list.txt")
 
 for (i in r_list){
 if (is.element(i,installed.packages()[,1]) == FALSE) {

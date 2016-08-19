@@ -1,0 +1,4 @@
+DESeq2
+metagenomeSeq
+phyloseq
+rhdf5
