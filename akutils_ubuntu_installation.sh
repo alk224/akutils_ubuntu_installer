@@ -125,19 +125,19 @@ R updates/installs from CRAN:" >> $log
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
 
-	echo "R updates/installs from github:
-	"
-	echo "
-R updates/installs from github:" >> $log
-	Rscript $scriptdir/scripts/r_github_slave.r $scriptdir/scripts/R_github_package_list.txt 1>$stdout 2>$stderr || true
-	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-	wait
-
 	echo "R updates/installs from biocLite:
 	"
 	echo "
 R updates/installs from biocLite:" >> $log
 	Rscript $scriptdir/scripts/r_bioclite_slave.r $scriptdir/scripts/R_bioclite_package_list.txt 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+
+	echo "R updates/installs from github:
+	"
+	echo "
+R updates/installs from github:" >> $log
+	Rscript $scriptdir/scripts/r_github_slave.r $scriptdir/scripts/R_github_package_list.txt 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
 
@@ -463,19 +463,19 @@ R updates/installs from CRAN:" >> $log
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
 
-	echo "R updates/installs from github:
-	"
-	echo "
-R updates/installs from github:" >> $log
-	Rscript $scriptdir/scripts/r_github_slave.r $scriptdir/scripts/R_github_package_list.txt 1>$stdout 2>$stderr || true
-	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
-	wait
-
 	echo "R updates/installs from biocLite:
 	"
 	echo "
 R updates/installs from biocLite:" >> $log
 	Rscript $scriptdir/scripts/r_bioclite_slave.r $scriptdir/scripts/R_bioclite_package_list.txt 1>$stdout 2>$stderr || true
+	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
+	wait
+
+	echo "R updates/installs from github:
+	"
+	echo "
+R updates/installs from github:" >> $log
+	Rscript $scriptdir/scripts/r_github_slave.r $scriptdir/scripts/R_github_package_list.txt 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
 
