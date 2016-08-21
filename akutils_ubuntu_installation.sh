@@ -145,7 +145,7 @@ R updates/installs from github:" >> $log
 	"
 	echo "
 R updates/installs from local:" >> $log
-	Rscript $scriptdir/scripts/r_local_slave.r $scriptdir/scripts/R_local_package_list.txt $scriptdir/3rd_party_packages/ 1>$stdout 2>$stderr || true
+	Rscript $scriptdir/scripts/r_local_slave.r $scriptdir/scripts/R_local_package_list.txt $scriptdir/scripts/R_local_package_names.txt $scriptdir/3rd_party_packages/ 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
 
@@ -483,7 +483,7 @@ R updates/installs from github:" >> $log
 	"
 	echo "
 R updates/installs from local:" >> $log
-	Rscript $scriptdir/scripts/r_local_slave.r $scriptdir/scripts/R_local_package_list.txt $scriptdir/3rd_party_packages/ 1>$stdout 2>$stderr || true
+	Rscript $scriptdir/scripts/r_local_slave.r $scriptdir/scripts/R_local_package_list.txt $scriptdir/scripts/R_local_package_names.txt $scriptdir/3rd_party_packages/ 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 	wait
 
