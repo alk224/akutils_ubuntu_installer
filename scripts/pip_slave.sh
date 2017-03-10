@@ -17,15 +17,15 @@ date0=`date`
 
 ## Upgrading pip
 pipver=`python -c "import pip; print pip.__version__" 2>/dev/null`
-if [[ $pipver != 7.1.2 ]]; then
-echo "Installing pip v7.1.2.
+if [[ $pipver != 9.0.1 ]]; then
+echo "Installing pip v9.0.1.
 "
-echo "Installing pip v7.1.2." >> $log
-pip install pip==7.1.2 1>$stdout 2>$stderr || true
+echo "Installing pip v9.0.1." >> $log
+pip install pip==9.0.1 1>$stdout 2>$stderr || true
 	bash $scriptdir/scripts/log_slave.sh $stdout $stderr $log
 wait
 else
-echo "Pip already correct version (7.1.2).
+echo "Pip already correct version (9.0.1).
 "
 fi
 
