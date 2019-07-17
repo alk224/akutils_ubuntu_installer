@@ -2,7 +2,7 @@
 Stacks component now functional. This is great if you do your analysis on a cluster and need to view your database locally. See below for instructions.  
 
 ***Date: 2015-08-29  
-Author: Andrew Krohn***  
+Author: Lela Andrews***  
 
 These scripts are meant to ease rebuilding of my bioinformatics computer when (not if) the system drive fails.  It also facilitates establishing a new cloud instance (say on EC2 or iPLANT) or if you wish to set up a VM in some other environment.  
 
@@ -66,7 +66,7 @@ If installing as a guest within a virtual environment (VirtualBox, for instance)
 
 **Citing this repository**  
 
-Andrew Krohn. (2016). akutils_ubuntu_installer v1.1.0: Simple bioinformatic software installer. Zenodo. 10.5281/zenodo.56762  
+Lela Andrews. (2016). akutils_ubuntu_installer v1.1.0: Simple bioinformatic software installer. Zenodo. 10.5281/zenodo.56762  
 
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.56762.svg)](http://dx.doi.org/10.5281/zenodo.56762)  
 
